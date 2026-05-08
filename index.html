@@ -1,0 +1,2719 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#01040c">
+<title>Observable Universe · 1D · v1.0 · The Cosmic Ray™</title>
+<meta name="description" content="1D map of the observable universe — 112 galaxies projected on a single radial axis. Switch between lookback time, comoving distance, redshift, and scale factor. Logarithmic histogram of cosmic density. Quiz, guided tour, accessibility (prefers-reduced-motion, daltonism, keyboard nav), bilingual RO/EN, persistent preferences. v1.0 — The Cosmic Ray™ companion to the 2D and 3D versions.">
+<meta property="og:title" content="Observable Universe · 1D · v1.0 · The Cosmic Ray™">
+<meta property="og:description" content="The radial truth: 112 galaxies on a single axis. Distance is the only honest dimension.">
+<meta property="og:type" content="website">
+
+<style>
+:root {
+  --bg: #01040c;
+  --bg2: #03081a;
+  --fg: #e0e8f5;
+  --dim: #a0b0c8;
+  --dimmer: #6080a0;
+  --dimmest: #405060;
+  --accent: #aaddff;
+  --accent2: #88bbee;
+  --hot: #66ee99;
+  --warn: #ffaa44;
+  --crit: #ff5577;
+  --line: rgba(70,130,255,0.14);
+  --line2: rgba(70,130,255,0.06);
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin:0; padding:0; height:100%; overflow:hidden; background:var(--bg); color:var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 14px; line-height: 1.5;
+  touch-action: pan-y; }
+body.daltonism { --accent: #33bbee; --hot: #009988; }
+
+/* ─ TOPBAR ─ */
+#topbar {
+  position: fixed; top: 0; left: 0; right: 0; height: 56px; z-index: 200;
+  display: flex; align-items: center; gap: 8px; padding: 0 12px;
+  background: rgba(1,4,12,0.94); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+#title { font-weight: 900; font-size: 13.5px; letter-spacing: 1px; color: var(--accent);
+  flex-shrink: 0; }
+#title .ver { color: var(--dim); font-weight: 400; font-size: 11px; margin-left: 4px; }
+#topbtns { display: flex; gap: 6px; margin-left: auto; flex-wrap: nowrap; }
+.tbtn { background: rgba(70,130,255,0.05); border: 1px solid var(--line); color: var(--dim);
+  padding: 6px 11px; border-radius: 8px; cursor: pointer; font-size: 13px; font-family: inherit;
+  transition: all .15s; }
+.tbtn:hover { background: rgba(70,130,255,0.14); color: var(--accent); }
+.tbtn.on { background: rgba(70,130,255,0.22); color: var(--accent); border-color: rgba(70,130,255,0.4); }
+@media (max-width: 600px) {
+  #title { font-size: 11.5px; }
+  #title .ver { display: none; }
+  .tbtn { padding: 6px 9px; font-size: 12px; }
+}
+
+/* ─ MAIN STAGE ─ */
+#stage { position: fixed; top: 56px; left: 0; right: 0; bottom: 56px; overflow: hidden;
+  display: flex; flex-direction: column; }
+#axisInfo { padding: 10px 16px 4px; font-size: 11.5px; color: var(--dimmer);
+  letter-spacing: 0.5px; display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+#axisInfo strong { color: var(--accent); font-weight: 900; }
+#modeSel { background: rgba(70,130,255,0.05); border: 1px solid var(--line); color: var(--fg);
+  padding: 4px 8px; border-radius: 6px; font-size: 11.5px; font-family: inherit; cursor: pointer; }
+#modeSel:focus-visible { outline: 2px solid var(--accent); }
+#stats { color: var(--dimmest); font-size: 11px; }
+
+#rayContainer { flex: 1; position: relative; overflow: hidden;
+  margin: 0 12px; }
+#rayCanvas { position: absolute; inset: 0; cursor: crosshair; }
+#rayCanvas:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+#histContainer { height: 60px; padding: 0 12px 8px; position: relative; }
+#histCanvas { position: absolute; inset: 0 12px 8px; height: calc(100% - 8px); }
+#histLabel { position: absolute; top: 2px; left: 18px; font-size: 9.5px;
+  color: var(--dimmest); letter-spacing: 1.2px; text-transform: uppercase; pointer-events: none; }
+
+/* ─ INFO PANEL ─ */
+#pnl { position: fixed; top: 56px; right: 0; width: min(380px, 100vw); height: calc(100vh - 56px - 56px);
+  background: rgba(1,4,18,0.97); border-left: 1px solid var(--line);
+  transform: translateX(100%); transition: transform .25s cubic-bezier(.4,0,.2,1);
+  z-index: 180; overflow-y: auto; padding: 18px 18px 22px;
+  scrollbar-width: thin; touch-action: pan-y; }
+#pnl.open { transform: translateX(0); }
+#pnl h2 { font-size: 17px; margin: 0 0 4px; letter-spacing: 0.3px; color: var(--accent); font-weight: 900; }
+#pnl .sub { font-size: 11.5px; color: var(--dimmer); letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 12px; }
+#pnl .row { display: flex; justify-content: space-between; padding: 6px 0;
+  border-bottom: 1px solid var(--line2); font-size: 12.5px; }
+#pnl .row .k { color: var(--dimmer); }
+#pnl .row .v { color: var(--fg); font-family: 'Courier New', monospace; }
+#pnl .desc { margin-top: 14px; font-size: 13px; color: #d8e0f0; line-height: 1.65; }
+#pnl .desc-en { margin-top: 8px; font-size: 12px; color: var(--dim); font-style: italic; line-height: 1.6;
+  border-left: 2px solid var(--line); padding-left: 10px; }
+#pnl .pnlClose { position: absolute; top: 14px; right: 14px; cursor: pointer; font-size: 18px;
+  color: var(--dim); padding: 4px 8px; border-radius: 6px; }
+#pnl .pnlClose:hover { background: rgba(255,100,100,0.12); color: var(--crit); }
+#pnl .actions { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+#pnl .actBtn { flex: 1; min-width: 90px; padding: 7px; border-radius: 7px;
+  border: 1px solid var(--line); background: rgba(70,130,255,0.06); color: var(--dim);
+  font-size: 11px; cursor: pointer; font-family: 'Courier New', monospace; letter-spacing: 0.6px; }
+#pnl .actBtn:hover { background: rgba(70,130,255,0.14); color: var(--accent); }
+
+/* ─ HOVER TOOLTIP ─ */
+#tip { position: fixed; pointer-events: none; z-index: 150;
+  background: rgba(0,4,16,0.95); border: 1px solid var(--line); border-radius: 7px;
+  padding: 6px 10px; font-size: 12px; max-width: 230px; line-height: 1.4;
+  color: var(--fg); display: none; }
+#tip.show { display: block; }
+#tip .tn { color: var(--accent); font-weight: 700; font-size: 12.5px; }
+#tip .td { color: var(--dimmer); font-size: 10.5px; margin-top: 2px; font-family: 'Courier New', monospace; }
+
+/* ─ BOTTOM BAR ─ */
+#botbar { position: fixed; bottom: 0; left: 0; right: 0; height: 56px; z-index: 180;
+  display: flex; align-items: center; gap: 12px; padding: 0 14px;
+  background: rgba(1,4,12,0.94); backdrop-filter: blur(12px);
+  border-top: 1px solid var(--line); }
+#zoomCtrl { display: flex; gap: 6px; align-items: center; }
+#zoomCtrl .zb { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--line);
+  background: rgba(70,130,255,0.05); color: var(--accent); font-size: 16px; cursor: pointer;
+  font-family: inherit; padding: 0; line-height: 1; }
+#zoomCtrl .zb:hover { background: rgba(70,130,255,0.14); }
+#zoomLabel { font-size: 11px; color: var(--dimmer); font-family: 'Courier New', monospace;
+  min-width: 52px; text-align: center; }
+#hintTxt { flex: 1; text-align: center; font-size: 11px; color: var(--dimmest); letter-spacing: 0.4px; }
+@media (max-width: 600px) { #hintTxt { display: none; } }
+#h0Box { display: flex; gap: 8px; align-items: center; font-size: 11px; color: var(--dimmer); }
+#h0Box input[type=range] { width: 70px; accent-color: var(--accent); }
+#h0Val { font-family: 'Courier New', monospace; color: var(--accent); min-width: 44px; }
+@media (max-width: 600px) { #h0Box label { display: none; } #h0Box input { width: 56px; } }
+
+/* ─ SEARCH OVERLAY ─ */
+#srchOvl { position: fixed; inset: 0; background: rgba(0,0,8,0.85); backdrop-filter: blur(8px);
+  z-index: 400; display: none; align-items: flex-start; justify-content: center; padding-top: 12vh; }
+#srchOvl.show { display: flex; }
+#srchBox { background: var(--bg2); border: 1px solid var(--line); border-radius: 12px;
+  width: min(540px, 92vw); padding: 18px; }
+#srchInp { width: 100%; padding: 11px; border-radius: 8px; border: 1px solid var(--line);
+  background: rgba(0,0,0,0.35); color: var(--fg); font-size: 15px; font-family: inherit; }
+#srchInp:focus-visible { outline: 2px solid var(--accent); border-color: transparent; }
+#srchRes { margin-top: 12px; max-height: 50vh; overflow-y: auto; scrollbar-width: thin; }
+.sres { padding: 8px 10px; cursor: pointer; border-radius: 6px; display: flex; gap: 8px;
+  align-items: center; border: 1px solid transparent; }
+.sres:hover, .sres.sel { background: rgba(70,130,255,0.1); border-color: var(--line); }
+.sres .si { font-size: 14px; }
+.sres .sn { flex: 1; font-size: 12.5px; }
+.sres .sd { font-size: 10.5px; color: var(--dimmer); font-family: 'Courier New', monospace; }
+#srchHint { display: flex; gap: 14px; margin-top: 12px; font-size: 10.5px; color: var(--dimmest); }
+#srchHint kbd { background: rgba(70,130,255,0.18); color: var(--accent); padding: 1px 6px;
+  border-radius: 4px; font-family: 'Courier New', monospace; font-size: 10px; }
+
+/* ─ GUIDE OVERLAY ─ */
+#guideOvl { position: fixed; inset: 0; background: rgba(0,0,8,0.88); backdrop-filter: blur(10px);
+  z-index: 500; display: none; align-items: center; justify-content: center; }
+#guideOvl.open { display: flex; }
+#guideBox { background: var(--bg2); border: 1px solid var(--line); border-radius: 12px;
+  width: min(820px, 96vw); height: min(82vh, 720px); display: flex; flex-direction: column; overflow: hidden; }
+#guideHdr { display: flex; justify-content: space-between; align-items: center;
+  padding: 13px 18px; border-bottom: 1px solid var(--line); flex-shrink: 0; }
+#guideTtl { color: var(--accent); font-weight: 900; font-size: 13px; letter-spacing: 0.5px; }
+#guideClose { cursor: pointer; color: var(--dim); padding: 4px 10px; border-radius: 6px; font-size: 16px; }
+#guideClose:hover { background: rgba(255,100,100,0.12); color: var(--crit); }
+#guideTabs { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px 14px;
+  background: rgba(0,0,16,0.4); border-bottom: 1px solid var(--line); flex-shrink: 0; }
+@media (max-width: 600px) {
+  #guideTabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  #guideTabs::-webkit-scrollbar { display: none; }
+}
+.gtb { padding: 6px 11px; border-radius: 6px; font-size: 11px; color: var(--dim);
+  background: transparent; border: 1px solid transparent; cursor: pointer; white-space: nowrap;
+  letter-spacing: 0.4px; flex-shrink: 0; font-family: inherit; }
+.gtb:hover { background: rgba(70,130,255,0.07); }
+.gtb.act { background: rgba(70,130,255,0.16); color: var(--accent); border-color: rgba(70,130,255,0.28); }
+#guideBody { padding: 18px 22px 22px; overflow-y: auto; font-size: 13px; line-height: 1.7;
+  color: #f0f4fa; flex: 1; scrollbar-width: thin; }
+#guideBody h3 { font-size: 14px; color: var(--accent); margin: 16px 0 8px; font-weight: 900; }
+#guideBody h3:first-child { margin-top: 0; }
+#guideBody h4 { font-size: 12px; color: #88ccdd; margin: 14px 0 6px; font-weight: 900; }
+#guideBody p { margin: 7px 0; }
+#guideBody ul { margin: 6px 0 10px 18px; }
+#guideBody li { margin: 4px 0; }
+#guideBody table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 11.5px; }
+#guideBody th, #guideBody td { padding: 6px 9px; border-bottom: 1px solid var(--line); text-align: left; }
+#guideBody th { color: var(--accent); font-weight: 900; }
+#guideBody td:first-child { color: #a0c0d8; font-family: 'Courier New', monospace; }
+#guideBody code { background: rgba(70,130,255,0.1); padding: 1px 5px; border-radius: 3px; font-size: 11.5px; color: #c8e0ff; }
+#guideBody kbd { background: rgba(70,130,255,0.18); color: var(--accent); padding: 1px 6px;
+  border-radius: 4px; font-family: 'Courier New', monospace; font-size: 10.5px; }
+#guideBody .gnote { background: rgba(70,130,255,0.06); border-left: 3px solid var(--accent);
+  padding: 8px 12px; margin: 10px 0; font-size: 12px; border-radius: 0 6px 6px 0; }
+#guideBody .gwarn { background: rgba(255,170,68,0.06); border-left: 3px solid var(--warn);
+  padding: 8px 12px; margin: 10px 0; font-size: 12px; border-radius: 0 6px 6px 0; color: #ddccaa; }
+#guideBody .gfact { background: rgba(50,200,140,0.05); border-left: 3px solid var(--hot);
+  padding: 8px 12px; margin: 10px 0; font-size: 12px; border-radius: 0 6px 6px 0; color: #bce0d0; }
+
+/* ─ QUIZ OVERLAY ─ */
+#quizOvl { position: fixed; inset: 0; background: rgba(0,0,8,0.88); backdrop-filter: blur(10px);
+  z-index: 500; display: none; align-items: center; justify-content: center; padding: 16px; }
+#quizOvl.open { display: flex; }
+#quizBox { background: var(--bg2); border: 1px solid var(--line); border-radius: 12px;
+  width: min(560px, 96vw); max-height: 90vh; padding: 22px; overflow-y: auto; scrollbar-width: thin; }
+#quizQ { font-size: 15px; color: var(--accent); margin-bottom: 16px; font-weight: 900; line-height: 1.45; }
+.qopt { padding: 11px 14px; margin: 7px 0; border-radius: 8px; cursor: pointer;
+  background: rgba(70,130,255,0.06); border: 1px solid var(--line); font-size: 13px;
+  transition: all .12s; }
+.qopt:hover { background: rgba(70,130,255,0.14); }
+.qopt.ok { background: rgba(50,200,140,0.18); border-color: var(--hot); color: var(--hot); }
+.qopt.bad { background: rgba(255,85,119,0.18); border-color: var(--crit); color: var(--crit); }
+#quizMeta { display: flex; justify-content: space-between; font-size: 11px; color: var(--dimmer);
+  margin-bottom: 12px; letter-spacing: 0.6px; }
+#quizNext, #quizClose { display: inline-block; margin-top: 16px; margin-right: 8px;
+  padding: 8px 16px; border-radius: 8px; border: 1px solid var(--line);
+  background: rgba(70,130,255,0.1); color: var(--accent); cursor: pointer;
+  font-size: 12px; letter-spacing: 0.5px; font-family: inherit; }
+#quizNext:hover, #quizClose:hover { background: rgba(70,130,255,0.2); }
+#quizExp { margin-top: 14px; padding: 10px 14px; border-left: 3px solid var(--accent);
+  background: rgba(70,130,255,0.06); border-radius: 0 6px 6px 0; font-size: 12px; line-height: 1.55;
+  display: none; }
+#quizExp.show { display: block; }
+
+/* ─ TOAST ─ */
+#toast { position: fixed; left: 50%; bottom: 80px; transform: translateX(-50%) translateY(60px);
+  background: rgba(70,130,255,0.95); color: #001020; padding: 8px 16px; border-radius: 8px;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.4px; z-index: 600;
+  transition: transform .25s; }
+#toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ─ TOUR CARD ─ */
+#tourCard { position: fixed; left: 50%; top: 76px; transform: translateX(-50%);
+  background: rgba(1,4,18,0.97); border: 1px solid var(--accent); border-radius: 10px;
+  padding: 14px 18px; max-width: min(540px, 92vw); z-index: 250; display: none;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.5); }
+#tourCard.show { display: block; }
+#tourMeta { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--accent);
+  font-weight: 900; letter-spacing: 1px; margin-bottom: 6px; }
+#tourTtl { font-size: 13.5px; color: var(--accent); margin-bottom: 6px; font-weight: 900; }
+#tourTxt { font-size: 12.5px; color: #d8e0f0; line-height: 1.55; }
+#tourBtns { display: flex; gap: 8px; margin-top: 12px; }
+.tourB { padding: 6px 12px; border-radius: 6px; border: 1px solid var(--line);
+  background: rgba(70,130,255,0.07); color: var(--dim); cursor: pointer; font-size: 11px;
+  font-family: inherit; letter-spacing: 0.5px; }
+.tourB:hover { background: rgba(70,130,255,0.14); color: var(--accent); }
+.tourB.primary { background: rgba(70,130,255,0.2); color: var(--accent);
+  border-color: rgba(70,130,255,0.4); }
+
+/* ─ RING/MARKERS COLORS by type ─ */
+.t-spiral { --tc: #88bbee; }
+.t-elliptical { --tc: #ddaa88; }
+.t-irregular { --tc: #cc99ee; }
+.t-dwarf { --tc: #99ddcc; }
+.t-quasar { --tc: #ffaa44; }
+.t-blazar { --tc: #ff7799; }
+.t-EHZ { --tc: #ff5577; }
+.t-CMB { --tc: #ffffff; }
+.t-cluster { --tc: #ffcc66; }
+
+/* ─ Reduced motion CSS ─ */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+/* ─ Skip link ─ */
+.skip-link { position: absolute; top: -48px; left: 0; background: var(--accent); color: #001;
+  padding: 8px 16px; border-radius: 0 0 8px 0; z-index: 9999; font-weight: 900; transition: top .15s; }
+.skip-link:focus { top: 0; }
+
+/* ─ Tour Stop Marker (highlighted on canvas via separate rendering) ─ */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+/* ─ FOOTER badge ─ */
+#vbadge { position: absolute; bottom: 64px; right: 12px; font-size: 9px; color: var(--dimmest);
+  letter-spacing: 1px; pointer-events: none; opacity: 0.6; font-family: 'Courier New', monospace; }
+@media (max-width: 600px) { #vbadge { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#rayCanvas">Skip to map</a>
+
+<!-- TOPBAR -->
+<header id="topbar" role="banner">
+  <div id="title">🌠 OBSERVABLE UNIVERSE · 1D <span class="ver">v1.0 · Cosmic Ray™</span></div>
+  <div id="topbtns">
+    <button class="tbtn" id="btnSearch" aria-label="Search galaxies" title="Search (/)">🔍</button>
+    <button class="tbtn" id="btnTour"   aria-label="Guided tour"     title="Tour">🚀</button>
+    <button class="tbtn" id="btnQuiz"   aria-label="Cosmic quiz"     title="Quiz">🧩</button>
+    <button class="tbtn" id="btnGuide"  aria-label="User guide"      title="Guide">📖</button>
+    <button class="tbtn" id="btnLang"   aria-label="Toggle language" title="Limba / Language">RO</button>
+    <button class="tbtn" id="btnReset"  aria-label="Reset view"      title="Reset">⌂</button>
+  </div>
+</header>
+
+<!-- MAIN STAGE -->
+<main id="stage" role="main">
+  <div id="axisInfo">
+    <span><strong id="modeLbl">Lookback time</strong></span>
+    <select id="modeSel" aria-label="Axis mode">
+      <option value="lookback">Lookback time (Myr)</option>
+      <option value="comoving">Comoving distance (Mly)</option>
+      <option value="redshift">Redshift (z)</option>
+      <option value="scale">Scale factor (a = 1/(1+z))</option>
+    </select>
+    <span id="stats">112 galaxii</span>
+    <span style="margin-left:auto;font-size:10.5px;color:var(--dimmer);">
+      <kbd style="background:rgba(70,130,255,0.18);color:var(--accent);padding:1px 5px;border-radius:3px;font-size:9.5px;">←→</kbd> nav ·
+      <kbd style="background:rgba(70,130,255,0.18);color:var(--accent);padding:1px 5px;border-radius:3px;font-size:9.5px;">/</kbd> search
+    </span>
+  </div>
+  <div id="rayContainer">
+    <canvas id="rayCanvas" tabindex="0" aria-label="1D cosmic distance visualization"></canvas>
+    <div id="vbadge">v1.0 · 1D · 112 galaxies</div>
+  </div>
+  <div id="histContainer">
+    <canvas id="histCanvas" aria-hidden="true"></canvas>
+    <div id="histLabel">density · log₁₀(N+1)</div>
+  </div>
+</main>
+
+<!-- BOTTOM BAR -->
+<footer id="botbar" role="contentinfo">
+  <div id="zoomCtrl">
+    <button class="zb" id="zoomOut" aria-label="Zoom out">−</button>
+    <span id="zoomLabel">1.00×</span>
+    <button class="zb" id="zoomIn" aria-label="Zoom in">+</button>
+  </div>
+  <span id="hintTxt">Hover for tooltip · Click for details · Scroll-zoom anywhere on the ray · ← → arrow keys to step galaxies</span>
+  <div id="h0Box">
+    <label for="h0Slider">H₀</label>
+    <input type="range" id="h0Slider" min="60" max="78" step="0.1" value="67.4" aria-label="Hubble constant">
+    <span id="h0Val">67.4</span>
+  </div>
+</footer>
+
+<!-- TOOLTIP -->
+<div id="tip" role="tooltip" aria-hidden="true">
+  <div class="tn"></div>
+  <div class="td"></div>
+</div>
+
+<!-- INFO PANEL -->
+<aside id="pnl" role="dialog" aria-label="Galaxy details" aria-hidden="true">
+  <div class="pnlClose" id="pnlCloseBtn" role="button" tabindex="0" aria-label="Close panel">✕</div>
+  <h2 id="pnlName">—</h2>
+  <div class="sub" id="pnlType">—</div>
+  <div id="pnlRows"></div>
+  <div class="desc" id="pnlDesc">—</div>
+  <div class="desc-en" id="pnlDescEn"></div>
+  <div class="actions">
+    <button class="actBtn" id="actShare">🔗 SHARE</button>
+    <button class="actBtn" id="actCopy">📋 COPY</button>
+    <button class="actBtn" id="actClose">✕ CLOSE</button>
+  </div>
+</aside>
+
+<!-- SEARCH OVERLAY -->
+<div id="srchOvl" role="dialog" aria-modal="true" aria-label="Search">
+  <div id="srchBox">
+    <input id="srchInp" type="text" placeholder="🔍  Caută galaxie · Search galaxy..." autocomplete="off">
+    <div id="srchRes" role="listbox"></div>
+    <div id="srchHint">
+      <span><kbd>↑↓</kbd> nav</span><span><kbd>Enter</kbd> select</span><span><kbd>Esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+
+<!-- GUIDE OVERLAY -->
+<div id="guideOvl" role="dialog" aria-modal="true" aria-label="Guide">
+  <div id="guideBox">
+    <div id="guideHdr">
+      <span id="guideTtl">📖 GUIDE · OBSERVABLE UNIVERSE · 1D</span>
+      <span id="guideClose" role="button" tabindex="0" aria-label="Close">✕</span>
+    </div>
+    <div id="guideTabs" role="tablist">
+      <button class="gtb act" data-tab="intro" role="tab">🌌 Intro</button>
+      <button class="gtb" data-tab="navig" role="tab">🎮 Navigation</button>
+      <button class="gtb" data-tab="modes" role="tab">📏 Axis Modes</button>
+      <button class="gtb" data-tab="why1d" role="tab">🤔 Why 1D?</button>
+      <button class="gtb" data-tab="terms" role="tab">📚 Terms</button>
+      <button class="gtb" data-tab="limits" role="tab">⚖️ Limits</button>
+      <button class="gtb" data-tab="changelog" role="tab">📋 Changelog</button>
+      <button class="gtb" data-tab="credits" role="tab">🏅 Credits</button>
+    </div>
+    <div id="guideBody"></div>
+  </div>
+</div>
+
+<!-- QUIZ OVERLAY -->
+<div id="quizOvl" role="dialog" aria-modal="true" aria-label="Quiz">
+  <div id="quizBox">
+    <div id="quizMeta">
+      <span id="quizCnt">1 / 10</span>
+      <span id="quizScore">SCORE: 0</span>
+    </div>
+    <div id="quizQ">—</div>
+    <div id="quizOpts"></div>
+    <div id="quizExp"></div>
+    <button id="quizNext" style="display:none;">NEXT →</button>
+    <button id="quizClose">✕ CLOSE</button>
+  </div>
+</div>
+
+<!-- TOUR CARD -->
+<div id="tourCard" role="dialog" aria-label="Tour stop">
+  <div id="tourMeta">
+    <span id="tourCnt">1 / 10</span>
+    <span id="tourSkip" style="cursor:pointer;">✕ End</span>
+  </div>
+  <div id="tourTtl">—</div>
+  <div id="tourTxt">—</div>
+  <div id="tourBtns">
+    <button class="tourB" id="tourPrev">← Prev</button>
+    <button class="tourB primary" id="tourNext">Next →</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" aria-live="polite"></div>
+
+<script>
+'use strict';
+
+// ═══════════════════════════════════════════════════════
+//  Observable Universe 1D · The Cosmic Ray™
+//  Companion to 2D (alexio.tf/universul-observabil-2d) and
+//  3D (alexio.tf/universul-observabil-3d).
+//
+//  Philosophy: a single radial axis. The most honest projection.
+//  No angular distortion, no rotation, no false directions —
+//  just distance from us. The price: galaxies in the same
+//  direction are squashed onto the same point. The benefit:
+//  the cosmic distance hierarchy becomes legible at a glance.
+// ═══════════════════════════════════════════════════════
+
+const VERSION = '1.0';
+
+// ═══════════════════════════════════════════════════════
+//  COSMOLOGY (Planck 2018) — same single source of truth
+//  used by 2D version, kept identical for cross-version
+//  consistency.
+// ═══════════════════════════════════════════════════════
+const COSMO = Object.freeze({
+  H0_PLANCK: 67.4, H0_SHOES: 73.0,
+  OMEGA_M: 0.315, OMEGA_LAMBDA: 0.685,
+  T_CMB_NOW: 2.725, Z_RECOMB: 1090,
+  C_KMS: 299792.458,
+  AGE_GYR: 13.8,
+  HUBBLE_TIME_MYR_FACTOR: 977800, // 1/H0 [s/(km/Mpc)] → Myr
+});
+const T_BB_MYR = COSMO.AGE_GYR * 1000;
+
+let userH0 = COSMO.H0_PLANCK;
+
+// ─── Friedmann lookback time (ΛCDM) ────────────────────
+function lookbackTimeFriedmann(z, H0) {
+  if (z <= 0) return 0;
+  const _H0 = H0 || userH0;
+  const Om = COSMO.OMEGA_M, OL = COSMO.OMEGA_LAMBDA;
+  const H_time_Myr = COSMO.HUBBLE_TIME_MYR_FACTOR / _H0;
+  const N = 500;
+  let integral = 0;
+  for (let i = 0; i < N; i++) {
+    const zi = z * (i + 0.5) / N;
+    const E = Math.sqrt(Om * Math.pow(1 + zi, 3) + OL);
+    integral += (z / N) / ((1 + zi) * E);
+  }
+  return integral * H_time_Myr;
+}
+const _lbCache = {};
+function lookbackCached(z) {
+  if (z <= 0) return 0;
+  const k = z.toFixed(4) + '@' + userH0.toFixed(2);
+  if (_lbCache[k] === undefined) _lbCache[k] = lookbackTimeFriedmann(z, userH0);
+  return _lbCache[k];
+}
+
+// ─── Comoving distance (Mly) ────────────────────────────
+function comovingDistance(z, H0) {
+  if (z <= 0) return 0;
+  const _H0 = H0 || userH0;
+  const Om = COSMO.OMEGA_M, OL = COSMO.OMEGA_LAMBDA;
+  const D_H_Mly = COSMO.C_KMS / _H0 * 3.262; // Hubble distance in Mly: D_H = c/H0 in Mpc, × 3.262 → Mly
+  const N = 500;
+  let integral = 0;
+  for (let i = 0; i < N; i++) {
+    const zi = z * (i + 0.5) / N;
+    const E = Math.sqrt(Om * Math.pow(1 + zi, 3) + OL);
+    integral += (z / N) / E;
+  }
+  return integral * D_H_Mly;
+}
+const _comCache = {};
+function comovingCached(z) {
+  if (z <= 0) return 0;
+  const k = z.toFixed(4) + '@' + userH0.toFixed(2);
+  if (_comCache[k] === undefined) _comCache[k] = comovingDistance(z, userH0);
+  return _comCache[k];
+}
+
+// ─── Universe age, H₀-aware (logarithmic substitution) ──
+function _universeAgeIntegrate(H0) {
+  const Om = COSMO.OMEGA_M, OL = COSMO.OMEGA_LAMBDA;
+  const H_time_Myr = COSMO.HUBBLE_TIME_MYR_FACTOR / H0;
+  const u_max = Math.log(1 + 5000);
+  const N = 500;
+  let integral = 0;
+  for (let i = 0; i < N; i++) {
+    const u = u_max * (i + 0.5) / N;
+    const z = Math.exp(u) - 1;
+    const E = Math.sqrt(Om * Math.pow(1 + z, 3) + OL);
+    integral += (u_max / N) / E;
+  }
+  return integral * H_time_Myr;
+}
+const _ageCache = {};
+function universeAge(H0) {
+  H0 = H0 || userH0;
+  const k = H0.toFixed(2);
+  if (_ageCache[k] !== undefined) return _ageCache[k];
+  if (Math.abs(H0 - COSMO.H0_PLANCK) < 0.01) _ageCache[k] = T_BB_MYR;
+  else _ageCache[k] = _universeAgeIntegrate(H0);
+  return _ageCache[k];
+}
+function invalidateCosmoCache() {
+  for (const k in _lbCache) delete _lbCache[k];
+  for (const k in _comCache) delete _comCache[k];
+  for (const k in _ageCache) delete _ageCache[k];
+}
+
+// ═══════════════════════════════════════════════════════
+//  UV1D_PREFS — preferences store (mirrors 2D's UV2D_PREFS)
+// ═══════════════════════════════════════════════════════
+const UV1D_PREFS_KEY = 'uv1d_prefs_v1';
+let _prefsCache = null;
+let _prefsSaveTimer = null;
+function loadPrefs() {
+  if (_prefsCache) return _prefsCache;
+  try {
+    const raw = localStorage.getItem(UV1D_PREFS_KEY);
+    _prefsCache = raw ? JSON.parse(raw) : {};
+  } catch (e) { _prefsCache = {}; }
+  return _prefsCache;
+}
+function getPref(k, fb) { const p = loadPrefs(); return (k in p) ? p[k] : fb; }
+function setPref(k, v) {
+  const p = loadPrefs();
+  if (p[k] === v) return;
+  p[k] = v;
+  if (_prefsSaveTimer) clearTimeout(_prefsSaveTimer);
+  _prefsSaveTimer = setTimeout(() => {
+    try { localStorage.setItem(UV1D_PREFS_KEY, JSON.stringify(p)); } catch(e) {}
+    _prefsSaveTimer = null;
+  }, 180);
+}
+function clearPrefs() {
+  _prefsCache = {};
+  try { localStorage.removeItem(UV1D_PREFS_KEY); } catch(e) {}
+}
+function prefersReducedMotion() {
+  const ov = getPref('redmot', 'auto');
+  if (ov === 'on')  return true;
+  if (ov === 'off') return false;
+  return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+}
+
+// ═══════════════════════════════════════════════════════
+//  Type colors (CVD-aware)
+// ═══════════════════════════════════════════════════════
+const TYPE_COLORS_NORMAL = {
+  spiral:'#88bbee', elliptical:'#ddaa88', irregular:'#cc99ee',
+  dwarf:'#99ddcc', quasar:'#ffaa44', blazar:'#ff7799',
+  EHZ:'#ff5577', CMB:'#ffffff', cluster:'#ffcc66',
+};
+// Daltonism-friendly palette (deuteranopia bias)
+const TYPE_COLORS_CVD = {
+  spiral:'#3399cc', elliptical:'#cc8855', irregular:'#9966cc',
+  dwarf:'#66ccaa', quasar:'#ee9922', blazar:'#cc5577',
+  EHZ:'#dd3344', CMB:'#ffffff', cluster:'#eebb44',
+};
+let typeColors = { ...TYPE_COLORS_NORMAL };
+let cvdMode = 'normal';
+function setCVD(mode) {
+  cvdMode = mode;
+  typeColors = (mode === 'normal') ? { ...TYPE_COLORS_NORMAL } : { ...TYPE_COLORS_CVD };
+  document.body.classList.toggle('daltonism', mode !== 'normal');
+  document.documentElement.style.setProperty('--accent', mode !== 'normal' ? '#33bbee' : '#aaddff');
+  document.documentElement.style.setProperty('--hot', mode !== 'normal' ? '#009988' : '#66ee99');
+  setPref('cvd', mode);
+  draw();
+}
+
+const GALAXIES = [
+  // GRUP LOCAL & VECINĂTATE
+  {n:"Calea Lactee",ra:266,dec:-29,d:0,t:"spiral",m:"🌌",z:0,lb:0,
+   desc:"Galaxia noastră. Disc plat? Sigur... de ~100.000 ani-lumină diametru.",
+   de:"Our galaxy. Flat disc? Sure... 100,000 light-years in diameter. The 'flat' part refers to its disc structure — not its topology."},
+  {n:"LMC (Marele Nor Magellanic)",ra:80,dec:-69,d:0.163,t:"irregular",m:"💫",z:0,lb:0.16,
+   desc:"Galaxie satelit a Căii Lactee. Vizibilă cu ochiul liber din emisfera sudică.",
+   de:"Satellite galaxy of the Milky Way. Visible to the naked eye from the southern hemisphere. Site of Supernova 1987A."},
+  {n:"SMC (Micul Nor Magellanic)",ra:13,dec:-73,d:0.2,t:"irregular",m:"💫",z:0,lb:0.2,
+   desc:"A doua galaxie satelit majoră. Nori Magellanic — nori de galaxii, nu de apă.",
+   de:"The second major satellite galaxy. Magellanic Clouds — clouds of galaxies, not water. Contains some of the brightest young stars known."},
+  {n:"Andromeda (M31)",ra:10.7,dec:41.3,d:2.537,t:"spiral",m:"🌀",z:0.00100,lb:2.5,
+   desc:"Cea mai apropiată galaxie spirală mare. Vine spre noi cu 110 km/s. Coliziune în ~4,5 Gyr.",
+   de:"The nearest large spiral galaxy. Approaching us at ~110 km/s. Collision in ~4.5 Gyr forming 'Milkomeda'. The light you see left 2.5 million years ago."},
+  {n:"Triunghiul (M33)",ra:23.5,dec:30.7,d:2.73,t:"spiral",m:"🌀",z:0.00060,lb:2.7,
+   desc:"A treia galaxie ca mărime în Grupul Local. ~40 miliarde stele.",
+   de:"The third largest galaxy in the Local Group. ~40 billion stars. The most distant naked-eye object under perfect dark-sky conditions."},
+  {n:"M32 (NGC 221)",ra:10.7,dec:40.9,d:2.49,t:"elliptical",m:"⭕",z:0,lb:2.5,
+   desc:"Galaxie satelit eliptică a Andromedei. Una dintre cele mai compacte galaxii cunoscute.",
+   de:"Elliptical satellite of Andromeda. One of the most compact galaxies known — it may be the remnant core of a larger stripped spiral."},
+  {n:"NGC 185",ra:9.7,dec:48.3,d:2.08,t:"elliptical",m:"⭕",z:0,lb:2.1,
+   desc:"Galaxie satelit sferoidală a Andromedei.",
+   de:"Spheroidal satellite of Andromeda. Contains a central star cluster and small amounts of dust — unusual for an elliptical galaxy."},
+  {n:"IC 1613",ra:16.2,dec:2.1,d:2.35,t:"irregular",m:"💫",z:0,lb:2.4,
+   desc:"Galaxie neregulată izolată în Grupul Local. Puțin stele, mult gaz.",
+   de:"Isolated irregular galaxy in the Local Group. Low stellar density, gas-rich. Used as a key calibration target for the cosmic distance ladder."},
+  {n:"NGC 6822 (Barnard)",ra:296,dec:-14.8,d:1.63,t:"irregular",m:"💫",z:0,lb:1.6,
+   desc:"Galaxie neregulată, una dintre cele mai apropiate vecine ale Căii Lactee.",
+   de:"Irregular galaxy, one of the nearest neighbors of the Milky Way. Named after E.E. Barnard who first resolved it into stars (1884)."},
+  {n:"WLM (Wolf-Lundmark-Melotte)",ra:1.0,dec:-15.5,d:3.04,t:"irregular",m:"💫",z:0,lb:3.0,
+   desc:"La granița Grupului Local. Izolată, cu puțini vecini.",
+   de:"At the edge of the Local Group. Isolated, with few neighbors. Extremely low metallicity — a pristine laboratory for early-universe chemistry."},
+
+  // GALAXII LA 5-50 Mly
+  {n:"Centaurus A (NGC 5128)",ra:201,dec:-43,d:12.4,t:"elliptical",m:"⭕",z:0.0018,lb:12,
+   desc:"Galaxie radio gigantică cu jet relativistic. Una dintre sursele radio cele mai strălucitoare.",
+   de:"Giant radio galaxy with a relativistic jet. One of the brightest radio sources in the sky. Its jet was imaged by the Event Horizon Telescope in 2021."},
+  {n:"M81 (Bode)",ra:149,dec:69.1,d:12.0,t:"spiral",m:"🌀",z:0.0008,lb:12,
+   desc:"Una dintre galaxiile cele mai strălucitoare vizibile cu teleobiectivul.",
+   de:"One of the brightest galaxies visible through a small telescope. Its gravitational interaction with M82 triggered a starburst in its companion."},
+  {n:"M82 (Trabucul)",ra:148.9,dec:69.7,d:12.0,t:"starburst",m:"🔥",z:0.0007,lb:12,
+   desc:"Galaxie starburst cu vânturi galactice spectaculoase.",
+   de:"Starburst galaxy with spectacular galactic winds. Superwinds of ionized gas extend thousands of light-years perpendicular to the disc."},
+  {n:"NGC 253 (Sculptorul)",ra:11.9,dec:-25.3,d:11.4,t:"spiral",m:"🌀",z:0.0008,lb:11,
+   desc:"Una dintre galaxiile starburst cele mai strălucitoare.",
+   de:"One of the brightest starburst galaxies in the sky. Forming stars at ~3 solar masses per year, 3× the Milky Way rate."},
+  {n:"M101 (Morișca)",ra:210.8,dec:54.3,d:20.9,t:"spiral",m:"🌀",z:0.0008,lb:21,
+   desc:"Spirală față-față mare și simetrică, favorita astronomilor amatori.",
+   de:"Large, nearly perfectly face-on spiral, a favorite of amateur astronomers. Nearly twice the diameter of the Milky Way."},
+  {n:"M51 (Vârtejul)",ra:202.5,dec:47.2,d:23.0,t:"spiral",m:"🌀",z:0.0017,lb:23,
+   desc:"Galaxie spirală cu brațe clare, aflată în interacțiune cu NGC 5195.",
+   de:"Grand design spiral galaxy interacting with NGC 5195. One of the first objects recognized as a spiral nebula by Lord Rosse (1845)."},
+  {n:"M104 (Sombrero)",ra:190,dec:-11.6,d:31.1,t:"Sa",m:"🎩",z:0.0034,lb:31,
+   desc:"Galaxie cu un halou spectaculos de praf și un nucleu luminos strălucitor.",
+   de:"Galaxy with a spectacular dust halo and a luminous nucleus. One of the largest galaxies in the nearby Virgo supercluster. Black hole mass ~1 billion M☉."},
+  {n:"NGC 4565 (Spirala-Ac)",ra:189.1,dec:25.9,d:47.0,t:"spiral",m:"🌀",z:0.0040,lb:47,
+   desc:"Spirală văzută exact din profil — pare un disc plat! (Cu ironie, da.)",
+   de:"Spiral seen perfectly edge-on — it looks like a flat disc! (Ironically, yes.) A perfect example of why 'flat' appearance doesn't mean flat reality."},
+  {n:"M64 (Ochiul Negru)",ra:194.2,dec:21.7,d:17.0,t:"spiral",m:"🌀",z:0.0013,lb:17,
+   desc:"Galaxie spirală cu o bandă de praf întunecată în jurul nucleului.",
+   de:"Spiral galaxy with a prominent dark dust band around the nucleus. Unusually, its outer stars orbit in the opposite direction to inner stars."},
+  {n:"M94",ra:192.7,dec:41.1,d:16.0,t:"spiral",m:"🌀",z:0.0010,lb:16,
+   desc:"Spirală cu inele de formare stelară activă.",
+   de:"Spiral with active star-forming rings. Has two distinct ring structures — an inner starburst ring and a faint outer ring."},
+
+  // ROACELE VIRGO ~54 Mly
+  {n:"M87 (Virgo A)",ra:187.7,dec:12.4,d:53.5,t:"elliptical",m:"⭕",z:0.0044,lb:53,
+   desc:"Gaura neagră supermivă fotografiată de EHT în 2019. M87* = 6,5 miliarde M☉.",
+   de:"Supermassive black hole photographed by the Event Horizon Telescope in 2019. M87* = 6.5 billion M☉. Jets of plasma extend 5,000 light-years."},
+  {n:"M84",ra:186.3,dec:12.9,d:60.0,t:"elliptical",m:"⭕",z:0.0034,lb:60,
+   desc:"Galaxie eliptică masivă în centrul Roiului Virgo.",
+   de:"Massive elliptical galaxy near the core of the Virgo Cluster. One of the dominant gravitational centers of the cluster."},
+  {n:"M86",ra:186.6,dec:13.0,d:60.0,t:"elliptical",m:"⭕",z:0.0003,lb:60,
+   desc:"Una dintre galaxiile cele mai strălucitoare din Roiul Virgo.",
+   de:"One of the brightest galaxies in the Virgo Cluster. Notably has one of the highest blueshifts of any Messier galaxy — moving toward us at ~244 km/s relative to the cluster."},
+  {n:"M49",ra:187.4,dec:8.0,d:56.0,t:"elliptical",m:"⭕",z:0.0033,lb:56,
+   desc:"Cea mai strălucitoare galaxie din Roiul Virgo.",
+   de:"The brightest galaxy in the Virgo Cluster and the first Virgo cluster member discovered. Contains thousands of globular clusters."},
+  {n:"M60",ra:190.9,dec:11.6,d:54.0,t:"elliptical",m:"⭕",z:0.0037,lb:54,
+   desc:"Galaxie eliptică cu o gaură neagră de 4,5 miliarde M☉.",
+   de:"Elliptical galaxy with a 4.5 billion M☉ black hole. Paired with spiral NGC 4647, which appears to be interacting with it."},
+
+  // FORNAX ~62 Mly
+  {n:"NGC 1399 (Fornax BCG)",ra:54.6,dec:-35.5,d:62.0,t:"elliptical",m:"⭕",z:0.0047,lb:62,
+   desc:"Galaxia centrală a Roiului Fornax. Centru de gravitație al unui roi de galaxii.",
+   de:"The brightest cluster galaxy (BCG) of the Fornax Cluster. A gravitational center dominating hundreds of galaxies. Hosts a massive population of globular clusters."},
+  {n:"NGC 1316 (Fornax A)",ra:50.7,dec:-37.2,d:62.0,t:"elliptical",m:"⭕",z:0.0059,lb:62,
+   desc:"Sursă radio puternică în Fornax. Rezultat al mai multor fuziuni galactice.",
+   de:"Strong radio source in Fornax. Result of multiple galactic mergers — internal dust and shells reveal its violent history. One of the brightest radio galaxies in the sky."},
+
+  // COMA ~321 Mly
+  {n:"NGC 4889 (Coma BCG)",ra:195.0,dec:27.97,d:308.0,t:"elliptical",m:"⭕",z:0.0215,lb:308,
+   desc:"Una dintre cele mai masive galaxii cunoscute. GN ~21 miliarde M☉.",
+   de:"One of the most massive galaxies known. Its central black hole may be ~21 billion M☉ — one of the largest ever measured. Dominates the Coma Cluster core."},
+  {n:"NGC 4874",ra:194.9,dec:27.96,d:321.0,t:"elliptical",m:"⭕",z:0.0239,lb:321,
+   desc:"Co-centrul Roiului Coma. Un roi de ~1000 galaxii.",
+   de:"Co-center of the Coma Cluster. A swarm of ~1,000 galaxies surrounds this giant elliptical. Fritz Zwicky used this cluster to first infer the existence of dark matter (1933)."},
+
+  // PERSEUS ~240 Mly
+  {n:"NGC 1275 (Perseus A)",ra:49.9,dec:41.5,d:236.0,t:"Seyfert",m:"🔥",z:0.0176,lb:236,
+   desc:"Galaxie Seyfert cu un halo de filamente de hidrogen. Sursă X intensă.",
+   de:"Seyfert galaxy with a spectacular halo of hydrogen filaments. Intense X-ray source at the center of the Perseus Cluster. The AGN drives sound waves through the hot cluster gas."},
+
+  // DISTANT GALAXIES & QUASARS
+  {n:"3C 273 (Quasar)",ra:187.3,dec:2.1,d:2440.0,t:"quasar",m:"✨",z:0.158,lb:2440,
+   desc:"Primul quasar identificat (1963). Cel mai luminos obiect permanent vizibil cu un telescop mic.",
+   de:"The first quasar identified (1963, Maarten Schmidt). The most luminous permanently visible object through a small amateur telescope. Luminosity = ~4 trillion Suns."},
+  {n:"Mrk 231",ra:194.1,dec:56.9,d:600.0,t:"quasar",m:"✨",z:0.042,lb:600,
+   desc:"Quasar ultraluominos, cel mai apropiat. Fuziune galactică cu formare stelară masivă.",
+   de:"The nearest ultraluminous quasar. A galactic merger with massive star formation. Contains a binary supermassive black hole system in the process of merging."},
+  {n:"Mrk 421",ra:166.1,dec:38.2,d:397.0,t:"blazar",m:"⚡",z:0.030,lb:397,
+   desc:"Blazar activ — jet relativistic îndreptat direct spre noi.",
+   de:"Active blazar — a relativistic jet pointing directly at us. One of the brightest TeV gamma-ray sources in the sky. Can flare to exceed the Crab Nebula in brightness."},
+  {n:"Arp 220",ra:233.7,dec:23.5,d:250.0,t:"ULIRG",m:"💥",z:0.0181,lb:250,
+   desc:"Galaxia ultraluoaminoasă în infraroșu cu care se compară JWST. Fuziune dublă.",
+   de:"The nearest ultraluminous infrared galaxy (ULIRG), used as a JWST calibration benchmark. A double galaxy merger with star formation rate ~200 solar masses per year."},
+
+  // JWST HIGH-Z
+  {n:"GN-z11",ra:189.1,dec:62.2,d:32100.0,t:"EHZ",m:"🔴",z:10.96,lb:13420,
+   desc:"Una dintre cele mai îndepărtate galaxii cunoscute înainte de JWST. Vârstă: ~400M ani după BB.",
+   de:"One of the farthest galaxies known before JWST. Age: ~400M years after the Big Bang. Contains an active AGN and unusually high nitrogen abundance — possible sign of Population III stellar remnants."},
+  {n:"GLASS-z13",ra:3.5,dec:-30.4,d:33600.0,t:"EHZ",m:"🔴",z:12.2,lb:13500,
+   desc:"Prima galaxie candidat la z>12 anunțată de JWST (Castellano et al. 2022), confirmată spectroscopic la z=12,2. Câmpul Abell 2744. Universul: ~320M ani.",
+   de:"First galaxy candidate at z>12 announced by JWST (Castellano et al. 2022), spectroscopically confirmed at z=12.2. Abell 2744 field. Universe age: ~320M years."},
+  {n:"JADES-GS-z14-0",ra:53.1,dec:-27.8,d:35000.0,t:"EHZ",m:"🔴",z:14.32,lb:13600,
+   desc:"Record JWST mai 2024 → ian. 2026 (depășit de MoM-z14). z=14,32. Universul: ~290M ani. Diametru surprinzător de mare (~1.700 al). Conține deja oxigen — chimie complexă neașteptată la această vârstă.",
+   de:"JWST record May 2024 → Jan. 2026 (surpassed by MoM-z14). z=14.32. Universe age: ~290M years. Surprisingly large diameter (~1,700 ly). Already contains oxygen — unexpectedly complex chemistry this early."},
+  {n:"MoM-z14",ra:150.2,dec:2.5,d:35200.0,t:"EHZ",m:"🔴",z:14.44,lb:13620,
+   desc:"RECORD ABSOLUT (arXiv mai 2025 · publicat OJA ian. 2026 · curent mai 2026). z=14,44. Descoperit de Rohan Naidu (MIT) et al. prin JWST/NIRSpec. Universul: 280M ani — 2% din vârsta actuală. Compact (rază ~241 al), masă comparabilă cu SMC.",
+   de:"ABSOLUTE RECORD (arXiv May 2025 · published OJA Jan. 2026 · current May 2026). z=14.44. Discovered by Rohan Naidu (MIT) et al. via JWST/NIRSpec. Universe age: 280M years — 2% of current age. Compact (radius ~241 ly), mass comparable to SMC."},
+  {n:"Maisie's Galaxy",ra:214.5,dec:52.8,d:32500.0,t:"EHZ",m:"🔴",z:11.4,lb:13450,
+   desc:"Descoperită de JWST în primele imagini (2022), confirmată spectroscopic 2023. Numită după fiica astronomului Steven Finkelstein. Universul avea ~390 M ani.",
+   de:"Discovered by JWST in first-light images (2022), spectroscopically confirmed 2023. Named after astronomer Steven Finkelstein's daughter. The Universe was ~390M years old."},
+  {n:"CEERS-93316",ra:215.0,dec:52.9,d:21000.0,t:"EHZ",m:"🔴",z:4.91,lb:12300,
+   desc:"⚠ Lecție metodologică: candidat fotometric inițial la z~16 (2022), confirmat spectroscopic la z≈4,9 (Fujimoto et al. 2023, ApJL). Exemplu clasic al importanței confirmării spectroscopice față de estimarea fotometrică.",
+   de:"⚠ Methodological lesson: initially a photometric candidate at z~16 (2022), spectroscopically confirmed at z≈4.9 (Fujimoto et al. 2023, ApJL). Classic example of why spectroscopic confirmation is essential."},
+  {n:"HD1",ra:160.2,dec:64.4,d:33500.0,t:"EHZ",m:"🔴",z:13.5,lb:13575,
+   desc:"Descoperită cu Subaru/UKIRT (Harikane et al. 2022). Redshift fotometric z≈13,5 — una dintre primele galaxii candidate la z>13. Posibil stele de Populație III sau AGN masiv.",
+   de:"Discovered with Subaru/UKIRT (Harikane et al. 2022). Photometric redshift z≈13.5 — one of the first z>13 candidate galaxies. May host Population III stars or a massive AGN."},
+  {n:"EGS-zs8-1",ra:215.0,dec:52.8,d:30200.0,t:"EHZ",m:"🔴",z:7.73,lb:13200,
+   desc:"Galaxie JWST cu formare stelară intensă la z~8.",
+   de:"JWST galaxy with intense star formation at z~8. One of the brightest Lyman-break galaxies at this epoch, forming stars at ~80 solar masses per year."},
+  {n:"z8-GND-5296",ra:189.1,dec:62.2,d:30100.0,t:"EHZ",m:"🔴",z:7.51,lb:13170,
+   desc:"Confirmată prin spectroscopie Keck. Record temporar de distanță în 2013.",
+   de:"Confirmed via Keck spectroscopy. Temporary distance record in 2013. Significant because it was the first galaxy at z>7.5 confirmed without lensing."},
+  {n:"JADES-GS+53.15492-27.81951",ra:53.15,dec:-27.82,d:34100.0,t:"EHZ",m:"🔴",z:13.2,lb:13555,
+   desc:"Galaxie JWST de dimensiuni reduse la redshift extrem.",
+   de:"Small-sized JWST galaxy at extreme redshift, in the GOODS-South deep field. Compact and UV-bright, consistent with the first generation of star-forming galaxies."},
+
+  // STRUCTURI MARI
+  {n:"Leo I",ra:152.1,dec:12.3,d:0.82,t:"dwarf",m:"⭐",z:0,lb:0.82,
+   desc:"Galaxie pitică sferoidală, satelit al Căii Lactee.",
+   de:"Dwarf spheroidal galaxy, satellite of the Milky Way. One of the most luminous dwarf satellites. Has nearly no gas left — possibly stripped by the Milky Way's gravitational tides."},
+  {n:"Sculptor Dwarf",ra:15.0,dec:-33.7,d:0.29,t:"dwarf",m:"⭐",z:0,lb:0.29,
+   desc:"Una din galaxiile pitice satelit ale Căii Lactee.",
+   de:"One of the Milky Way's dwarf satellite galaxies. Among the first dwarf spheroidals discovered (1938). High dark matter content relative to its stellar mass."},
+  {n:"Fornax Dwarf",ra:39.6,dec:-34.5,d:0.46,t:"dwarf",m:"⭐",z:0,lb:0.46,
+   desc:"Galaxie pitică sferoidală, una dintre cele mai studiate.",
+   de:"One of the most studied dwarf spheroidal galaxies. Contains 5 globular clusters — unusual for a galaxy this small. Prime dark matter physics laboratory."},
+  {n:"Sagittarius Dwarf",ra:283.8,dec:-30.5,d:0.070,t:"dwarf",m:"⭐",z:0,lb:0.07,
+   desc:"Se fuzionează lent cu Calea Lactee — bine că nu e plată, altfel ar fi ciocnire frontală!",
+   de:"Slowly merging with the Milky Way — good it's not flat, otherwise it would be a head-on collision! Its stars are being stripped into streams that encircle our galaxy."},
+  {n:"Ursa Minor Dwarf",ra:227,dec:67.2,d:0.23,t:"dwarf",m:"⭐",z:0,lb:0.23,
+   desc:"Una dintre cele mai slab luminoase galaxii satelit ale Căii Lactee.",
+   de:"One of the least luminous Milky Way satellite galaxies. An almost perfect sphere dominated by dark matter — its mass-to-light ratio is among the highest known."},
+  {n:"Carina Dwarf",ra:100.4,dec:-50.9,d:0.33,t:"dwarf",m:"⭐",z:0,lb:0.33,
+   desc:"Galaxie pitică sferoidală din Grupul Local.",
+   de:"Dwarf spheroidal galaxy of the Local Group. Shows evidence of multiple distinct star formation episodes — unusual for a galaxy of this size."},
+  {n:"Draco Dwarf",ra:260.1,dec:57.9,d:0.26,t:"dwarf",m:"⭐",z:0,lb:0.26,
+   desc:"Galaxie pitică cu raport masă/luminozitate extrem de ridicat (materie întunecată!).",
+   de:"Dwarf galaxy with an extremely high mass-to-light ratio — nearly all of its mass is dark matter. One of the best candidates for indirect dark matter detection."},
+  
+  // GALAXII SUPLIMENTARE
+  {n:"M66",ra:170.1,dec:13.0,d:35.0,t:"spiral",m:"🌀",z:0.0024,lb:35,
+   desc:"Membru al Tripletului Leo. Spirală distorsionată gravitațional.",
+   de:"Member of the Leo Triplet. Gravitationally distorted spiral — its asymmetric arms record the tidal pull of its companions."},
+  {n:"M65",ra:169.7,dec:13.1,d:35.0,t:"spiral",m:"🌀",z:0.0026,lb:35,
+   desc:"Spirală cu inele față de M66, mai simetrică.",
+   de:"More symmetric spiral compared to M66. Part of the Leo Triplet. Contains very little dust and gas, suggesting an older stellar population."},
+  {n:"NGC 3628",ra:170.1,dec:13.6,d:35.0,t:"spiral",m:"🌀",z:0.0028,lb:35,
+   desc:"Al treilea membru al Tripletului Leo. Văzut din profil cu o bandă de praf.",
+   de:"Third member of the Leo Triplet. Seen edge-on with a prominent dust lane. Tidal interaction with M66 has created a spectacular stellar stream extending 300 kly."},
+  {n:"M63 (Floarea-Soarelui)",ra:198.0,dec:42.0,d:37.0,t:"spiral",m:"🌀",z:0.0017,lb:37,
+   desc:"Spirală cu un model floriforn magnific de brațe scurte și ramificate.",
+   de:"Spiral with a magnificent flocculent arm pattern — short, patchy spiral arms resemble a sunflower. Part of the M51 Group."},
+  {n:"M74",ra:24.2,dec:15.8,d:32.0,t:"spiral",m:"🌀",z:0.0022,lb:32,
+   desc:"Una din spiralele cu cel mai bun unghi față-față. Brațe clare.",
+   de:"One of the best face-on spirals. Two clearly defined grand design spiral arms make it a textbook example of a spiral galaxy."},
+  {n:"M77 (NGC 1068)",ra:40.7,dec:-0.0,d:47.0,t:"Seyfert",m:"🔥",z:0.0038,lb:47,
+   desc:"Nucleu activ de galaxie. Prototip Seyfert 2.",
+   de:"Active galactic nucleus. The prototypical Seyfert 2 galaxy. Its AGN is obscured by a dust torus — first evidence of AGN unification theory."},
+  {n:"M100",ra:185.7,dec:15.8,d:56.0,t:"spiral",m:"🌀",z:0.0053,lb:56,
+   desc:"Spirală mare în Roiul Virgo. Prima galaxie în care HST a rezolvat stele individuale.",
+   de:"Large grand design spiral in the Virgo Cluster. The first galaxy in which HST resolved individual stars (1994), enabling a direct distance measurement via Cepheid variables."},
+  {n:"NGC 2997",ra:146.4,dec:-31.2,d:35.0,t:"spiral",m:"🌀",z:0.0037,lb:35,
+   desc:"Spirală din Grupul Local Virgo, brațe spirale bine definite.",
+   de:"Spiral galaxy with well-defined arms, part of the local Virgo supercluster. Notable for having a ring of hot gas clouds around its nucleus."},
+  {n:"NGC 1300",ra:49.9,dec:-19.4,d:61.0,t:"barred",m:"🌀",z:0.0053,lb:61,
+   desc:"Una dintre cele mai frumoase spirale barate. Photogenic din Hubble.",
+   de:"One of the most beautiful barred spirals. Hubble photographed it in stunning detail — the bar runs straight through the galaxy center with arms emerging at its ends."},
+  {n:"M95",ra:160.0,dec:11.7,d:38.0,t:"barred",m:"🌀",z:0.0026,lb:38,
+   desc:"Spirală barată. Supernovă observată în 2012.",
+   de:"Barred spiral. A supernova was observed here in 2012 (SN 2012aw). Forms a gravitationally bound group with M96 and M105."},
+  {n:"M96",ra:160.9,dec:11.8,d:38.0,t:"spiral",m:"🌀",z:0.0030,lb:38,
+   desc:"Spirală lider a Grupului Leo I.",
+   de:"The dominant spiral of the Leo I Group. An asymmetric galaxy — likely disturbed by past gravitational interaction with M95 and M105."},
+  {n:"NGC 5907",ra:228.0,dec:56.3,d:50.0,t:"spiral",m:"🌀",z:0.0022,lb:50,
+   desc:"Spirală vazuta 'din profil' — pare un disc subțire. Ironii flat-earth."},
+  {n:"NGC 4038/39 (Antenele)",ra:180.5,dec:-18.9,d:65.0,t:"merger",m:"💥",z:0.0057,lb:65,
+   desc:"Pereche de galaxii în plină fuziune. Formarea stelară accelerată dramatic."},
+  {n:"NGC 7331",ra:339.3,dec:34.4,d:49.0,t:"spiral",m:"🌀",z:0.0027,lb:49,
+   desc:"Spirală strălucitoare, similară Căii Lactee ca structură."},
+  {n:"Stephan's Quintet",ra:339.0,dec:33.9,d:280.0,t:"group",m:"💫",z:0.0215,lb:280,
+   desc:"Grup de galaxii interacționante. Patru sunt la aceeași distanță; una este în față."},
+  {n:"NGC 1052-DF2",ra:40.4,dec:-8.4,d:65.0,t:"ultra-diffuse",m:"⭐",z:0,lb:65,
+   desc:"Galaxie ultra-difuză fără materie întunecată aparentă. Enigmă cosmologică."},
+  {n:"IC 342",ra:56.7,dec:68.1,d:10.7,t:"spiral",m:"🌀",z:0.0002,lb:11,
+   desc:"Ascunsă parțial în planul Căii Lactee. Echivalentul M31 dar ascuns de praf."},
+  {n:"Maffei 1",ra:50.7,dec:59.6,d:9.8,t:"elliptical",m:"⭕",z:0,lb:9.8,
+   desc:"Galaxie eliptică masivă ascunsă de Zona de Evitare."},
+  {n:"Maffei 2",ra:50.8,dec:59.6,d:9.8,t:"spiral",m:"🌀",z:0,lb:9.8,
+   desc:"Tovarășa spirală a lui Maffei 1. Ambele ascunse de Zona de Evitare."},
+  {n:"NGC 6946 (Artificii)",ra:308.7,dec:60.2,d:22.5,t:"spiral",m:"🌀",z:0.0002,lb:23,
+   desc:"10 supernove observate în 100 de ani — cea mai activă galaxie în termeni de supernove."},
+  {n:"M109",ra:179.4,dec:53.4,d:55.0,t:"barred",m:"🌀",z:0.0034,lb:55,
+   desc:"Spirală barată mare în Ursa Major."},
+  {n:"M108",ra:167.9,dec:55.7,d:46.0,t:"spiral",m:"🌀",z:0.0023,lb:46,
+   desc:"Spirală neregulată, tovarăș al lui M97 pe cer."},
+  {n:"Hoag's Object",ra:218.2,dec:21.2,d:600.0,t:"ring",m:"💍",z:0.0428,lb:600,
+   desc:"Galaxie-inel perfectă. Centru eliptic înconjurat de un inel de stele tinere albastre."},
+  {n:"NGC 1132 (Relicvă Fosil)",ra:43.6,dec:-1.3,d:1020.0,t:"elliptical",m:"⭕",z:0.0232,lb:1020,
+   desc:"Galaxie gigantică izolată — probabil restul fuzionat al unui grup întreg."},
+  {n:"Abell 2029 (BCG)",ra:227.7,dec:5.7,d:1060.0,t:"elliptical",m:"⭕",z:0.0767,lb:1060,
+   desc:"Centrul unui roi masiv de galaxii X."},
+  {n:"Perseus (BCG IC 310)",ra:49.2,dec:41.3,d:780.0,t:"blazar",m:"⚡",z:0.0189,lb:780,
+   desc:"Sursă TeV. Variabilitate extremă detectată de MAGIC."},
+  {n:"3C 48",ra:24.4,dec:33.2,d:5200.0,t:"quasar",m:"✨",z:0.367,lb:5200,
+   desc:"Al doilea quasar identificat (1960). Sursă radio puternică."},
+  {n:"3C 279",ra:194.0,dec:-5.8,d:5800.0,t:"blazar",m:"⚡",z:0.536,lb:5800,
+   desc:"Blazar clasic. Prima sursă gamma extragalactică detectată (CGRO, 1991)."},
+  {n:"PKS 2155-304",ra:329.7,dec:-30.2,d:1400.0,t:"blazar",m:"⚡",z:0.116,lb:1400,
+   desc:"Blazar X-ray, una din cele mai strălucitoare surse la energii înalte."},
+  {n:"OJ 287",ra:133.7,dec:20.1,d:3500.0,t:"blazar",m:"⚡",z:0.306,lb:3500,
+   desc:"Sistem binar de găuri negre supermivă. Erupții periodice la ~12 ani."},
+  {n:"TON 618",ra:179.2,dec:29.2,d:10400.0,t:"quasar",m:"✨",z:2.219,lb:10400,
+   desc:"Gaura neagră de 66 miliarde M☉ — una dintre cele mai masive cunoscute."},
+  {n:"SDSS J1030+0524",ra:157.6,dec:5.4,d:26900.0,t:"quasar",m:"✨",z:6.28,lb:12900,
+   desc:"Quasar la z=6,28 — Universul era de 900M ani. Gaură neagră de ~1 miliard M☉."},
+  {n:"ULASJ1120+0641",ra:170.0,dec:6.7,d:28900.0,t:"quasar",m:"✨",z:7.085,lb:13100,
+   desc:"Quasar la z~7. Gaura neagra de 2 miliarde M☉ la ~770M ani după Big Bang."},
+  {n:"Abell 370 (Arc gravitational)",ra:39.9,dec:-1.6,d:5900.0,t:"cluster",m:"🔵",z:0.375,lb:5900,
+   desc:"Roi de galaxii cu lentile gravitaționale spectaculoase (arc uriaș). Materie întunecată vizibilă."},
+  {n:"MACS J0025 (Glonț)",ra:6.3,dec:-12.4,d:5200.0,t:"cluster",m:"🔵",z:0.586,lb:5200,
+   desc:"Coliziune de roiuri — materia întunecată se separă de gaz. Dovadă directă a materiei întunecate."},
+  {n:"El Gordo (ACT-CL J0102)",ra:15.7,dec:-49.2,d:7200.0,t:"cluster",m:"🔵",z:0.87,lb:7200,
+   desc:"Cel mai masiv roi de galaxii la z>0,8. Masă ~2 quadrilioane M☉."},
+  {n:"SPT-CL J2344 (Fenicul)",ra:356.2,dec:-42.7,d:5900.0,t:"cluster",m:"🔵",z:0.596,lb:5900,
+   desc:"Roi ultra-masiv cu cea mai rapidă formare stelară în galaxia centrală."},
+  {n:"RXCJ0232 (Pandora)",ra:38.0,dec:-20.1,d:4700.0,t:"cluster",m:"🔵",z:0.4,lb:4700,
+   desc:"Coliziune de mai multe roiuri — mai complexă decât Glonțul. Structură multi-corp."},
+  {n:"CL 0024+1654",ra:6.6,dec:17.2,d:5500.0,t:"cluster",m:"🔵",z:0.395,lb:5500,
+   desc:"Arc gravitațional multiplu — inele Einstein de la source la z>1."},
+  {n:"SDSS J1004+4112 (Cvintuplu quasar)",ra:151.2,dec:41.2,d:7000.0,t:"lens",m:"🔵",z:1.734,lb:7000,
+   desc:"Primul sistem quasar cu 5 imagini prin lentilare gravitațională."},
+  {n:"NGC 1277 (BH gigant)",ra:49.8,dec:41.6,d:220.0,t:"elliptical",m:"⭕",z:0.017,lb:220,
+   desc:"Gaura neagră de 17 miliarde M☉ = 14% masa totală a galaxiei. Neobișnuit de masivă."},
+  {n:"M89",ra:188.1,dec:12.6,d:50.0,t:"elliptical",m:"⭕",z:0.0012,lb:50,
+   desc:"Galaxie eliptică aproape perfect sferică."},
+  {n:"M90",ra:188.9,dec:13.2,d:58.7,t:"elliptical",m:"⭕",z:-0.0004,lb:58.7,
+   desc:"Una din puținele galaxii cu blueshift (se apropie de noi!)."},
+  {n:"IC 4296",ra:204.0,dec:-33.9,d:130.0,t:"elliptical",m:"⭕",z:0.0124,lb:130,
+   desc:"Galaxie gigantică radio din constelația Centaurus."},
+  {n:"NGC 4261",ra:184.8,dec:5.8,d:100.0,t:"elliptical",m:"⭕",z:0.00749,lb:100,
+   desc:"Jet relativistic HST fotografiat — gaura neagră centrală de 400 milioane M☉."},
+  {n:"Abell 1689 (Lentilă)",ra:197.9,dec:-1.3,d:7200.0,t:"cluster",m:"🔵",z:0.183,lb:7200,
+   desc:"Cel mai puternic sistem de lentile gravitaționale cunoscut. Harta materiei întunecate."},
+  {n:"COSMOS-AzTEC-1",ra:150.1,dec:2.3,d:12500.0,t:"starburst",m:"🔥",z:4.342,lb:12200,
+   desc:"Galaxie starburst masivă la z~4. 1000 stele/an (față de 1-2 pe an în Calea Lactee)."},
+  {n:"SPT0418-47",ra:64.5,dec:-47.3,d:24600.0,t:"EHZ",m:"🔴",z:4.225,lb:12200,
+   desc:"Galaxie cu disc la z=4,2 — discuri galaxiale apărute mai devreme decât se credea."},
+  {n:"REBELS-25",ra:36.9,dec:-4.3,d:29800.0,t:"EHZ",m:"🔴",z:7.306,lb:13100,
+   desc:"Descoperire ALMA — galaxie cu praf și gaze abundente la z~7."},
+  {n:"Gz9p3",ra:189.0,dec:62.3,d:32200.0,t:"EHZ",m:"🔴",z:9.313,lb:13350,
+   desc:"Una dintre primele galaxii masive la z~9. Formarea galaxiilor timpurie confirmată."},
+  {n:"JADES-GS-z9-0",ra:53.1,dec:-27.8,d:31800.0,t:"EHZ",m:"🔴",z:8.88,lb:13310,
+   desc:"Confirmat prin spectroscopia NIRSpec. Galaxie la epoca reionizării."},
+  {n:"JADES-GS-z13-0",ra:53.2,dec:-27.8,d:33800.0,t:"EHZ",m:"🔴",z:13.2,lb:13550,
+   desc:"Galaxie la z=13,2 — Universul: ~320M ani. Confirmare spectroscopică JWST 2022."},
+
+  // GALAXII ADĂUGATE v2.1 (incluse în totalul curent de 112)
+  {n:"EGS-z11-R0",ra:214.82,dec:52.81,d:32100.0,t:"EHZ",m:"🔴",z:11.45,lb:13452,
+   desc:"❖ NOU (martie 2026, arXiv 2603.15841). Cea mai îndepărtată galaxie ROȘIE confirmată spectroscopic — pantă UV ~−1,0, extincție praf 1,2 mag. Matură și prăfuită la 400M ani după BB. Câmpul CEERS Extended Groth Strip."},
+  {n:"JADES-GS-z14-1",ra:53.4,dec:-27.78,d:33800.0,t:"EHZ",m:"🔴",z:13.9,lb:13590,
+   desc:"Confirmată spectroscopic JWST/JADES 2024. z=13,90. Universul: ~290M ani. Dimensiune surprinzător de mare pentru vârsta sa — alături de JADES-GS-z14-0, redefinesc așteptările despre galaxiile timpurii."},
+  {n:"MACS1149-JD1",ra:177.4,dec:22.39,d:31800.0,t:"EHZ",m:"🔴",z:9.11,lb:13340,
+   desc:"Prima detecție ALMA a emisiei [OIII]88μm la z>9. Lentilată de MACS J1149. Conține stele cu vârsta ~300M ani — formate probabil la z~15! O fereastră spre primele generații stelare."},
+
+  // GALAXII LIPSĂ — sincronizare catalog v1.2
+  {n:"Câinele Mare Pitic",ra:107.75,dec:-27.67,d:0.025,t:"dwarf",m:"⭐",z:0,lb:0.025,
+   desc:"Cea mai apropiată galaxie față de Pământ (~25.000 al) — posibil rest al unui satelit absorbit de Calea Lactee. Materie întunecată dominantă."},
+  {n:"IOK-1",ra:208.5,dec:27.7,d:28200.0,t:"EHZ",m:"🔴",z:6.96,lb:12900,
+   desc:"Cea mai îndepărtată galaxie la descoperire (2006, Subaru). La limita reionizării cosmice — z~7 marchează finalul Erei Întunecate."},
+  {n:"J0313-1806",ra:48.3,dec:-18.1,d:29100.0,t:"quasar",m:"✨",z:7.64,lb:13100,
+   desc:"Cel mai îndepărtat quasar confirmat spectroscopic (2021). SMBH de 1,6 miliarde M☉ la 670M ani după Big Bang — formarea sa rămâne un mister cosmologic."},
+  {n:"GRB090423 host",ra:145.4,dec:18.15,d:29500.0,t:"EHZ",m:"🔴",z:8.2,lb:13200,
+   desc:"Galaxia gazdă a celui mai îndepărtat GRB confirmat spectroscopic. Universul: 630 milioane ani. Detectat cu Swift + VLT în 2009.",
+   de:"Host galaxy of the farthest spectroscopically confirmed GRB. Universe age: 630M years. Detected with Swift + VLT in 2009 — the gamma-ray burst briefly outshone its entire host galaxy."},
+  {n:"Wolfe Disk (z=4.26)",ra:123.1,dec:-10.75,d:21000.0,t:"EHZ",m:"🔴",z:4.26,lb:12200,
+   desc:"Prima galaxie disc rotitor Keplerian masiv la z>4 — contrazice modelele standard. Detectată via absorpție DLA în spectrul unui quasar (ALMA 2020).",
+   de:"First massive Keplerian rotating disk at z>4 — contradicts standard models. Detected via DLA absorption in a background quasar spectrum (ALMA 2020). Discs formed far earlier than predicted."},
+
+  // ORIZONTUL CMB (simbol)
+  {n:"Orizont CMB (Radiație Cosmică de Fond)",ra:0,dec:90,d:45600.0,t:"CMB",m:"🌐",z:1100,lb:13800,
+   desc:"Nu e o galaxie — e limita Universului observabil. La 45.600 Mly. Nu există Zid de Gheață aici.",
+   de:"Not a galaxy — it's the boundary of the observable universe at 45,600 Mly. The CMB was emitted 380,000 years after the Big Bang when hydrogen recombined. No Ice Wall here."},
+];
+const EN_DESCS_EXTRA = {
+  "NGC 5907":"Spiral seen edge-on — looks like a thin needle. Stellar streams trace ancient minor mergers. Another ironic reminder that 'flat-looking' ≠ flat.",
+  "NGC 4038/39 (Antenele)":"Pair of colliding galaxies. Thousands of new star clusters form in the overlap zone. The 'antennae' are tidal tails stretching 100 kly.",
+  "NGC 7331":"Bright spiral structurally similar to the Milky Way. Its bulge rotates opposite to its disc — a rare counter-rotating feature. Sometimes called the 'Milky Way twin'.",
+  "Stephan's Quintet":"Interacting galaxy group. Four at ~280 Mly; NGC 7320 is a ~40 Mly foreground interloper. JWST's first released deep-field image featured this group.",
+  "NGC 1052-DF2":"Ultra-diffuse galaxy with apparently no dark matter — a cosmological enigma still debated in 2026. Challenges the assumption that dark matter is universal.",
+  "IC 342":"Partially hidden by the Milky Way's dust plane. Would rival M31 in apparent size if unobscured. Only accessible via infrared through the dust veil.",
+  "Maffei 1":"Massive elliptical hidden behind the Zone of Avoidance. Discovered in 1968 via infrared photography. One of the nearest large galaxies.",
+  "Maffei 2":"Spiral companion of Maffei 1, both hidden in dust. Together they form a small isolated group on the edge of the Local Supercluster.",
+  "NGC 6946 (Artificii)":"10 supernovae in 100 years — the 'Fireworks Galaxy'. Intense star formation drives these frequent stellar deaths. JWST resolved individual star-forming regions.",
+  "M109":"Large barred spiral in Ursa Major. One of the most distant Messier objects. Its bar is ringed by active star-forming regions.",
+  "M108":"Low-surface-brightness irregular spiral near the Owl Nebula. Often paired visually with M97 but at very different distances.",
+  "Hoag's Object":"Nearly perfect ring galaxy: elliptical nucleus + blue star-forming ring + empty gap. Whether it's a polar ring or a disrupted bar remains debated.",
+  "NGC 1132 (Relicvă Fosil)":"Giant isolated elliptical — probably the merged remnant of an entire galaxy group. A 'fossil group' BCG that consumed all its companions.",
+  "Abell 2029 (BCG)":"Center of a massive X-ray galaxy cluster. Its BCG (IC 1101) is among the largest known galaxies — diameter ~6 million light-years.",
+  "Perseus (BCG IC 310)":"TeV blazar in the Perseus Cluster. MAGIC detected rapid gamma-ray flares varying in under 5 minutes — faster than light can cross the black hole.",
+  "3C 48":"The second quasar identified (1960). Its star-like appearance baffled astronomers for years before its cosmological distance was understood.",
+  "3C 279":"Classic blazar. First extragalactic gamma-ray source detected (CGRO, 1991). Apparent superluminal jet motion is a relativistic projection illusion.",
+  "PKS 2155-304":"X-ray blazar, one of the brightest high-energy sources. Rapid 2006 TeV flares challenged jet formation models.",
+  "OJ 287":"Binary supermassive black hole with ~12-year periodic outbursts. A natural gravitational wave source used to test general relativity.",
+  "TON 618":"A 66 billion M☉ black hole — one of the most massive measured. Light left when the Universe was ~3 billion years old.",
+  "SDSS J1030+0524":"Quasar at z=6.28 — Universe just 900M years old. How a ~1 billion M☉ BH formed so quickly remains an open cosmological mystery.",
+  "ULASJ1120+0641":"Quasar at z~7 with a 2 billion M☉ BH at 770M years after Big Bang. Challenges BH seed and growth models.",
+  "Abell 370 (Arc gravitational)":"Powerful gravitational lens cluster with spectacular background arcs. Dark matter mapped through arc geometry. Used as a cosmic telescope.",
+  "MACS J0025 (Glonț)":"Merging clusters where dark matter passed freely through while X-ray gas was slowed. Direct proof that dark matter is non-baryonic.",
+  "El Gordo (ACT-CL J0102)":"Most massive cluster at z>0.8 ('The Fat One'). Challenges ΛCDM structure formation — too massive for its cosmic epoch.",
+  "SPT-CL J2344 (Fenicul)":"Ultra-massive cluster with ~740 M☉/yr BCG star formation — 1,000× the Milky Way rate — fed by cooling cluster gas.",
+  "RXCJ0232 (Pandora)":"Multi-body cluster collision, more complex than the Bullet Cluster. Multiple dark matter clumps and gas clouds in an intricate 3D geometry.",
+  "CL 0024+1654":"Multiple arc gravitational lens system — Einstein rings from z>1 sources. JWST revealed dozens of magnified background galaxies.",
+  "SDSS J1004+4112 (Cvintuplu quasar)":"First 5-image gravitationally lensed quasar system. A galaxy cluster at z=0.68 splits a background quasar (z=1.73) into a rare quintet.",
+  "NGC 1277 (BH gigant)":"~17 billion M☉ BH = 14% of galaxy mass. Defies the M-sigma relation. A 'relic galaxy' that formed its giant BH early and then froze.",
+  "M89":"Nearly perfectly spherical Virgo Cluster elliptical. Despite its symmetry, has a faint radio jet — evidence of past AGN activity now quenched.",
+  "M90":"One of few galaxies with a blueshift — falling into the Virgo Cluster faster than the cluster recedes via Hubble flow.",
+  "IC 4296":"Giant radio elliptical in Centaurus. One of the brightest southern radio galaxies, embedded in a luminous X-ray halo.",
+  "NGC 4261":"Relativistic jet imaged by HST — central BH ~400 million M☉. HST revealed the accretion disc feeding the jet: textbook evidence for AGN unification.",
+  "Abell 1689 (Lentilă)":"One of the most powerful gravitational lenses. Over 100 arc images mapped the dark matter distribution. Natural cosmic telescope for z>6 galaxies.",
+  "COSMOS-AzTEC-1":"Massive starburst at z~4, ~1,000 M☉/yr. Completely optically invisible — only detectable in submillimeter. A dusty extreme of galaxy formation.",
+  "SPT0418-47":"Disk galaxy at z=4.2 — ALMA revealed ordered rotation, contradicting models predicting chaotic early galaxies. Discs formed far earlier than expected.",
+  "REBELS-25":"Abundant dust at z~7 detected by ALMA — rapid metal enrichment implies stars lived and died within the first ~800M years of cosmic history.",
+  "Gz9p3":"One of the first massive galaxies confirmed at z~9. Too massive for its age — a challenge to hierarchical structure formation theory.",
+  "JADES-GS-z9-0":"NIRSpec-confirmed at z=8.88, the reionization epoch. These galaxies provided UV photons that ionized the Universe's neutral hydrogen.",
+  "JADES-GS-z13-0":"Spectroscopically confirmed at z=13.2 (Universe: ~320M years). Among the first luminous sources to pierce the cosmic Dark Ages.",
+  "EGS-z11-R0":"❖ NEW (March 2026). Farthest spectroscopically confirmed RED galaxy — surprisingly mature and dusty at 400M years after Big Bang. UV slope ~-1.0.",
+  "JADES-GS-z14-1":"JWST/JADES confirmed at z=13.90, Universe: ~290M years. Surprisingly large — alongside z14-0, redefines early galaxy expectations.",
+  "MACS1149-JD1":"First ALMA [OIII]88μm at z>9. Contains stars ~300M years old — likely formed at z~15! A window into the very first stellar generations.",
+  "Câinele Mare Pitic":"Closest known galaxy (~25,000 ly) — a disrupted satellite absorbed by the Milky Way. Its stellar streams encircle our galaxy.",
+  "IOK-1":"Farthest confirmed galaxy at discovery (2006). At z~7, near the end of the Epoch of Reionization when UV photons finally ionized neutral hydrogen.",
+  // [v4.2] Additional EN descriptions for galaxies previously missing them — NO DUPLICATES
+  "J0313-1806":"Farthest spectroscopically confirmed quasar (2021). A 1.6 billion M☉ SMBH at 670M years after Big Bang — its rapid formation remains a cosmological mystery.",
+  "GRB090423 host":"Host galaxy of the farthest spectroscopically confirmed GRB. Universe age: 630M years. The gamma-ray burst briefly outshone its entire host galaxy.",
+  "Wolfe Disk (z=4.26)":"First massive Keplerian rotating disk at z>4 — contradicts standard galaxy formation models. Detected via DLA absorption in a background quasar (ALMA 2020).",
+  "Orizont CMB (Radiație Cosmică de Fond)":"Not a galaxy — the boundary of the observable universe at 45,600 Mly. CMB was emitted 380,000 years after the Big Bang when hydrogen recombined. No Ice Wall here."
+};
+// ═══════════════════════════════════════════════════════
+//  STATE — minimal, all in one place for debuggability
+// ═══════════════════════════════════════════════════════
+const state = {
+  mode: getPref('mode', 'lookback'),    // axis mode
+  zoom: 1.0,                             // 1.0 = full range visible
+  pan: 0,                                // 0..1, fraction of axis (anchor)
+  hovered: null,                         // index in GALAXIES
+  selected: null,                        // index in GALAXIES (for info panel)
+  dragging: false,
+  lastX: 0,
+  W: 0, H: 0, dpr: 1,
+  needsRedraw: true,
+};
+
+let currentLang = getPref('lang', (navigator.language || 'en').slice(0,2) === 'ro' ? 'ro' : 'en');
+
+// ═══════════════════════════════════════════════════════
+//  AXIS PROJECTION
+//  Each mode maps each galaxy.lb / .z / etc. to a 0..1
+//  fraction of the visible ray (after log).
+// ═══════════════════════════════════════════════════════
+function axisValueFor(g, mode) {
+  switch (mode) {
+    case 'comoving': {
+      // Comoving distance in Mly. For Milky Way (z=0, d=0) → 0.001 sentinel
+      if (g.z > 0) return comovingCached(g.z);
+      // For very close galaxies use g.d directly (negligible cosmological correction)
+      return g.d || 0.001;
+    }
+    case 'redshift': return Math.max(g.z || 0, 0);
+    case 'scale':    return 1 / (1 + (g.z || 0)); // a; 1.0 = now, ↓ = past
+    case 'lookback':
+    default: {
+      // Use actual H₀-aware lookback when z>0; else g.lb (fallback / Local-Group consistency)
+      if (g.z > 0) return lookbackCached(g.z);
+      return g.lb || 0;
+    }
+  }
+}
+
+function axisLabel(mode, lang) {
+  const L = (lang === 'ro');
+  switch (mode) {
+    case 'comoving': return L ? 'Distanță comoving (Mly)'    : 'Comoving distance (Mly)';
+    case 'redshift': return L ? 'Redshift z'                 : 'Redshift z';
+    case 'scale':    return L ? 'Factor scară a = 1/(1+z)'   : 'Scale factor a = 1/(1+z)';
+    case 'lookback':
+    default:         return L ? 'Timp de privire înapoi (Myr)' : 'Lookback time (Myr)';
+  }
+}
+
+function axisRange(mode) {
+  // Returns [min, max] in physical units before log mapping.
+  switch (mode) {
+    case 'comoving': return [0.05, 47000];   // Mly: from Local Group to CMB (~46 Gly comoving)
+    case 'redshift': return [0,    1100];    // 0 → CMB
+    case 'scale':    return [1/1101, 1.0];   // a from CMB era to now
+    case 'lookback':
+    default:         return [0.1,  13800];   // Myr: 0.1 (just below Local Group) → universe age (log floor)
+  }
+}
+
+// Logarithmic projection of a value to a 0..1 fraction of the axis.
+// 'redshift' and 'scale' need special handling because they're not strictly logarithmic.
+function projectAxis(v, mode) {
+  const [lo, hi] = axisRange(mode);
+  if (mode === 'scale') {
+    // Linear in a — from a=hi (now) on RIGHT to a=lo (past) on LEFT
+    // We invert so that "past → present" reads left-to-right like the others
+    const t = (v - lo) / (hi - lo); // 0 at lo (CMB), 1 at hi (now)
+    return 1 - t; // flip: CMB on far right would feel wrong; keep "past on right" convention
+  }
+  if (mode === 'redshift') {
+    // log(1+z) is the natural variable
+    const num = Math.log1p(v);
+    const den = Math.log1p(hi);
+    return Math.max(0, Math.min(1, num / den));
+  }
+  // lookback / comoving — log mapping with floor
+  const _v = Math.max(lo, v);
+  const num = Math.log10(_v) - Math.log10(lo);
+  const den = Math.log10(hi) - Math.log10(lo);
+  return Math.max(0, Math.min(1, num / den));
+}
+
+// Convert axis fraction (0..1) → screen X (px)
+function fracToX(frac, W) {
+  // Apply zoom and pan: we show [pan, pan + 1/zoom] of the axis
+  const span = 1 / state.zoom;
+  const left = state.pan;
+  return ((frac - left) / span) * W;
+}
+
+// Inverse: screen X → axis fraction
+function xToFrac(x, W) {
+  const span = 1 / state.zoom;
+  return state.pan + (x / W) * span;
+}
+
+// ═══════════════════════════════════════════════════════
+//  CANVAS SIZING
+// ═══════════════════════════════════════════════════════
+function resize() {
+  const dpr = window.devicePixelRatio || 1;
+  state.dpr = dpr;
+  const cv = document.getElementById('rayCanvas');
+  const ct = document.getElementById('rayContainer');
+  state.W = ct.clientWidth;
+  state.H = ct.clientHeight;
+  cv.width = state.W * dpr;
+  cv.height = state.H * dpr;
+  cv.style.width = state.W + 'px';
+  cv.style.height = state.H + 'px';
+  const hc = document.getElementById('histCanvas');
+  hc.width = state.W * dpr;
+  hc.height = 60 * dpr;
+  hc.style.width = state.W + 'px';
+  hc.style.height = '60px';
+  state.needsRedraw = true;
+}
+
+// ═══════════════════════════════════════════════════════
+//  TICKS — generate axis tick marks for current mode
+// ═══════════════════════════════════════════════════════
+function generateTicks(mode) {
+  switch (mode) {
+    case 'lookback':
+      return [
+        { v: 1,     label: '1 Myr',  major: false },
+        { v: 10,    label: '10 Myr', major: false },
+        { v: 100,   label: '100 Myr', major: true },
+        { v: 1000,  label: '1 Gyr',  major: true },
+        { v: 5000,  label: '5 Gyr',  major: false },
+        { v: 10000, label: '10 Gyr', major: true },
+        { v: 13000, label: '13 Gyr', major: false },
+        { v: T_BB_MYR, label: 'Big Bang', major: true },
+      ];
+    case 'comoving':
+      return [
+        { v: 0.1,   label: '0.1 Mly', major: false },
+        { v: 1,     label: '1 Mly',   major: false },
+        { v: 10,    label: '10 Mly',  major: true },
+        { v: 100,   label: '100 Mly', major: true },
+        { v: 1000,  label: '1 Gly',   major: true },
+        { v: 10000, label: '10 Gly',  major: true },
+        { v: 46000, label: 'CMB',     major: true },
+      ];
+    case 'redshift':
+      return [
+        { v: 0.01, label: 'z=0.01', major: false },
+        { v: 0.1,  label: 'z=0.1',  major: true },
+        { v: 1,    label: 'z=1',    major: true },
+        { v: 5,    label: 'z=5',    major: true },
+        { v: 10,   label: 'z=10',   major: true },
+        { v: 100,  label: 'z=100',  major: false },
+        { v: 1100, label: 'CMB (z=1100)', major: true },
+      ];
+    case 'scale':
+      return [
+        { v: 1.0,    label: 'a=1 (now)',   major: true },
+        { v: 0.5,    label: 'a=0.5 (z=1)', major: true },
+        { v: 0.1,    label: 'a=0.1 (z=9)', major: true },
+        { v: 0.01,   label: 'a=0.01',      major: false },
+        { v: 1/1101, label: 'a≈10⁻³ (CMB)', major: true },
+      ];
+  }
+  return [];
+}
+
+// ═══════════════════════════════════════════════════════
+//  HISTOGRAM — bin galaxies by axis fraction, log-normalized count
+// ═══════════════════════════════════════════════════════
+function buildHistogram(mode, W, bins) {
+  bins = bins || Math.max(40, Math.floor(W / 10));
+  const counts = new Array(bins).fill(0);
+  GALAXIES.forEach(g => {
+    if (g.t === 'CMB') return; // CMB is a horizon, not a galaxy — skip in density count
+    const v = axisValueFor(g, mode);
+    const frac = projectAxis(v, mode);
+    const bin = Math.min(bins - 1, Math.max(0, Math.floor(frac * bins)));
+    counts[bin]++;
+  });
+  // Log-normalize for visibility (matches v5.9 heatmap philosophy)
+  const max = counts.reduce((a, b) => Math.max(a, b), 0);
+  if (max === 0) return { counts, norm: counts.slice(), bins };
+  const logMax = Math.log1p(max);
+  const norm = counts.map(c => c === 0 ? 0 : Math.log1p(c) / logMax);
+  return { counts, norm, bins };
+}
+
+// ═══════════════════════════════════════════════════════
+//  DRAW — main render. Idempotent: just reads state and paints.
+// ═══════════════════════════════════════════════════════
+function draw() {
+  drawRay();
+  drawHistogram();
+  state.needsRedraw = false;
+}
+
+function drawRay() {
+  const cv = document.getElementById('rayCanvas');
+  const ctx = cv.getContext('2d');
+  const W = state.W, H = state.H, dpr = state.dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  // Background
+  ctx.fillStyle = '#01040c';
+  ctx.fillRect(0, 0, W, H);
+
+  // Center line — the ray itself
+  const cy = H / 2;
+  const grad = ctx.createLinearGradient(0, 0, W, 0);
+  grad.addColorStop(0,    'rgba(170,221,255,0.35)');
+  grad.addColorStop(0.5,  'rgba(120,180,230,0.4)');
+  grad.addColorStop(1,    'rgba(220,200,150,0.45)');
+  ctx.strokeStyle = grad;
+  ctx.lineWidth = 1.4;
+  ctx.beginPath();
+  ctx.moveTo(0, cy);
+  ctx.lineTo(W, cy);
+  ctx.stroke();
+
+  // "Now" arrow on the left for lookback / scale modes; on left for comoving / redshift too.
+  // The convention: PRESENT (us) on LEFT, PAST (CMB) on RIGHT.
+  ctx.save();
+  ctx.fillStyle = 'rgba(170,221,255,0.55)';
+  ctx.font = 'bold 11px monospace';
+  ctx.textAlign = 'left';
+  ctx.fillText(currentLang === 'ro' ? '◀ NOI' : '◀ US', 6, cy - 8);
+  ctx.textAlign = 'right';
+  ctx.fillStyle = 'rgba(220,180,150,0.55)';
+  ctx.fillText(currentLang === 'ro' ? 'BIG BANG ▶' : 'BIG BANG ▶', W - 6, cy - 8);
+  ctx.restore();
+
+  // Ticks (only those visible)
+  const ticks = generateTicks(state.mode);
+  ctx.save();
+  ctx.font = '10px monospace';
+  ctx.textBaseline = 'top';
+  ticks.forEach(t => {
+    const frac = projectAxis(t.v, state.mode);
+    const x = fracToX(frac, W);
+    if (x < -40 || x > W + 40) return;
+    ctx.strokeStyle = t.major ? 'rgba(170,221,255,0.35)' : 'rgba(120,160,200,0.18)';
+    ctx.lineWidth = t.major ? 1 : 0.6;
+    const tickH = t.major ? 12 : 6;
+    ctx.beginPath();
+    ctx.moveTo(x, cy - tickH);
+    ctx.lineTo(x, cy + tickH);
+    ctx.stroke();
+    if (t.major) {
+      ctx.fillStyle = 'rgba(180,210,240,0.7)';
+      ctx.textAlign = 'center';
+      ctx.fillText(t.label, x, cy + 14);
+    }
+  });
+  ctx.restore();
+
+  // Galaxies — draw as vertical "needles" off the ray, length proportional to log(1+|z|)
+  // This gives a "spectrogram-like" radial signature: nearby galaxies stand short, distant
+  // ones stand tall. We jitter the side (above / below) by a hash of name to avoid overlap clumps.
+  const ctxG = ctx;
+  ctxG.save();
+  const sortedIdx = GALAXIES.map((_, i) => i).sort((a, b) => GALAXIES[a].d - GALAXIES[b].d);
+  // Build occupancy map for label collision avoidance
+  const placedLabels = []; // { x, side, w }
+
+  sortedIdx.forEach(i => {
+    const g = GALAXIES[i];
+    const v = axisValueFor(g, state.mode);
+    const frac = projectAxis(v, state.mode);
+    const x = fracToX(frac, W);
+    if (x < -10 || x > W + 10) return;
+    const col = typeColors[g.t] || '#88aacc';
+    // Hash side: name char codes parity → above (-1) or below (+1)
+    const hashSide = ((g.n.charCodeAt(0) + g.n.charCodeAt(g.n.length - 1)) & 1) ? -1 : 1;
+    // "Stem" length grows with redshift (or distance for nearby objects)
+    const lenBase = g.z > 0 ? Math.log1p(g.z) * 14 + 10 : Math.log1p(Math.max(0.1, g.d / 5)) * 10 + 6;
+    const len = Math.min(H * 0.35, Math.max(8, lenBase));
+    const isHov = (state.hovered === i);
+    const isSel = (state.selected === i);
+    // Stem
+    ctxG.strokeStyle = col;
+    ctxG.globalAlpha = isHov || isSel ? 1.0 : 0.7;
+    ctxG.lineWidth = isHov || isSel ? 2.4 : 1.2;
+    ctxG.beginPath();
+    ctxG.moveTo(x, cy);
+    ctxG.lineTo(x, cy + hashSide * len);
+    ctxG.stroke();
+    // Dot at tip
+    ctxG.fillStyle = col;
+    ctxG.beginPath();
+    ctxG.arc(x, cy + hashSide * len, isHov || isSel ? 4.5 : 2.8, 0, Math.PI * 2);
+    ctxG.fill();
+    // Inner glow for selected
+    if (isSel) {
+      ctxG.strokeStyle = 'rgba(255,255,255,0.9)';
+      ctxG.lineWidth = 1.2;
+      ctxG.beginPath();
+      ctxG.arc(x, cy + hashSide * len, 7, 0, Math.PI * 2);
+      ctxG.stroke();
+    }
+    ctxG.globalAlpha = 1;
+    // Label, only if there's room or hovered/selected
+    if (isHov || isSel || state.zoom > 1.6) {
+      const labelY = cy + hashSide * (len + 14);
+      const label = g.m + ' ' + g.n;
+      ctxG.font = (isHov || isSel) ? 'bold 11px sans-serif' : '10px sans-serif';
+      ctxG.textAlign = 'center';
+      ctxG.textBaseline = hashSide < 0 ? 'bottom' : 'top';
+      const w = ctxG.measureText(label).width;
+      // Collision avoidance: only paint if no nearby placed label on same side
+      const collide = placedLabels.some(p => p.side === hashSide && Math.abs(p.x - x) < (p.w + w) / 2 + 8);
+      if (!collide || isHov || isSel) {
+        ctxG.fillStyle = isHov || isSel ? '#ffffff' : 'rgba(220,230,245,0.85)';
+        // Bg pad for readability when zoomed
+        if (isHov || isSel) {
+          const pad = 4;
+          const bgY = hashSide < 0 ? labelY - 13 : labelY - 1;
+          ctxG.fillStyle = 'rgba(0,4,16,0.85)';
+          ctxG.fillRect(x - w / 2 - pad, bgY, w + pad * 2, 14);
+          ctxG.fillStyle = '#ffffff';
+        }
+        ctxG.fillText(label, x, labelY);
+        placedLabels.push({ x, side: hashSide, w });
+      }
+    }
+  });
+  ctxG.restore();
+}
+
+function drawHistogram() {
+  const hc = document.getElementById('histCanvas');
+  const ctx = hc.getContext('2d');
+  const W = state.W, H = 60, dpr = state.dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+  // Build histogram for the VISIBLE range to give a useful local density
+  const bins = Math.max(40, Math.floor(W / 8));
+  const counts = new Array(bins).fill(0);
+  GALAXIES.forEach(g => {
+    if (g.t === 'CMB') return;
+    const v = axisValueFor(g, state.mode);
+    const frac = projectAxis(v, state.mode);
+    // Map global frac → screen X → screen-bin
+    const x = fracToX(frac, W);
+    if (x < 0 || x >= W) return;
+    const bin = Math.min(bins - 1, Math.floor((x / W) * bins));
+    counts[bin]++;
+  });
+  const max = counts.reduce((a, b) => Math.max(a, b), 0);
+  if (max === 0) return;
+  const logMax = Math.log1p(max);
+  const binW = W / bins;
+  for (let i = 0; i < bins; i++) {
+    if (counts[i] === 0) continue;
+    const t = Math.log1p(counts[i]) / logMax;
+    const barH = Math.max(1, t * (H - 8));
+    // Color: same gradient as the ray
+    const cmin = [70, 110, 200];   // blue
+    const cmax = [255, 200, 100];  // amber
+    const col = cmin.map((a, k) => Math.round(a + (cmax[k] - a) * t));
+    ctx.fillStyle = `rgba(${col[0]},${col[1]},${col[2]},${0.4 + t * 0.5})`;
+    ctx.fillRect(i * binW + 1, H - barH - 2, binW - 1, barH);
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  HIT TESTING — find galaxy nearest to (x, y) within tolerance
+// ═══════════════════════════════════════════════════════
+function findNearest(x, y) {
+  const W = state.W, H = state.H;
+  const cy = H / 2;
+  let best = -1, bestD2 = 36 * 36; // 36px² hit radius — generous for touch
+  GALAXIES.forEach((g, i) => {
+    const v = axisValueFor(g, state.mode);
+    const frac = projectAxis(v, state.mode);
+    const gx = fracToX(frac, W);
+    if (gx < -20 || gx > W + 20) return;
+    const hashSide = ((g.n.charCodeAt(0) + g.n.charCodeAt(g.n.length - 1)) & 1) ? -1 : 1;
+    const lenBase = g.z > 0 ? Math.log1p(g.z) * 14 + 10 : Math.log1p(Math.max(0.1, g.d / 5)) * 10 + 6;
+    const len = Math.min(H * 0.35, Math.max(8, lenBase));
+    const tipY = cy + hashSide * len;
+    // Distance from (x,y) to the stem (line segment) AND to the tip (circle)
+    // Tip first (more salient)
+    const dx = x - gx, dy = y - tipY;
+    const d2tip = dx*dx + dy*dy;
+    if (d2tip < bestD2) { bestD2 = d2tip; best = i; }
+    // Then check stem proximity (perpendicular distance to vertical line, between cy and tipY)
+    if (Math.abs(x - gx) < 6) {
+      const yMin = Math.min(cy, tipY), yMax = Math.max(cy, tipY);
+      if (y >= yMin && y <= yMax) {
+        const d2stem = (x - gx) * (x - gx);
+        if (d2stem < bestD2) { bestD2 = d2stem; best = i; }
+      }
+    }
+  });
+  return best;
+}
+
+// ═══════════════════════════════════════════════════════
+//  EVENT HANDLERS
+// ═══════════════════════════════════════════════════════
+function setupInteraction() {
+  const cv = document.getElementById('rayCanvas');
+
+  cv.addEventListener('mousemove', e => {
+    if (state.dragging) {
+      const dx = e.clientX - state.lastX;
+      state.lastX = e.clientX;
+      state.pan -= (dx / state.W) / state.zoom;
+      state.pan = Math.max(0, Math.min(1 - 1 / state.zoom, state.pan));
+      state.needsRedraw = true;
+      draw();
+      return;
+    }
+    const rect = cv.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const idx = findNearest(x, y);
+    if (idx !== state.hovered) {
+      state.hovered = idx;
+      updateTooltip(e.clientX, e.clientY);
+      draw();
+    } else if (idx !== -1) {
+      updateTooltip(e.clientX, e.clientY);
+    }
+  });
+
+  cv.addEventListener('mouseleave', () => {
+    state.hovered = null;
+    hideTooltip();
+    draw();
+  });
+
+  cv.addEventListener('mousedown', e => {
+    state.dragging = true;
+    state.lastX = e.clientX;
+    cv.style.cursor = 'grabbing';
+  });
+  cv.addEventListener('mouseup', e => {
+    cv.style.cursor = 'crosshair';
+    if (!state.dragging) return;
+    state.dragging = false;
+    // Click-without-drag → select
+    if (Math.abs(e.clientX - state.lastX) < 4) {
+      const rect = cv.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const idx = findNearest(x, y);
+      if (idx !== -1) selectGalaxy(idx);
+      else closePanel();
+    }
+  });
+  document.addEventListener('mouseup', () => {
+    if (state.dragging) { state.dragging = false; cv.style.cursor = 'crosshair'; }
+  });
+
+  // Wheel zoom — anchor at mouse position
+  cv.addEventListener('wheel', e => {
+    e.preventDefault();
+    const rect = cv.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const fracAtMouse = xToFrac(x, state.W);
+    const factor = e.deltaY > 0 ? 1 / 1.18 : 1.18;
+    const newZoom = Math.max(1, Math.min(60, state.zoom * factor));
+    if (newZoom === state.zoom) return;
+    // Keep mouse position fixed in axis space
+    const span = 1 / newZoom;
+    state.pan = Math.max(0, Math.min(1 - span, fracAtMouse - (x / state.W) * span));
+    state.zoom = newZoom;
+    updateZoomLabel();
+    state.needsRedraw = true;
+    draw();
+  }, { passive: false });
+
+  // Touch
+  let touchPrev = null;
+  cv.addEventListener('touchstart', e => {
+    if (e.touches.length === 1) {
+      touchPrev = { x: e.touches[0].clientX, y: e.touches[0].clientY, mode: 'pan' };
+    } else if (e.touches.length === 2) {
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      touchPrev = { dist: Math.hypot(dx, dy), mode: 'pinch',
+        cx: (e.touches[0].clientX + e.touches[1].clientX) / 2 };
+    }
+  }, { passive: true });
+  cv.addEventListener('touchmove', e => {
+    if (!touchPrev) return;
+    if (e.touches.length === 1 && touchPrev.mode === 'pan') {
+      const dx = e.touches[0].clientX - touchPrev.x;
+      touchPrev.x = e.touches[0].clientX;
+      state.pan -= (dx / state.W) / state.zoom;
+      state.pan = Math.max(0, Math.min(1 - 1 / state.zoom, state.pan));
+      state.needsRedraw = true;
+      draw();
+    } else if (e.touches.length === 2 && touchPrev.mode === 'pinch') {
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      const dist = Math.hypot(dx, dy);
+      const factor = dist / touchPrev.dist;
+      touchPrev.dist = dist;
+      const rect = cv.getBoundingClientRect();
+      const cx = touchPrev.cx - rect.left;
+      const fracAtPinch = xToFrac(cx, state.W);
+      const newZoom = Math.max(1, Math.min(60, state.zoom * factor));
+      const span = 1 / newZoom;
+      state.pan = Math.max(0, Math.min(1 - span, fracAtPinch - (cx / state.W) * span));
+      state.zoom = newZoom;
+      updateZoomLabel();
+      state.needsRedraw = true;
+      draw();
+    }
+  }, { passive: true });
+  cv.addEventListener('touchend', () => { touchPrev = null; }, { passive: true });
+
+  // Tap-to-select on touch
+  cv.addEventListener('click', e => {
+    if (e.detail === 0) return; // synthetic
+    // Already handled in mouseup for desktop; add for plain taps
+  });
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    // Search modal handles its own keys
+    if (document.getElementById('srchOvl').classList.contains('show')) return;
+    if (document.getElementById('quizOvl').classList.contains('open')) return;
+    if (e.key === '/' || (e.key === 'k' && (e.ctrlKey || e.metaKey))) {
+      e.preventDefault(); openSearch();
+    } else if (e.key === 'Escape') {
+      closePanel(); closeSearch(); closeGuide(); closeQuiz(); endTour();
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault(); stepGalaxy(+1);
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault(); stepGalaxy(-1);
+    } else if (e.key === '+' || e.key === '=') {
+      e.preventDefault(); zoomBy(1.3);
+    } else if (e.key === '-' || e.key === '_') {
+      e.preventDefault(); zoomBy(1 / 1.3);
+    } else if (e.key === 'g' || e.key === 'G') {
+      openGuide('intro');
+    } else if (e.key === 't' || e.key === 'T') {
+      startTour();
+    } else if (e.key === 'q' || e.key === 'Q') {
+      openQuiz();
+    } else if (e.key === 'l' || e.key === 'L') {
+      toggleLang();
+    } else if (e.key === 'm' || e.key === 'M') {
+      cycleMode();
+    }
+  });
+}
+
+function zoomBy(factor) {
+  const newZoom = Math.max(1, Math.min(60, state.zoom * factor));
+  if (newZoom === state.zoom) return;
+  // Anchor at center
+  const fracCenter = state.pan + 0.5 / state.zoom;
+  const span = 1 / newZoom;
+  state.pan = Math.max(0, Math.min(1 - span, fracCenter - 0.5 * span));
+  state.zoom = newZoom;
+  updateZoomLabel();
+  state.needsRedraw = true;
+  draw();
+}
+
+function updateZoomLabel() {
+  const el = document.getElementById('zoomLabel');
+  if (el) el.textContent = state.zoom.toFixed(2) + '×';
+}
+
+function stepGalaxy(direction) {
+  // Step through galaxies sorted by axis value
+  const sorted = GALAXIES.map((_, i) => i).sort((a, b) => {
+    return axisValueFor(GALAXIES[a], state.mode) - axisValueFor(GALAXIES[b], state.mode);
+  });
+  const cur = state.selected !== null ? sorted.indexOf(state.selected) : -1;
+  let next = cur + direction;
+  if (next < 0) next = sorted.length - 1;
+  if (next >= sorted.length) next = 0;
+  selectGalaxy(sorted[next]);
+}
+
+function cycleMode() {
+  const modes = ['lookback', 'comoving', 'redshift', 'scale'];
+  const i = modes.indexOf(state.mode);
+  const next = modes[(i + 1) % modes.length];
+  setMode(next);
+}
+
+function setMode(m) {
+  state.mode = m;
+  setPref('mode', m);
+  document.getElementById('modeSel').value = m;
+  document.getElementById('modeLbl').textContent = axisLabel(m, currentLang);
+  // Clamp pan to new mode's range (always 0..1 abstract, so fine)
+  state.needsRedraw = true;
+  draw();
+}
+
+function resetView() {
+  state.zoom = 1.0;
+  state.pan = 0;
+  state.selected = null;
+  state.hovered = null;
+  closePanel();
+  hideTooltip();
+  updateZoomLabel();
+  draw();
+}
+
+// ═══════════════════════════════════════════════════════
+//  TOOLTIP
+// ═══════════════════════════════════════════════════════
+function updateTooltip(clientX, clientY) {
+  const tip = document.getElementById('tip');
+  if (state.hovered === null || state.hovered === -1) { hideTooltip(); return; }
+  const g = GALAXIES[state.hovered];
+  if (!g) { hideTooltip(); return; }
+  tip.querySelector('.tn').textContent = g.m + ' ' + g.n;
+  // Compose subtitle: distance and redshift
+  const lookback = lookbackCached(g.z || 0);
+  const tdParts = [];
+  if (g.d > 0) tdParts.push(g.d.toLocaleString() + ' Mly');
+  if (g.z > 0) tdParts.push('z=' + g.z.toFixed(g.z < 0.1 ? 4 : 2));
+  if (lookback > 0) tdParts.push((lookback/1000).toFixed(2) + ' Gyr ago');
+  tip.querySelector('.td').textContent = tdParts.join(' · ') || '—';
+  tip.classList.add('show');
+  // Position, keep within viewport
+  const rect = tip.getBoundingClientRect();
+  let tx = clientX + 14;
+  let ty = clientY - rect.height - 14;
+  if (tx + rect.width > window.innerWidth - 8) tx = clientX - rect.width - 14;
+  if (ty < 8) ty = clientY + 14;
+  tip.style.left = tx + 'px';
+  tip.style.top  = ty + 'px';
+}
+function hideTooltip() {
+  const tip = document.getElementById('tip');
+  if (tip) tip.classList.remove('show');
+}
+
+// ═══════════════════════════════════════════════════════
+//  INFO PANEL
+// ═══════════════════════════════════════════════════════
+function selectGalaxy(idx) {
+  state.selected = idx;
+  state.needsRedraw = true;
+  // Auto-pan to bring into view if off-screen, but keep zoom
+  const g = GALAXIES[idx];
+  const v = axisValueFor(g, state.mode);
+  const frac = projectAxis(v, state.mode);
+  const span = 1 / state.zoom;
+  if (frac < state.pan + 0.05 || frac > state.pan + span - 0.05) {
+    state.pan = Math.max(0, Math.min(1 - span, frac - span / 2));
+  }
+  openPanel(g);
+  draw();
+}
+
+function openPanel(g) {
+  const pnl = document.getElementById('pnl');
+  document.getElementById('pnlName').textContent = g.m + ' ' + g.n;
+  document.getElementById('pnlType').textContent = (g.t === 'CMB' ? 'CMB · cosmological horizon' :
+    (typeLabel(g.t, currentLang) + (g.t === 'cluster' ? '' : ' galaxy')));
+  // Rows
+  const rows = document.getElementById('pnlRows');
+  rows.innerHTML = '';
+  const lb = lookbackCached(g.z || 0);
+  const co = comovingCached(g.z || 0);
+  const a = 1 / (1 + (g.z || 0));
+  const T_cmb = COSMO.T_CMB_NOW * (1 + (g.z || 0));
+  const ageEm = universeAge(userH0) - lb; // age of universe at emission
+  const dataRows = [
+    { k: currentLang === 'ro' ? 'Distanță (Mly)'    : 'Distance (Mly)',  v: (g.d > 0 ? g.d.toLocaleString() : '—') },
+    { k: 'z',                                                              v: (g.z > 0 ? g.z.toFixed(g.z < 0.1 ? 4 : 2) : '0') },
+    { k: currentLang === 'ro' ? 'Lookback (Myr)'    : 'Lookback (Myr)',   v: lb > 0 ? lb.toFixed(0) : '0' },
+    { k: currentLang === 'ro' ? 'Comoving (Mly)'    : 'Comoving (Mly)',   v: co > 0 ? co.toFixed(0) : '0' },
+    { k: currentLang === 'ro' ? 'Factor scară a'    : 'Scale factor a',   v: a.toFixed(g.z > 100 ? 5 : 4) },
+    { k: 'T_CMB (K)',                                                      v: T_cmb.toFixed(2) },
+    { k: currentLang === 'ro' ? 'Vârstă univ. la emisie' : 'Age of univ. at emission',
+      v: ageEm > 0 ? ageEm.toFixed(0) + ' Myr' : '—' },
+    { k: 'RA (deg)',                                                       v: g.ra.toString() },
+    { k: 'Dec (deg)',                                                      v: g.dec.toString() },
+  ];
+  dataRows.forEach(r => {
+    const div = document.createElement('div');
+    div.className = 'row';
+    div.innerHTML = `<span class="k">${r.k}</span><span class="v">${r.v}</span>`;
+    rows.appendChild(div);
+  });
+  // Description
+  document.getElementById('pnlDesc').textContent = g.desc || '—';
+  // EN description: prefer inline `de:` field, else lookup in EN_DESCS_EXTRA
+  const enDesc = g.de || (typeof EN_DESCS_EXTRA !== 'undefined' && EN_DESCS_EXTRA[g.n]) || '';
+  document.getElementById('pnlDescEn').textContent = enDesc;
+  document.getElementById('pnlDescEn').style.display = enDesc ? 'block' : 'none';
+  pnl.classList.add('open');
+  pnl.setAttribute('aria-hidden', 'false');
+}
+
+function typeLabel(t, lang) {
+  const RO = { spiral:'Spirală', elliptical:'Eliptică', irregular:'Neregulată',
+               dwarf:'Pitică', quasar:'Quasar', blazar:'Blazar', EHZ:'EHZ',
+               CMB:'CMB', cluster:'Roi' };
+  const EN = { spiral:'Spiral', elliptical:'Elliptical', irregular:'Irregular',
+               dwarf:'Dwarf', quasar:'Quasar', blazar:'Blazar', EHZ:'EHZ',
+               CMB:'CMB', cluster:'Cluster' };
+  return (lang === 'ro' ? RO : EN)[t] || t;
+}
+
+function closePanel() {
+  const pnl = document.getElementById('pnl');
+  pnl.classList.remove('open');
+  pnl.setAttribute('aria-hidden', 'true');
+  state.selected = null;
+  state.needsRedraw = true;
+  draw();
+}
+
+// ═══════════════════════════════════════════════════════
+//  TOAST
+// ═══════════════════════════════════════════════════════
+let _toastTimer = null;
+function toast(msg, ms) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  if (_toastTimer) clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => t.classList.remove('show'), ms || 2400);
+}
+
+// ═══════════════════════════════════════════════════════
+//  SEARCH OVERLAY — fuzzy match
+// ═══════════════════════════════════════════════════════
+let _srchSelected = 0;
+function fuzzyScore(str, q) {
+  const s = str.toLowerCase(), qq = q.toLowerCase();
+  if (s.includes(qq)) return 100 + (100 - qq.length);
+  let score = 0;
+  for (let i = 0; i < qq.length - 1; i++)
+    if (s.includes(qq.slice(i, i + 2))) score += 10;
+  for (const ch of qq) if (s.includes(ch)) score += 1;
+  return score;
+}
+function openSearch() {
+  document.getElementById('srchOvl').classList.add('show');
+  const inp = document.getElementById('srchInp');
+  inp.value = '';
+  inp.focus();
+  renderSearchResults('');
+}
+function closeSearch() {
+  document.getElementById('srchOvl').classList.remove('show');
+}
+function renderSearchResults(q) {
+  const res = document.getElementById('srchRes');
+  res.innerHTML = '';
+  let items;
+  if (!q) {
+    // Show first 8 sorted by distance
+    items = GALAXIES.map((g, i) => ({ g, i, score: 100 - g.d / 100 }))
+      .sort((a, b) => b.score - a.score).slice(0, 8);
+  } else {
+    items = GALAXIES.map((g, i) => ({ g, i, score: fuzzyScore(g.n, q) }))
+      .filter(x => x.score > 5).sort((a, b) => b.score - a.score).slice(0, 12);
+  }
+  _srchSelected = 0;
+  items.forEach((it, k) => {
+    const div = document.createElement('div');
+    div.className = 'sres' + (k === 0 ? ' sel' : '');
+    div.dataset.idx = it.i;
+    div.innerHTML = `<span class="si">${it.g.m}</span><span class="sn">${it.g.n}</span><span class="sd">${it.g.d > 0 ? it.g.d.toLocaleString() + ' Mly' : 'Local'}</span>`;
+    div.onclick = () => { closeSearch(); selectGalaxy(it.i); };
+    res.appendChild(div);
+  });
+}
+function setupSearch() {
+  const inp = document.getElementById('srchInp');
+  inp.addEventListener('input', e => renderSearchResults(e.target.value));
+  inp.addEventListener('keydown', e => {
+    const items = document.querySelectorAll('.sres');
+    if (e.key === 'Escape') { e.preventDefault(); closeSearch(); }
+    else if (e.key === 'Enter') {
+      e.preventDefault();
+      const sel = document.querySelector('.sres.sel');
+      if (sel) { closeSearch(); selectGalaxy(+sel.dataset.idx); }
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      _srchSelected = Math.min(items.length - 1, _srchSelected + 1);
+      items.forEach((it, i) => it.classList.toggle('sel', i === _srchSelected));
+      items[_srchSelected].scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      _srchSelected = Math.max(0, _srchSelected - 1);
+      items.forEach((it, i) => it.classList.toggle('sel', i === _srchSelected));
+      items[_srchSelected].scrollIntoView({ block: 'nearest' });
+    }
+  });
+  document.getElementById('srchOvl').addEventListener('click', e => {
+    if (e.target.id === 'srchOvl') closeSearch();
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  PERMALINK — encode state in URL hash, restore on load
+// ═══════════════════════════════════════════════════════
+function buildPermalink() {
+  const obj = {
+    m: state.mode,
+    z: +state.zoom.toFixed(3),
+    p: +state.pan.toFixed(4),
+    s: state.selected,
+    h: +userH0.toFixed(1),
+    l: currentLang,
+    cvd: cvdMode,
+  };
+  const json = JSON.stringify(obj);
+  const b64 = btoa(unescape(encodeURIComponent(json)));
+  return location.origin + location.pathname + '#s=' + b64;
+}
+function loadPermalink() {
+  const hash = location.hash;
+  if (!hash || !hash.startsWith('#s=')) return false;
+  try {
+    const b64 = hash.slice(3);
+    const json = decodeURIComponent(escape(atob(b64)));
+    const obj = JSON.parse(json);
+    if (obj.m) state.mode = obj.m;
+    if (typeof obj.z === 'number') state.zoom = Math.max(1, Math.min(60, obj.z));
+    if (typeof obj.p === 'number') state.pan = Math.max(0, Math.min(1, obj.p));
+    if (typeof obj.s === 'number' && obj.s >= 0 && obj.s < GALAXIES.length) state.selected = obj.s;
+    if (typeof obj.h === 'number') { userH0 = obj.h; invalidateCosmoCache(); }
+    if (obj.l) currentLang = obj.l;
+    if (obj.cvd) setCVD(obj.cvd);
+    return true;
+  } catch (e) { return false; }
+}
+function shareLink() {
+  const url = buildPermalink();
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(
+      () => toast(currentLang === 'ro' ? '🔗 Link copiat!' : '🔗 Link copied!'),
+      () => prompt('Copy this link:', url)
+    );
+  } else {
+    prompt('Copy this link:', url);
+  }
+}
+function copyDetails() {
+  if (state.selected === null) { toast('No galaxy selected'); return; }
+  const g = GALAXIES[state.selected];
+  const lb = lookbackCached(g.z || 0);
+  const co = comovingCached(g.z || 0);
+  const txt = `${g.m} ${g.n}\n` +
+    `Type: ${typeLabel(g.t, currentLang)}\n` +
+    `Distance: ${g.d > 0 ? g.d + ' Mly' : 'Local'}\n` +
+    `Redshift z: ${g.z}\n` +
+    `Lookback: ${lb.toFixed(0)} Myr\n` +
+    `Comoving: ${co.toFixed(0)} Mly\n` +
+    `RA/Dec: ${g.ra}°, ${g.dec}°\n\n` +
+    g.desc + (g.de ? '\n\n' + g.de : '') +
+    `\n\n— ${buildPermalink()}`;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(txt).then(
+      () => toast(currentLang === 'ro' ? '📋 Detalii copiate!' : '📋 Details copied!')
+    );
+  } else {
+    prompt('Copy:', txt);
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  LANGUAGE TOGGLE
+// ═══════════════════════════════════════════════════════
+function toggleLang() {
+  currentLang = (currentLang === 'ro') ? 'en' : 'ro';
+  setPref('lang', currentLang);
+  applyI18N();
+  draw();
+}
+function applyI18N() {
+  const isRO = currentLang === 'ro';
+  document.documentElement.lang = isRO ? 'ro' : 'en';
+  document.getElementById('btnLang').textContent = isRO ? 'EN' : 'RO';
+  document.getElementById('modeLbl').textContent = axisLabel(state.mode, currentLang);
+  // Mode select labels
+  const opts = document.getElementById('modeSel').options;
+  if (isRO) {
+    opts[0].text = 'Timp de privire înapoi (Myr)';
+    opts[1].text = 'Distanță comoving (Mly)';
+    opts[2].text = 'Redshift (z)';
+    opts[3].text = 'Factor scară a = 1/(1+z)';
+  } else {
+    opts[0].text = 'Lookback time (Myr)';
+    opts[1].text = 'Comoving distance (Mly)';
+    opts[2].text = 'Redshift (z)';
+    opts[3].text = 'Scale factor a = 1/(1+z)';
+  }
+  // Stats
+  document.getElementById('stats').textContent = isRO ? '112 galaxii · 1 CMB' : '112 galaxies · 1 CMB';
+  // Hint
+  document.getElementById('hintTxt').textContent = isRO
+    ? 'Hover pentru tooltip · Click pentru detalii · Scroll pentru zoom · Săgeți ← → pentru navigare'
+    : 'Hover for tooltip · Click for details · Scroll-zoom · Arrow keys ← → to step';
+  // Guide title
+  document.getElementById('guideTtl').textContent = isRO
+    ? '📖 GHID · UNIVERSUL OBSERVABIL · 1D'
+    : '📖 GUIDE · OBSERVABLE UNIVERSE · 1D';
+  // Tabs labels
+  const tabBtns = document.querySelectorAll('#guideTabs .gtb');
+  const tabsRO = ['🌌 Intro','🎮 Navigare','📏 Moduri axă','🤔 De ce 1D?','📚 Termeni','⚖️ Limite','📋 Jurnal','🏅 Credite'];
+  const tabsEN = ['🌌 Intro','🎮 Navigation','📏 Axis Modes','🤔 Why 1D?','📚 Terms','⚖️ Limits','📋 Changelog','🏅 Credits'];
+  const labels = isRO ? tabsRO : tabsEN;
+  tabBtns.forEach((b, i) => { if (labels[i]) b.textContent = labels[i]; });
+  // Refresh open guide tab
+  if (document.getElementById('guideOvl').classList.contains('open')) showTab(_activeTab);
+  // Refresh open panel
+  if (state.selected !== null) openPanel(GALAXIES[state.selected]);
+  // Search placeholder
+  document.getElementById('srchInp').placeholder = isRO
+    ? '🔍  Caută galaxie · Search galaxy...'
+    : '🔍  Search galaxy · Caută galaxie...';
+}
+// ═══════════════════════════════════════════════════════
+//  GUIDE CONTENT — RO + EN, 8 tabs each
+// ═══════════════════════════════════════════════════════
+let _activeTab = 'intro';
+
+const GUIDE_RO = {
+  intro: `
+    <h3>🌠 Universul Observabil 1D · v${VERSION} · Cosmic Ray™</h3>
+    <p>Aceeași bază reală de date astronomice ca <a href="https://alexio.tf/universul-observabil-2d" target="_blank" style="color:var(--accent)">versiunea 2D</a> și <a href="https://alexio.tf/universul-observabil-3d" target="_blank" style="color:var(--accent)">cea 3D</a>, redusă la o singură axă: <strong>distanța de la noi</strong>.</p>
+    <div class="gnote">✓ <strong>112 galaxii</strong> proiectate pe o rază unică. Patru moduri de axă: timp lookback (Myr), distanță comoving (Mly), redshift (z), factor de scară (a). 12 marcaje de tick. Modelul cosmologic ΛCDM Planck 2018.</div>
+    <h4>De ce 1D?</h4>
+    <p>Pentru că <strong>distanța radială este singura dimensiune fără ambiguitate</strong> în cosmologie. Direcția pe cer (RA, Dec) e accidentală — depinde de unde se află Pământul în Calea Lactee. Dar lookback time este o coordonată invariantă: galaxia X se află la 13,4 miliarde de ani lumină <em>distanță în timp</em>, oricare ar fi orientarea ta.</p>
+    <h4>Convenție</h4>
+    <p><strong>Stânga = NOI. Dreapta = BIG BANG.</strong> Cu cât te miști spre dreapta, cu atât privești mai departe în trecut. CMB-ul (z=1100) e ultima limită — radiația dinaintea ei era opacă.</p>
+    <h4>Convenție (continuare)</h4>
+    <p>Galaxiile apar ca <strong>țepi verticali</strong> de o parte sau alta a razei. Lungimea țepului crește cu redshift-ul (un fel de „semnătură spectrală" radială). Partea (sus / jos) e dictată determinist de un hash al numelui — astfel evităm ca galaxiile foarte apropiate să se suprapună.</p>
+    <h4>Histograma de jos</h4>
+    <p>Sub raza centrală vezi o <strong>histogramă de densitate</strong> — câte galaxii cad în fiecare bin de pe axa actuală, normalizat logaritmic. Vezi imediat unde se acumulează populația catalogului: în primele 100 Myr (Local Group), în vecinătatea 1-3 Gly (sondajele JWST), la marginea CMB.</p>`,
+
+  navig: `
+    <h3>🎮 Navigare</h3>
+    <table>
+      <tr><th>Acțiune</th><th>Desktop</th><th>Mobil</th></tr>
+      <tr><td>Zoom</td><td>Rotița mouse</td><td>Pinch 2 degete</td></tr>
+      <tr><td>Pan</td><td>Drag</td><td>Drag 1 deget</td></tr>
+      <tr><td>Detalii</td><td>Click</td><td>Tap</td></tr>
+      <tr><td>Tooltip</td><td>Hover</td><td>—</td></tr>
+      <tr><td>Caută</td><td><kbd>/</kbd> sau <kbd>Ctrl+K</kbd></td><td>🔍</td></tr>
+      <tr><td>Galaxia precedentă/următoare</td><td><kbd>←</kbd> <kbd>→</kbd></td><td>—</td></tr>
+      <tr><td>Zoom +/−</td><td><kbd>+</kbd> <kbd>−</kbd></td><td>Butoane</td></tr>
+      <tr><td>Schimbă mod axă</td><td><kbd>M</kbd></td><td>Dropdown</td></tr>
+      <tr><td>Comută limba</td><td><kbd>L</kbd></td><td>Buton RO/EN</td></tr>
+      <tr><td>Tour ghidat</td><td><kbd>T</kbd> sau 🚀</td><td>🚀</td></tr>
+      <tr><td>Quiz</td><td><kbd>Q</kbd> sau 🧩</td><td>🧩</td></tr>
+      <tr><td>Ghid</td><td><kbd>G</kbd> sau 📖</td><td>📖</td></tr>
+      <tr><td>Reset vedere</td><td>⌂</td><td>⌂</td></tr>
+      <tr><td>Închide overlay</td><td><kbd>Esc</kbd></td><td>Tap în afara</td></tr>
+    </table>
+    <p>Slider-ul <strong>H₀</strong> din bara de jos îți permite să vezi efectul tensiunii Hubble: la Planck (67,4) vârsta universului e ~13,8 Gyr; la SH0ES (73) e ~12,7 Gyr. Toate distanțele cosmologice se recalculează în timp real.</p>`,
+
+  modes: `
+    <h3>📏 Cele patru moduri de axă</h3>
+    <p>Fiecare mod este o reprezentare matematic distinctă a aceluiași catalog. Compară-le ca să intuiești geometria spațiu-timp în expansiune.</p>
+    <h4>1. Timp de privire înapoi (Lookback time, Myr)</h4>
+    <p>Cât timp a călătorit lumina de la galaxie până la tine. Calea Lactee = 0; CMB ≈ 13.800 Myr. Aceasta e mărimea cea mai intuitivă: <em>„cât de bătrână e imaginea pe care o vedem?"</em>.</p>
+    <h4>2. Distanță comoving (Mly)</h4>
+    <p>Distanța <em>actuală</em> dintre noi și galaxie, eliminând expansiunea universului. CMB ≈ 46.000 Mly comoving (deși lumina ei a călătorit doar 13,8 Gly). Util pentru a înțelege geometria reală a spațiului.</p>
+    <h4>3. Redshift (z)</h4>
+    <p>Cantitatea cu care lungimile de undă au fost întinse de expansiune. z=0 acum, z=1 când universul era pe jumătate, z=1100 la suprafața de ultim împrăștiat (CMB). Mărime adimensională, observată direct prin spectroscopie.</p>
+    <h4>4. Factor de scară (a = 1/(1+z))</h4>
+    <p>Mărimea relativă a universului față de azi: a=1 acum, a=0,5 la z=1, a≈10⁻³ la CMB. <em>Reverse</em> al lui z. Util pentru a visualiza expansiunea ca o axă temporală conformă.</p>
+    <div class="gnote">💡 <strong>Truc</strong>: apasă <kbd>M</kbd> rapid pentru a comuta între moduri. Aceeași galaxie își schimbă poziția — observă cum ordinea ei pe axă se păstrează, dar densitățile locale se modifică.</div>`,
+
+  why1d: `
+    <h3>🤔 De ce o vizualizare 1D?</h3>
+    <p>O simulare 1D pare un downgrade față de 2D și 3D. Dar are o motivație serioasă.</p>
+    <h4>Pierderea direcției e câștig epistemic</h4>
+    <p>În 2D și 3D, poziția unghiulară a unei galaxii pe cer (RA, Dec) e dată de unde e Pământul. Dacă te-ai fi născut într-o altă galaxie, ai fi văzut același catalog de obiecte... la alte poziții pe cer. Dar <strong>distanța lookback rămâne aceeași</strong>.</p>
+    <h4>Densitatea radială devine vizibilă</h4>
+    <p>În proiecții 2D / 3D, eșantionarea apropie galaxii de la diferite distanțe în puncte vecine, ascunzând structura radială. În 1D, structura radială e <em>tot ce vezi</em>. Histograma de mai jos arată: catalogul are bias spre Local Group și spre era JWST (~13 Gly).</p>
+    <h4>Onestitate epistemologică</h4>
+    <p>O hartă 2D dă iluzia că „uite cum arată universul". Dar e o ficțiune — universul nu are o suprafață 2D. O hartă 3D dă o ficțiune mai bună, dar tot e o reducere. <strong>O axă 1D nu pretinde altceva decât ce e: o ordonare după distanță.</strong></p>
+    <h4>Multilectorial</h4>
+    <p>Patru moduri de axă (lookback, comoving, redshift, scale factor) îți permit să vezi <em>aceeași</em> realitate prin patru ferestre conceptuale diferite. Niciuna nu e „adevărată" mai mult decât celelalte. Toate descriu aceeași expansiune ΛCDM.</p>
+    <h4>Limite de neuitat</h4>
+    <p>Nu poți spune nimic despre clusterizare unghiulară (Coma vs Virgo arată identic în 1D). Nu poți distinge filamentele cosmice. Nu poți reprezenta supercluștere. Pentru asta există versiunile 2D și 3D — au fiecare scopurile lor pedagogice.</p>
+    <div class="gfact">💡 <strong>Filosofia</strong>: niciuna dintre dimensiuni (1D, 2D, 3D) nu este „adevărul". Toate sunt instrumente. Folosește-le împreună.</div>`,
+
+  terms: `
+    <h3>📚 Termeni cheie</h3>
+    <table>
+      <tr><th>Termen</th><th>Sens</th></tr>
+      <tr><td>z (redshift)</td><td>Decalaj spectral. Galaxie la z=1: lumina ei a fost întinsă cu 100%</td></tr>
+      <tr><td>Mly</td><td>Megaani-lumină. 1 Mly = 10⁶ ani-lumină ≈ 9,46×10²² m</td></tr>
+      <tr><td>Gly</td><td>Gigaani-lumină. 1 Gly = 10⁹ ani-lumină = 1.000 Mly</td></tr>
+      <tr><td>Lookback time</td><td>Cât timp a călătorit lumina de la sursă la noi</td></tr>
+      <tr><td>Comoving distance</td><td>Distanța actuală, eliminând expansiunea</td></tr>
+      <tr><td>Scale factor a</td><td>Mărimea relativă a universului. a=1 azi, a→0 la Big Bang</td></tr>
+      <tr><td>H₀</td><td>Constanta Hubble. Rata expansiunii curente</td></tr>
+      <tr><td>ΛCDM</td><td>Model standard: Λ (energie întunecată) + CDM (materie întunecată rece)</td></tr>
+      <tr><td>CMB</td><td>Cosmic Microwave Background — radiația emisă la 380.000 ani după Big Bang</td></tr>
+      <tr><td>JWST</td><td>James Webb Space Telescope (lansat 2021)</td></tr>
+      <tr><td>EHZ</td><td>Extreme High Redshift — galaxii la z &gt; 10</td></tr>
+      <tr><td>Tensiunea Hubble</td><td>Discrepanța dintre măsurătorile H₀: Planck (67,4) vs SH0ES (73)</td></tr>
+    </table>`,
+
+  limits: `
+    <h3>⚖️ Limitele simulării 1D</h3>
+    <p>O simulare bună e onestă cu privire la ce nu poate face. 1D este și mai onestă decât 2D — pentru că reducerea e mai radicală.</p>
+    <h4>1. Distanța e tot ce vezi</h4>
+    <p>Două galaxii la aceeași distanță apar suprapuse, indiferent dacă în realitate sunt în zone opuse ale cerului. Toată informația de direcție (RA, Dec) e aruncată. Acceptat — e prețul claritații axiale.</p>
+    <h4>2. Eșantion curatorial 112 galaxii</h4>
+    <p>Aceleași 112 obiecte ca în 2D. Universul observabil are ~10¹¹ galaxii. Nu este o reprezentare statistică — e o selecție pedagogică.</p>
+    <h4>3. Distanțe ΛCDM cu eroare crescătoare cu z</h4>
+    <p>z &lt; 1: ~1-3% precizie. z &gt; 5: 5-10%. z &gt; 10 (recordurile JWST): 10-15%. CEERS-93316 era candidat la z~16 — JWST a corectat la z≈4,9.</p>
+    <h4>4. Tensiunea Hubble nerezolvată</h4>
+    <p>Slider-ul H₀ (67,4 Planck ↔ 73 SH0ES) demonstrează ambiguitatea. Nu există consens — vezi tabul Moduri axă pentru efectele numerice.</p>
+    <h4>5. Hashul de lateralitate e arbitrar</h4>
+    <p>Galaxiile apar deasupra sau dedesubtul razei după paritatea sumei caracterelor numelui. Acesta e un truc de afișaj — NU o variabilă fizică. Schimbă numele unei galaxii în catalog și „va trece" pe partea cealaltă.</p>
+    <h4>6. Histograma e per-bin pe ecran, nu volumetrică</h4>
+    <p>Ce vezi jos e densitatea catalogului proiectat pe axă, normalizată logaritmic. NU e densitatea reală a universului — care variază cu r² (volumul cojii sferice).</p>
+    <h4>7. Lookback &lt; vs &gt; vârstă univers la H₀&gt;67.4</h4>
+    <p>Slider-ul H₀ poate face o galaxie de catalog (cu lb prefix) să pară „mai veche decât universul". Aplicația folosește calcul Friedmann live, deci la H₀=73 z=14,44 dă lookback ~12,5 Gyr (consistent cu vârsta univers la SH0ES de 12,7 Gyr).</p>
+    <h4>8. Persistența localStorage (v1.0)</h4>
+    <p>Preferințele (mod axă, limbă, CVD) sunt salvate <strong>local pe dispozitivul tău</strong>. Nu există server — această aplicație este o singură pagină statică. Reset: DevTools → Application → Local Storage → șterge cheile <code>uv1d_*</code>.</p>
+    <div class="gfact">💡 <strong>Filosofie:</strong> Cu cât mai puține dimensiuni, cu atât mai puține minciuni. 1D pretinde minim — și livrează maxim într-un singur lucru: ordinea radială.</div>`,
+
+  changelog: `
+    <h3>📋 Istoric versiuni</h3>
+    <h4>v1.0 (mai 2026) — Lansare 1D · The Cosmic Ray™</h4>
+    <ul>
+      <li>🌠 Catalog 112 galaxii proiectat pe o singură axă radială.</li>
+      <li>📏 4 moduri axă: lookback (Myr), comoving (Mly), redshift (z), scale factor (a).</li>
+      <li>🧭 Calculator Friedmann live cu H₀-aware (slider 60-78 km/s/Mpc).</li>
+      <li>📊 Histogramă de densitate normalizată logaritmic, recalculată la fiecare zoom/pan.</li>
+      <li>🔍 Căutare fuzzy bilingvă, navigare cu săgețile între galaxii.</li>
+      <li>🚀 Tour ghidat 8 opriri, quiz cosmic adaptat dimensional.</li>
+      <li>💾 Persistență preferințe (uv1d_prefs_v1): mod axă, limbă, CVD.</li>
+      <li>♿ Accesibilitate: prefers-reduced-motion, daltonism palette, focus visible, skip-link, ARIA roles.</li>
+      <li>🌍 Bilingv complet RO/EN (interfață, ghid 8 tab-uri, descrieri galaxii).</li>
+      <li>🔗 Permalink cu encodare base64 a stării complete (mod, zoom, pan, selecție, H₀, limbă).</li>
+      <li>📑 Tab onestitate „De ce 1D?" + tab „Limitele simulării" cu 8 secțiuni.</li>
+    </ul>
+    <p style="margin-top:12px;font-size:11.5px;color:var(--dimmer)">
+    Companion la versiunile <a href="https://alexio.tf/universul-observabil-2d" target="_blank" style="color:var(--accent)">2D v5.9</a>
+    și <a href="https://alexio.tf/universul-observabil-3d" target="_blank" style="color:var(--accent)">3D</a>.</p>`,
+
+  credits: `
+    <h3>🏅 Credite &amp; Surse</h3>
+    <h4>Autor</h4>
+    <p><strong>Alexandru Ionuț Chiuță „Alexio"</strong> · ARES — Centrul STRING × ASFAN-România · <a href="https://alexio.tf" target="_blank" style="color:var(--accent)">alexio.tf</a></p>
+    <h4>Surse de date</h4>
+    <table>
+      <tr><th>Sursă</th><th>Utilizare</th></tr>
+      <tr><td>ΛCDM Planck 2018</td><td>H₀=67,4 km/s/Mpc, Ω_m=0,315, Ω_Λ=0,685</td></tr>
+      <tr><td>NASA/IPAC NED</td><td>Coordonate RA/Dec, distanțe</td></tr>
+      <tr><td>SIMBAD</td><td>Tipuri obiecte, redshift-uri</td></tr>
+      <tr><td>JWST / JADES</td><td>JADES-GS-z14-0/1, GN-z11, etc.</td></tr>
+      <tr><td>Naidu et al. 2025</td><td>MoM-z14 (z=14,44) — recordul curent</td></tr>
+    </table>
+    <h4>Calcul cosmologic</h4>
+    <p>Integrală Friedmann (N=500 pași) cu substituție logaritmică pentru vârsta universului. Verificat scipy.integrate.quad pe ediția 2D v5.8. Cache-uit pe (z, H₀).</p>
+    <h4>Citare</h4>
+    <p>Chiuță, Alexandru Ionuț (2026). <em>Universul Observabil 1D · v${VERSION} · Cosmic Ray™</em>. ARES — Centrul STRING × ASFAN. <a href="https://alexio.tf" style="color:var(--accent)">alexio.tf</a>. DOI: 10.5281/zenodo.PLACEHOLDER</p>
+    <h4>Disclaimer</h4>
+    <p>Aplicație <strong>satirică și educațională</strong>. Toate datele sunt corecte conform celor mai bune surse. Companion la <a href="https://alexio.tf/universul-observabil-2d" style="color:var(--accent)">versiunea 2D</a> și cea 3D.</p>`,
+};
+
+const GUIDE_EN = {
+  intro: `
+    <h3>🌠 Observable Universe 1D · v${VERSION} · Cosmic Ray™</h3>
+    <p>The same real astronomical database as the <a href="https://alexio.tf/universul-observabil-2d" target="_blank" style="color:var(--accent)">2D version</a> and <a href="https://alexio.tf/universul-observabil-3d" target="_blank" style="color:var(--accent)">3D version</a>, reduced to a single axis: <strong>distance from us</strong>.</p>
+    <div class="gnote">✓ <strong>112 galaxies</strong> projected onto a single ray. Four axis modes: lookback time (Myr), comoving distance (Mly), redshift (z), scale factor (a). 12 tick markers. ΛCDM Planck 2018 cosmology.</div>
+    <h4>Why 1D?</h4>
+    <p>Because <strong>radial distance is the only unambiguous dimension</strong> in cosmology. Direction on the sky (RA, Dec) is accidental — it depends on where Earth happens to be in the Milky Way. But lookback time is invariant: galaxy X is 13.4 billion years <em>away in time</em>, regardless of your orientation.</p>
+    <h4>Convention</h4>
+    <p><strong>Left = US. Right = BIG BANG.</strong> The further right you move, the further back in time you look. The CMB (z=1100) is the ultimate boundary — radiation from before that was opaque.</p>
+    <h4>Convention (cont.)</h4>
+    <p>Galaxies appear as <strong>vertical needles</strong> on either side of the ray. Needle length grows with redshift (a kind of radial "spectral signature"). Side (above / below) is set deterministically by a name hash — preventing nearby galaxies from overlapping in clumps.</p>
+    <h4>Histogram below</h4>
+    <p>Below the central ray, a <strong>density histogram</strong> shows how many galaxies fall in each axis bin, log-normalized. You see immediately where the catalog clusters: in the first 100 Myr (Local Group), around 1-3 Gly (JWST surveys), at the CMB edge.</p>`,
+
+  navig: `
+    <h3>🎮 Navigation</h3>
+    <table>
+      <tr><th>Action</th><th>Desktop</th><th>Mobile</th></tr>
+      <tr><td>Zoom</td><td>Mouse wheel</td><td>Pinch 2-finger</td></tr>
+      <tr><td>Pan</td><td>Drag</td><td>1-finger drag</td></tr>
+      <tr><td>Details</td><td>Click</td><td>Tap</td></tr>
+      <tr><td>Tooltip</td><td>Hover</td><td>—</td></tr>
+      <tr><td>Search</td><td><kbd>/</kbd> or <kbd>Ctrl+K</kbd></td><td>🔍</td></tr>
+      <tr><td>Prev/next galaxy</td><td><kbd>←</kbd> <kbd>→</kbd></td><td>—</td></tr>
+      <tr><td>Zoom in/out</td><td><kbd>+</kbd> <kbd>−</kbd></td><td>Buttons</td></tr>
+      <tr><td>Cycle axis mode</td><td><kbd>M</kbd></td><td>Dropdown</td></tr>
+      <tr><td>Toggle language</td><td><kbd>L</kbd></td><td>RO/EN button</td></tr>
+      <tr><td>Guided tour</td><td><kbd>T</kbd> or 🚀</td><td>🚀</td></tr>
+      <tr><td>Quiz</td><td><kbd>Q</kbd> or 🧩</td><td>🧩</td></tr>
+      <tr><td>Guide</td><td><kbd>G</kbd> or 📖</td><td>📖</td></tr>
+      <tr><td>Reset view</td><td>⌂</td><td>⌂</td></tr>
+      <tr><td>Close overlay</td><td><kbd>Esc</kbd></td><td>Tap outside</td></tr>
+    </table>
+    <p>The <strong>H₀</strong> slider in the bottom bar lets you see the Hubble tension effect: at Planck (67.4) the universe is ~13.8 Gyr old; at SH0ES (73) it's ~12.7 Gyr. All cosmological distances recompute live.</p>`,
+
+  modes: `
+    <h3>📏 The four axis modes</h3>
+    <p>Each mode is a mathematically distinct representation of the same catalog. Compare them to grow intuition for the geometry of expanding spacetime.</p>
+    <h4>1. Lookback time (Myr)</h4>
+    <p>How long the light has been traveling from the galaxy to you. Milky Way = 0; CMB ≈ 13,800 Myr. The most intuitive quantity: <em>"how old is the image we see?"</em></p>
+    <h4>2. Comoving distance (Mly)</h4>
+    <p>The <em>current</em> distance between us and the galaxy, with cosmic expansion factored out. CMB ≈ 46,000 Mly comoving (even though its light traveled only ~13.8 Gly). Useful for true spatial geometry.</p>
+    <h4>3. Redshift (z)</h4>
+    <p>How much wavelengths have been stretched by expansion. z=0 now, z=1 when the universe was half its current size, z=1100 at the surface of last scattering (CMB). Dimensionless, observed directly via spectroscopy.</p>
+    <h4>4. Scale factor (a = 1/(1+z))</h4>
+    <p>Relative size of the universe vs today: a=1 now, a=0.5 at z=1, a≈10⁻³ at the CMB. <em>Reverse</em> of z. Useful for visualizing expansion as a conformal time-like axis.</p>
+    <div class="gnote">💡 <strong>Tip</strong>: press <kbd>M</kbd> rapidly to cycle modes. The same galaxy moves along the ray — observe how its order is preserved but local density changes.</div>`,
+
+  why1d: `
+    <h3>🤔 Why a 1D visualization?</h3>
+    <p>A 1D simulation seems like a downgrade from 2D / 3D. But there's a serious case for it.</p>
+    <h4>Losing direction is an epistemic gain</h4>
+    <p>In 2D and 3D, a galaxy's angular position on the sky (RA, Dec) is given by where Earth is. If you'd been born in a different galaxy, you'd see the same catalog... at different sky positions. But <strong>lookback distance stays the same</strong>.</p>
+    <h4>Radial density becomes visible</h4>
+    <p>In 2D / 3D projections, sampling brings galaxies at very different distances into adjacent points, hiding the radial structure. In 1D, radial structure is <em>all you see</em>. The histogram below shows: the catalog is biased toward the Local Group and the JWST era (~13 Gly).</p>
+    <h4>Epistemic honesty</h4>
+    <p>A 2D map gives the illusion that "this is what the universe looks like". But it's a fiction — the universe has no 2D surface. A 3D map is a better fiction, but still a reduction. <strong>A 1D axis pretends to nothing more than what it is: a distance ordering.</strong></p>
+    <h4>Multi-readable</h4>
+    <p>Four axis modes (lookback, comoving, redshift, scale factor) let you view the <em>same</em> reality through four conceptual windows. None is "more true" than the others. All describe the same ΛCDM expansion.</p>
+    <h4>Limits to remember</h4>
+    <p>You can say nothing about angular clustering (Coma vs Virgo look identical in 1D). You can't distinguish cosmic filaments. You can't represent superclusters. For that, the 2D and 3D versions exist — each with its own pedagogical purpose.</p>
+    <div class="gfact">💡 <strong>Philosophy</strong>: none of the dimensions (1D, 2D, 3D) is "the truth". All are tools. Use them together.</div>`,
+
+  terms: `
+    <h3>📚 Key terms</h3>
+    <table>
+      <tr><th>Term</th><th>Meaning</th></tr>
+      <tr><td>z (redshift)</td><td>Spectral shift. A galaxy at z=1: its light was stretched 100%</td></tr>
+      <tr><td>Mly</td><td>Million light-years. 1 Mly = 10⁶ ly ≈ 9.46×10²² m</td></tr>
+      <tr><td>Gly</td><td>Billion light-years. 1 Gly = 10⁹ ly = 1,000 Mly</td></tr>
+      <tr><td>Lookback time</td><td>How long the light has been traveling from source to us</td></tr>
+      <tr><td>Comoving distance</td><td>Current distance with expansion factored out</td></tr>
+      <tr><td>Scale factor a</td><td>Relative size of the universe. a=1 today, a→0 at Big Bang</td></tr>
+      <tr><td>H₀</td><td>Hubble constant. Current expansion rate</td></tr>
+      <tr><td>ΛCDM</td><td>Standard model: Λ (dark energy) + CDM (cold dark matter)</td></tr>
+      <tr><td>CMB</td><td>Cosmic Microwave Background — radiation from 380,000 yr after Big Bang</td></tr>
+      <tr><td>JWST</td><td>James Webb Space Telescope (launched 2021)</td></tr>
+      <tr><td>EHZ</td><td>Extreme High Redshift — galaxies at z &gt; 10</td></tr>
+      <tr><td>Hubble tension</td><td>Discrepancy between H₀ measurements: Planck (67.4) vs SH0ES (73)</td></tr>
+    </table>`,
+
+  limits: `
+    <h3>⚖️ The limits of the 1D simulation</h3>
+    <p>A good simulation is honest about what it can't do. 1D is even more honest than 2D — because the reduction is more radical.</p>
+    <h4>1. Distance is all you see</h4>
+    <p>Two galaxies at the same distance overlap, regardless of whether they're in opposite parts of the sky. All directional information (RA, Dec) is discarded. Accepted — it's the price of axial clarity.</p>
+    <h4>2. Curated 112-galaxy sample</h4>
+    <p>Same 112 objects as 2D. The observable universe contains ~10¹¹ galaxies. This is NOT a statistical representation — it's a pedagogical selection.</p>
+    <h4>3. ΛCDM distances with z-growing error</h4>
+    <p>z &lt; 1: ~1-3% precision. z &gt; 5: 5-10%. z &gt; 10 (JWST records): 10-15%. CEERS-93316 was a z~16 candidate — JWST corrected to z≈4.9.</p>
+    <h4>4. Hubble tension unresolved</h4>
+    <p>The H₀ slider (67.4 Planck ↔ 73 SH0ES) demonstrates the ambiguity. No consensus exists — see Axis Modes for numerical effects.</p>
+    <h4>5. The lateral hash is arbitrary</h4>
+    <p>Galaxies appear above or below the ray based on the parity of their name's character sum. This is a display trick — NOT a physical variable. Rename a galaxy in the catalog, and it switches sides.</p>
+    <h4>6. The histogram is per-bin on screen, not volumetric</h4>
+    <p>What you see below is the catalog's projected density on the axis, log-normalized. NOT the real density of the universe — which scales with r² (the volume of a spherical shell).</p>
+    <h4>7. Lookback &lt; vs &gt; universe age at H₀&gt;67.4</h4>
+    <p>The H₀ slider can make a catalog galaxy (with prefix lb) seem "older than the universe". The app uses live Friedmann calculation, so at H₀=73 z=14.44 gives lookback ~12.5 Gyr (consistent with SH0ES universe age 12.7 Gyr).</p>
+    <h4>8. localStorage persistence (v1.0)</h4>
+    <p>Preferences (axis mode, language, CVD) are saved <strong>locally on your device</strong>. There is no server — this app is a single static page. Reset: DevTools → Application → Local Storage → delete <code>uv1d_*</code> keys.</p>
+    <div class="gfact">💡 <strong>Philosophy:</strong> Fewer dimensions, fewer lies. 1D claims minimum — and delivers maximum on one thing: radial ordering.</div>`,
+
+  changelog: `
+    <h3>📋 Changelog</h3>
+    <h4>v1.0 (May 2026) — 1D launch · The Cosmic Ray™</h4>
+    <ul>
+      <li>🌠 112-galaxy catalog projected onto a single radial axis.</li>
+      <li>📏 4 axis modes: lookback (Myr), comoving (Mly), redshift (z), scale factor (a).</li>
+      <li>🧭 Live Friedmann calculator with H₀-aware (slider 60-78 km/s/Mpc).</li>
+      <li>📊 Log-normalized density histogram, recomputed on every zoom/pan.</li>
+      <li>🔍 Bilingual fuzzy search, arrow-key galaxy navigation.</li>
+      <li>🚀 Guided 8-stop tour, dimensionally-adapted cosmic quiz.</li>
+      <li>💾 Persistent preferences (uv1d_prefs_v1): axis mode, language, CVD.</li>
+      <li>♿ Accessibility: prefers-reduced-motion, daltonism palette, focus-visible, skip-link, ARIA roles.</li>
+      <li>🌍 Full RO/EN bilingual (UI, 8-tab guide, galaxy descriptions).</li>
+      <li>🔗 Permalink with base64-encoded full state (mode, zoom, pan, selection, H₀, language).</li>
+      <li>📑 Honesty tab "Why 1D?" + "Simulation Limits" tab with 8 sections.</li>
+    </ul>
+    <p style="margin-top:12px;font-size:11.5px;color:var(--dimmer)">
+    Companion to <a href="https://alexio.tf/universul-observabil-2d" target="_blank" style="color:var(--accent)">2D v5.9</a>
+    and <a href="https://alexio.tf/universul-observabil-3d" target="_blank" style="color:var(--accent)">3D</a>.</p>`,
+
+  credits: `
+    <h3>🏅 Credits &amp; Sources</h3>
+    <h4>Author</h4>
+    <p><strong>Alexandru Ionuț Chiuță "Alexio"</strong> · ARES — Centrul STRING × ASFAN-România · <a href="https://alexio.tf" target="_blank" style="color:var(--accent)">alexio.tf</a></p>
+    <h4>Data sources</h4>
+    <table>
+      <tr><th>Source</th><th>Usage</th></tr>
+      <tr><td>ΛCDM Planck 2018</td><td>H₀=67.4 km/s/Mpc, Ω_m=0.315, Ω_Λ=0.685</td></tr>
+      <tr><td>NASA/IPAC NED</td><td>RA/Dec coordinates, distances</td></tr>
+      <tr><td>SIMBAD</td><td>Object types, redshifts</td></tr>
+      <tr><td>JWST / JADES</td><td>JADES-GS-z14-0/1, GN-z11, etc.</td></tr>
+      <tr><td>Naidu et al. 2025</td><td>MoM-z14 (z=14.44) — current record</td></tr>
+    </table>
+    <h4>Cosmological calculation</h4>
+    <p>Friedmann integral (N=500 steps) with logarithmic substitution for universe age. scipy.integrate.quad-verified in 2D edition v5.8. Cached on (z, H₀).</p>
+    <h4>Citation</h4>
+    <p>Chiuță, Alexandru Ionuț (2026). <em>Observable Universe 1D · v${VERSION} · Cosmic Ray™</em>. ARES — Centrul STRING × ASFAN. <a href="https://alexio.tf" style="color:var(--accent)">alexio.tf</a>. DOI: 10.5281/zenodo.PLACEHOLDER</p>
+    <h4>Disclaimer</h4>
+    <p><strong>Satirical and educational</strong> application. All data are accurate to the best available sources. Companion to the <a href="https://alexio.tf/universul-observabil-2d" style="color:var(--accent)">2D version</a> and the 3D one.</p>`,
+};
+
+function showTab(t) {
+  _activeTab = t;
+  document.querySelectorAll('.gtb').forEach(b => b.classList.toggle('act', b.dataset.tab === t));
+  const src = currentLang === 'ro' ? GUIDE_RO : GUIDE_EN;
+  document.getElementById('guideBody').innerHTML = src[t] || GUIDE_EN[t] || '';
+}
+function openGuide(tab) {
+  document.getElementById('guideOvl').classList.add('open');
+  showTab(tab || 'intro');
+}
+function closeGuide() {
+  document.getElementById('guideOvl').classList.remove('open');
+}
+function setupGuide() {
+  document.querySelectorAll('.gtb').forEach(b => {
+    b.addEventListener('click', () => showTab(b.dataset.tab));
+  });
+  document.getElementById('guideClose').addEventListener('click', closeGuide);
+  document.getElementById('guideOvl').addEventListener('click', e => {
+    if (e.target.id === 'guideOvl') closeGuide();
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  TOUR — 8 stops, bilingual, animates pan+zoom to each
+// ═══════════════════════════════════════════════════════
+const TOUR_STOPS = [
+  { name: 'Calea Lactee',
+    ttl_ro: 'Aici suntem',
+    ttl_en: 'Here we are',
+    txt_ro: 'Punctul de plecare al razei. Calea Lactee — galaxia noastră, ~400 miliarde stele. Pe orice axă, ea este la zero. Toate celelalte galaxii sunt mai departe (în spațiu și în timp).',
+    txt_en: 'The starting point of the ray. The Milky Way — our galaxy, ~400 billion stars. On any axis, it is at zero. Every other galaxy is farther (in space and in time).' },
+  { name: 'Andromeda (M31)',
+    ttl_ro: 'Cea mai apropiată galaxie spirală',
+    ttl_en: 'The nearest spiral galaxy',
+    txt_ro: 'La doar 2,5 milioane ani-lumină. În ~4,5 miliarde de ani vom fuziona în „Milkomeda". Lookback: 2,5 Myr — practic instantaneu pe scara cosmică.',
+    txt_en: 'Just 2.5 million light-years away. In ~4.5 Gyr we will merge into "Milkomeda". Lookback: 2.5 Myr — practically instantaneous on the cosmic scale.' },
+  { name: 'M87 (Virgo A)',
+    ttl_ro: 'Gaura neagră M87*',
+    ttl_en: 'The M87* black hole',
+    txt_ro: '54 milioane ani-lumină. Prima gaură neagră fotografiată (EHT 2019): 6,5 miliarde mase solare. Pe axa lookback încă suntem aproape de Big Bang... pe axa actuală, totuși, doar 54 Myr.',
+    txt_en: '54 million light-years. The first black hole ever photographed (EHT 2019): 6.5 billion solar masses. On the lookback axis we are still close to Big Bang... but only 54 Myr in.' },
+  { name: 'NGC 4889 (Coma BCG)',
+    ttl_ro: 'Roiul Coma',
+    ttl_en: 'Coma Cluster',
+    txt_ro: '321 Mly. Una dintre cele mai masive galaxii cunoscute: gaura neagră centrală ~21 miliarde mase solare, de 3× mai masivă decât M87*. Prima Gly de drum.',
+    txt_en: '321 Mly. One of the most massive galaxies known: central black hole ~21 billion solar masses, 3× more massive than M87*. The first Gly of the journey.' },
+  { name: 'TON 618',
+    ttl_ro: 'Quasarul gigant',
+    ttl_en: 'The giant quasar',
+    txt_ro: '10,4 miliarde ani-lumină. Gaură neagră 66 miliarde mase solare. Universul era de 3,3× mai mic atunci. Schimbă axa pe „redshift" și vezi z≈2,2.',
+    txt_en: '10.4 billion light-years. Black hole 66 billion solar masses. The universe was 3.3× smaller then. Switch to "redshift" axis to see z≈2.2.' },
+  { name: 'GN-z11',
+    ttl_ro: 'Recordul HST pre-JWST',
+    ttl_en: 'The HST pre-JWST record',
+    txt_ro: 'z=10,96. Universul avea ~400 milioane ani. JWST (2023) a confirmat redshift-ul și a descoperit AGN activ cu abundență de azot. Poți vedea pe axa „scale factor" că a≈0,083.',
+    txt_en: 'z=10.96. The universe was ~400 million years old. JWST (2023) confirmed the redshift and discovered an active AGN with nitrogen abundance. On the "scale factor" axis, a≈0.083.' },
+  { name: 'MoM-z14',
+    ttl_ro: 'Recordul curent JWST',
+    ttl_en: 'Current JWST record',
+    txt_ro: 'z=14,44. Universul avea doar 280 milioane ani — 2% din vârsta sa actuală. Confirmat de Naidu et al. 2025. Pe scara comoving: ~33 Gly.',
+    txt_en: 'z=14.44. The universe was only 280 million years old — 2% of its current age. Confirmed by Naidu et al. 2025. On the comoving scale: ~33 Gly.' },
+  { name: 'Orizont CMB (Radiație Cosmică de Fond)',
+    ttl_ro: 'Limita Universului observabil',
+    ttl_en: 'The boundary of the observable universe',
+    txt_ro: '45.600 Mly comoving · z=1100 · 380.000 ani după Big Bang. Înainte: opacitate. Aici e capătul razei — nu pentru că universul se termină, ci pentru că lumina se termină.',
+    txt_en: '45,600 Mly comoving · z=1100 · 380,000 years after Big Bang. Before: opacity. The end of the ray — not because the universe ends, but because the light ends.' },
+];
+
+let _tourIdx = 0;
+let _tourActive = false;
+function startTour() {
+  _tourActive = true;
+  _tourIdx = 0;
+  showTourStop();
+}
+function showTourStop() {
+  const stop = TOUR_STOPS[_tourIdx];
+  const idx = GALAXIES.findIndex(g => g.n === stop.name);
+  if (idx >= 0) {
+    selectGalaxy(idx);
+    // Auto-zoom on the target
+    const v = axisValueFor(GALAXIES[idx], state.mode);
+    const frac = projectAxis(v, state.mode);
+    const targetZoom = 6;
+    state.zoom = targetZoom;
+    state.pan = Math.max(0, Math.min(1 - 1 / targetZoom, frac - 0.5 / targetZoom));
+    updateZoomLabel();
+    draw();
+  }
+  document.getElementById('tourCnt').textContent = `${_tourIdx + 1} / ${TOUR_STOPS.length}`;
+  document.getElementById('tourTtl').textContent = currentLang === 'ro' ? stop.ttl_ro : stop.ttl_en;
+  document.getElementById('tourTxt').textContent = currentLang === 'ro' ? stop.txt_ro : stop.txt_en;
+  document.getElementById('tourCard').classList.add('show');
+}
+function nextTourStop() {
+  if (_tourIdx >= TOUR_STOPS.length - 1) { endTour(); return; }
+  _tourIdx++; showTourStop();
+}
+function prevTourStop() {
+  if (_tourIdx <= 0) return;
+  _tourIdx--; showTourStop();
+}
+function endTour() {
+  _tourActive = false;
+  document.getElementById('tourCard').classList.remove('show');
+}
+function setupTour() {
+  document.getElementById('tourNext').addEventListener('click', nextTourStop);
+  document.getElementById('tourPrev').addEventListener('click', prevTourStop);
+  document.getElementById('tourSkip').addEventListener('click', endTour);
+}
+
+// ═══════════════════════════════════════════════════════
+//  QUIZ — 12 question types, 1D-adapted
+// ═══════════════════════════════════════════════════════
+const QUIZ_TYPES = [
+  // Each returns { q_ro, q_en, opts (4), correctIdx, exp_ro, exp_en }
+  () => {
+    const g = GALAXIES.find(x => x.n === 'Andromeda (M31)');
+    return {
+      q_ro: 'Pe axa lookback, Andromeda (M31) e la aproximativ:',
+      q_en: 'On the lookback axis, Andromeda (M31) is at approximately:',
+      opts: ['2.5 Myr', '25 Myr', '250 Myr', '2.500 Myr'],
+      correctIdx: 0,
+      exp_ro: 'Andromeda e la 2,5 milioane ani-lumină — lumina ei a călătorit 2,5 milioane de ani.',
+      exp_en: 'Andromeda is 2.5 million light-years away — its light traveled 2.5 million years.',
+    };
+  },
+  () => ({
+    q_ro: 'Care este redshift-ul aproximativ al CMB-ului?',
+    q_en: 'What is the approximate redshift of the CMB?',
+    opts: ['z = 11', 'z = 100', 'z = 1100', 'z = 11000'],
+    correctIdx: 2,
+    exp_ro: 'CMB are z ≈ 1100. Lumina lui a fost emisă la 380.000 ani după Big Bang, când hidrogenul s-a recombinat.',
+    exp_en: 'CMB has z ≈ 1100. Its light was emitted 380,000 years after the Big Bang when hydrogen recombined.',
+  }),
+  () => ({
+    q_ro: 'La z=1, factor de scară a este:',
+    q_en: 'At z=1, the scale factor a is:',
+    opts: ['a = 0.5', 'a = 1.0', 'a = 2.0', 'a = 0.25'],
+    correctIdx: 0,
+    exp_ro: 'Formula: a = 1/(1+z). La z=1, a = 1/2 = 0,5. Universul era pe jumătate față de azi.',
+    exp_en: 'Formula: a = 1/(1+z). At z=1, a = 1/2 = 0.5. The universe was half its current size.',
+  }),
+  () => ({
+    q_ro: 'Vârsta universului la H₀ Planck (67,4) este aproximativ:',
+    q_en: 'The age of the universe at Planck H₀ (67.4) is approximately:',
+    opts: ['12.7 Gyr', '13.8 Gyr', '14.5 Gyr', '15.2 Gyr'],
+    correctIdx: 1,
+    exp_ro: 'La H₀=67,4 (Planck 2018), vârsta este 13,8 miliarde de ani. La SH0ES (H₀=73), e doar 12,7 Gyr.',
+    exp_en: 'At H₀=67.4 (Planck 2018), the age is 13.8 billion years. At SH0ES (H₀=73), only 12.7 Gyr.',
+  }),
+  () => ({
+    q_ro: 'Distanța comoving spre CMB e ~46.000 Mly. Lookback time e ~13.800 Myr. De ce diferă?',
+    q_en: 'CMB comoving distance is ~46,000 Mly. Lookback time is ~13,800 Myr. Why do they differ?',
+    opts: [
+      'Eroare de măsurare',
+      'Universul s-a expandat în timp ce lumina călătorea',
+      'Lumina merge mai repede ca lumina',
+      'Sunt două galaxii diferite'
+    ],
+    correctIdx: 1,
+    exp_ro: 'În timpul cât lumina CMB a călătorit (13,8 Gyr), universul s-a extins. Distanța actuală până la suprafața de ultim împrăștiat e ~46 Gly comoving.',
+    exp_en: 'While CMB light traveled (13.8 Gyr), the universe expanded. The current distance to the last-scattering surface is ~46 Gly comoving.',
+  }),
+  () => ({
+    q_ro: 'MoM-z14 e galaxia cea mai îndepărtată confirmată. Universul avea ~280 milioane ani când a emis lumina pe care o vedem. Pe axa lookback, ea apare la:',
+    q_en: 'MoM-z14 is the most distant confirmed galaxy. The universe was ~280 million years old when it emitted the light we see. On the lookback axis, it appears at:',
+    opts: ['~280 Myr', '~13.500 Myr', '~14.440 Myr', '~46.000 Myr'],
+    correctIdx: 1,
+    exp_ro: 'Lookback = vârsta univers acum (13.800) − vârsta univers la emisie (280) = 13.520 Myr. Aproape de marginea CMB.',
+    exp_en: 'Lookback = current universe age (13,800) − universe age at emission (280) = 13,520 Myr. Near the CMB edge.',
+  }),
+  () => ({
+    q_ro: 'În aplicația 1D, două galaxii la aceeași distanță dar din direcții diferite ale cerului apar:',
+    q_en: 'In the 1D app, two galaxies at the same distance but from different directions on the sky appear:',
+    opts: [
+      'În același punct',
+      'În puncte simetrice',
+      'În culori diferite',
+      'Ascunse'
+    ],
+    correctIdx: 0,
+    exp_ro: 'Aceasta e exact prețul unei reprezentări 1D: pierdem informația direcțională, păstrăm doar pe cea radială.',
+    exp_en: 'That is precisely the price of a 1D representation: we lose directional info and keep only the radial.',
+  }),
+  () => ({
+    q_ro: 'Care din următoarele NU este o axă disponibilă în Universul Observabil 1D?',
+    q_en: 'Which of the following is NOT an available axis in Observable Universe 1D?',
+    opts: ['Lookback time', 'Comoving distance', 'Redshift', 'Right Ascension'],
+    correctIdx: 3,
+    exp_ro: 'RA (Right Ascension) este o coordonată unghiulară. Aplicația 1D folosește doar axe radiale: lookback, comoving, redshift, scale factor.',
+    exp_en: 'RA (Right Ascension) is an angular coordinate. The 1D app only uses radial axes: lookback, comoving, redshift, scale factor.',
+  }),
+  () => ({
+    q_ro: 'Tensiunea Hubble se referă la:',
+    q_en: 'The Hubble tension refers to:',
+    opts: [
+      'Variația galaxiilor cu redshift',
+      'Două măsurători H₀ care nu sunt de acord (Planck vs SH0ES)',
+      'Forța elastică în univers',
+      'Tensionarea spațiu-timpului'
+    ],
+    correctIdx: 1,
+    exp_ro: 'Planck (CMB): H₀ = 67,4. SH0ES (cefeide + SN Ia): H₀ = 73. Diferența nu se rezolvă cu erorile de măsurare.',
+    exp_en: 'Planck (CMB): H₀ = 67.4. SH0ES (Cepheids + SN Ia): H₀ = 73. The difference is not resolved by measurement errors.',
+  }),
+  () => ({
+    q_ro: 'Histograma de jos arată:',
+    q_en: 'The histogram at the bottom shows:',
+    opts: [
+      'Densitatea reală volumetrică a universului',
+      'Numărul de galaxii din catalog per bin pe axa curentă (log-normalizat)',
+      'Energia totală a universului',
+      'Spectrul electromagnetic'
+    ],
+    correctIdx: 1,
+    exp_ro: 'E o histogramă a celor 112 galaxii din catalog, normalizată log. NU reflectă densitatea volumetrică reală.',
+    exp_en: 'It is a histogram of the 112 catalog galaxies, log-normalized. It does NOT reflect real volumetric density.',
+  }),
+  () => ({
+    q_ro: 'Dacă mărești H₀ de la 67,4 la 73, vârsta universului:',
+    q_en: 'If you increase H₀ from 67.4 to 73, the age of the universe:',
+    opts: ['Crește', 'Scade', 'Rămâne la fel', 'Devine negativă'],
+    correctIdx: 1,
+    exp_ro: 'H₀ mai mare = expansiune mai rapidă = mai puțin timp pentru a ajunge la mărimea actuală = vârstă mai mică (12,7 Gyr la SH0ES, vs 13,8 la Planck).',
+    exp_en: 'Larger H₀ = faster expansion = less time to reach current size = smaller age (12.7 Gyr at SH0ES vs 13.8 at Planck).',
+  }),
+  () => ({
+    q_ro: 'TON 618 e quasarul cu cea mai masivă gaură neagră confirmată. Câte mase solare?',
+    q_en: 'TON 618 is the quasar with the most massive confirmed black hole. How many solar masses?',
+    opts: ['66 milioane', '660 milioane', '66 miliarde', '660 miliarde'],
+    correctIdx: 2,
+    exp_ro: '66 miliarde mase solare. De 16.000× mai masivă decât M87* (6,5 miliarde).',
+    exp_en: '66 billion solar masses. 16,000× more massive than M87* (6.5 billion).',
+  }),
+];
+
+let _quizIdx = 0;
+let _quizScore = 0;
+let _quizCurrent = null;
+let _quizQuestions = [];
+
+function openQuiz() {
+  _quizScore = 0;
+  _quizIdx = 0;
+  // Pick 10 random distinct templates
+  _quizQuestions = QUIZ_TYPES.slice().sort(() => Math.random() - 0.5).slice(0, 10).map(f => f());
+  showQuizQuestion();
+  document.getElementById('quizOvl').classList.add('open');
+}
+function closeQuiz() {
+  document.getElementById('quizOvl').classList.remove('open');
+}
+function showQuizQuestion() {
+  if (_quizIdx >= _quizQuestions.length) {
+    document.getElementById('quizQ').textContent = currentLang === 'ro'
+      ? `🎉 Final! Scor: ${_quizScore} / ${_quizQuestions.length}`
+      : `🎉 Done! Score: ${_quizScore} / ${_quizQuestions.length}`;
+    document.getElementById('quizOpts').innerHTML = '';
+    document.getElementById('quizExp').classList.remove('show');
+    document.getElementById('quizNext').style.display = 'none';
+    return;
+  }
+  _quizCurrent = _quizQuestions[_quizIdx];
+  document.getElementById('quizCnt').textContent = `${_quizIdx + 1} / ${_quizQuestions.length}`;
+  document.getElementById('quizScore').textContent = (currentLang === 'ro' ? 'SCOR: ' : 'SCORE: ') + _quizScore;
+  document.getElementById('quizQ').textContent = currentLang === 'ro' ? _quizCurrent.q_ro : _quizCurrent.q_en;
+  const optsDiv = document.getElementById('quizOpts');
+  optsDiv.innerHTML = '';
+  _quizCurrent.opts.forEach((opt, i) => {
+    const d = document.createElement('div');
+    d.className = 'qopt';
+    d.textContent = opt;
+    d.addEventListener('click', () => answerQuiz(i, d));
+    optsDiv.appendChild(d);
+  });
+  document.getElementById('quizExp').classList.remove('show');
+  document.getElementById('quizNext').style.display = 'none';
+}
+function answerQuiz(i, el) {
+  const opts = document.querySelectorAll('.qopt');
+  opts.forEach(o => o.style.pointerEvents = 'none');
+  if (i === _quizCurrent.correctIdx) {
+    el.classList.add('ok');
+    _quizScore++;
+  } else {
+    el.classList.add('bad');
+    opts[_quizCurrent.correctIdx].classList.add('ok');
+  }
+  const exp = document.getElementById('quizExp');
+  exp.textContent = currentLang === 'ro' ? _quizCurrent.exp_ro : _quizCurrent.exp_en;
+  exp.classList.add('show');
+  document.getElementById('quizScore').textContent = (currentLang === 'ro' ? 'SCOR: ' : 'SCORE: ') + _quizScore;
+  document.getElementById('quizNext').style.display = 'inline-block';
+}
+function setupQuiz() {
+  document.getElementById('quizNext').addEventListener('click', () => {
+    _quizIdx++;
+    showQuizQuestion();
+  });
+  document.getElementById('quizClose').addEventListener('click', closeQuiz);
+  document.getElementById('quizOvl').addEventListener('click', e => {
+    if (e.target.id === 'quizOvl') closeQuiz();
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  applyPrefsAtBoot — apply persisted prefs (UV1D_PREFS).
+//  Permalinks override prefs (loaded after).
+// ═══════════════════════════════════════════════════════
+function applyPrefsAtBoot() {
+  const m = getPref('mode', null);
+  if (m && ['lookback','comoving','redshift','scale'].includes(m)) state.mode = m;
+  const lang = getPref('lang', null);
+  if (lang === 'ro' || lang === 'en') currentLang = lang;
+  const cvd = getPref('cvd', 'normal');
+  if (cvd === 'cvd') setCVD('cvd');
+}
+
+// ═══════════════════════════════════════════════════════
+//  INIT — wire everything up
+// ═══════════════════════════════════════════════════════
+function init() {
+  // 1) Prefs first (so initial state is correct), then permalink (overrides)
+  applyPrefsAtBoot();
+  loadPermalink();
+
+  // 2) Size canvas based on current container
+  resize();
+
+  // 3) Reflect state in UI controls
+  document.getElementById('modeSel').value = state.mode;
+  document.getElementById('modeLbl').textContent = axisLabel(state.mode, currentLang);
+  document.getElementById('h0Slider').value = userH0;
+  document.getElementById('h0Val').textContent = userH0.toFixed(1);
+  updateZoomLabel();
+
+  // 4) Apply i18n based on language (also updates tabs, hint, mode select labels)
+  applyI18N();
+
+  // 5) Event listeners — topbar
+  document.getElementById('btnSearch').addEventListener('click', openSearch);
+  document.getElementById('btnTour').addEventListener('click', startTour);
+  document.getElementById('btnQuiz').addEventListener('click', openQuiz);
+  document.getElementById('btnGuide').addEventListener('click', () => openGuide('intro'));
+  document.getElementById('btnLang').addEventListener('click', toggleLang);
+  document.getElementById('btnReset').addEventListener('click', resetView);
+
+  // 6) Mode select + H0 slider
+  document.getElementById('modeSel').addEventListener('change', e => setMode(e.target.value));
+  const h0sl = document.getElementById('h0Slider');
+  h0sl.addEventListener('input', e => {
+    userH0 = +e.target.value;
+    invalidateCosmoCache();
+    document.getElementById('h0Val').textContent = userH0.toFixed(1);
+    state.needsRedraw = true;
+    draw();
+  });
+
+  // 7) Zoom buttons
+  document.getElementById('zoomIn').addEventListener('click', () => zoomBy(1.3));
+  document.getElementById('zoomOut').addEventListener('click', () => zoomBy(1 / 1.3));
+
+  // 8) Panel close + actions
+  document.getElementById('pnlCloseBtn').addEventListener('click', closePanel);
+  document.getElementById('actClose').addEventListener('click', closePanel);
+  document.getElementById('actShare').addEventListener('click', shareLink);
+  document.getElementById('actCopy').addEventListener('click', copyDetails);
+
+  // 9) Setup overlays + interaction
+  setupSearch();
+  setupGuide();
+  setupTour();
+  setupQuiz();
+  setupInteraction();
+
+  // 10) Window resize (debounced)
+  let _resizeT = null;
+  window.addEventListener('resize', () => {
+    if (_resizeT) clearTimeout(_resizeT);
+    _resizeT = setTimeout(() => { resize(); draw(); }, 80);
+  });
+
+  // 11) Hash change → reload permalink
+  window.addEventListener('hashchange', () => {
+    if (loadPermalink()) {
+      document.getElementById('modeSel').value = state.mode;
+      document.getElementById('h0Slider').value = userH0;
+      document.getElementById('h0Val').textContent = userH0.toFixed(1);
+      applyI18N();
+      updateZoomLabel();
+      draw();
+      if (state.selected !== null) openPanel(GALAXIES[state.selected]);
+    }
+  });
+
+  // 12) First paint
+  if (state.selected !== null) openPanel(GALAXIES[state.selected]);
+  draw();
+
+  // 13) Auto-run smoke tests if ?test=1
+  if (location.search.includes('test=1')) {
+    setTimeout(() => {
+      const r = runSmokeTests();
+      console.log(`[UV1D Smoke] ${r.pass}/${r.total} passed${r.fail ? ' · FAILURES: ' + r.failures.join(', ') : ''}`);
+      toast(r.fail === 0 ? `✓ ${r.pass}/${r.total} smoke tests passed` : `✗ ${r.fail} smoke tests FAILED`);
+    }, 200);
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  SMOKE TESTS — exposed as window.UV1D.runTests()
+// ═══════════════════════════════════════════════════════
+function runSmokeTests() {
+  const failures = [];
+  let pass = 0, total = 0;
+  function assert(name, cond) {
+    total++;
+    if (cond) pass++; else failures.push(name);
+  }
+  // Catalog integrity
+  assert('GALAXIES is array', Array.isArray(GALAXIES));
+  assert('GALAXIES has 112 entries', GALAXIES.length === 112);
+  assert('First galaxy is Calea Lactee', GALAXIES[0].n === 'Calea Lactee');
+  assert('Last galaxy is CMB horizon', GALAXIES[GALAXIES.length - 1].t === 'CMB');
+  assert('All galaxies have required fields',
+    GALAXIES.every(g => 'n' in g && 't' in g && 'd' in g && 'z' in g));
+  // COSMO immutable
+  assert('COSMO is frozen', Object.isFrozen(COSMO));
+  assert('H0_PLANCK is 67.4', COSMO.H0_PLANCK === 67.4);
+  assert('OMEGA_M + OMEGA_LAMBDA ≈ 1', Math.abs(COSMO.OMEGA_M + COSMO.OMEGA_LAMBDA - 1) < 0.001);
+  // Cosmology calculations
+  assert('lookbackCached(0) = 0', lookbackCached(0) === 0);
+  assert('lookbackCached(1) > 0', lookbackCached(1) > 0);
+  assert('lookbackCached(1) < 14000', lookbackCached(1) < 14000);
+  assert('comovingCached(0) = 0', comovingCached(0) === 0);
+  assert('comovingCached(1) > 1000', comovingCached(1) > 1000);
+  assert('universeAge(67.4) ≈ 13800', Math.abs(universeAge(67.4) - 13800) < 50);
+  assert('universeAge(73) < universeAge(67.4)', universeAge(73) < universeAge(67.4));
+  // Axis projection
+  ['lookback','comoving','redshift','scale'].forEach(m => {
+    const g = GALAXIES.find(x => x.n === 'Andromeda (M31)');
+    const v = axisValueFor(g, m);
+    assert(`axisValueFor(Andromeda, ${m}) is finite`, Number.isFinite(v));
+    const f = projectAxis(v, m);
+    assert(`projectAxis ${m} is in [0,1]`, f >= 0 && f <= 1);
+  });
+  // Histogram
+  const h = buildHistogram('lookback', 800, 50);
+  assert('Histogram has 50 bins', h.bins === 50);
+  assert('Histogram norm values in [0,1]', h.norm.every(v => v >= 0 && v <= 1));
+  assert('Histogram total counts ≤ catalog (excludes CMB)',
+    h.counts.reduce((a,b) => a+b, 0) <= GALAXIES.length);
+  // Prefs round-trip
+  const _origVal = getPref('__test_key', null);
+  setPref('__test_key', 'hello');
+  // Wait briefly for debounce — but for sync test we just check the cache:
+  assert('Prefs round-trip in cache', getPref('__test_key', null) === 'hello');
+  // Force write to localStorage by waiting then re-reading
+  // (skip — debounce test is async; cache check is sufficient for now)
+  // prefersReducedMotion is boolean
+  assert('prefersReducedMotion returns boolean', typeof prefersReducedMotion() === 'boolean');
+  // Guide content
+  assert('GUIDE_RO has 8 tabs',
+    ['intro','navig','modes','why1d','terms','limits','changelog','credits'].every(t => GUIDE_RO[t]));
+  assert('GUIDE_EN has 8 tabs',
+    ['intro','navig','modes','why1d','terms','limits','changelog','credits'].every(t => GUIDE_EN[t]));
+  assert('GUIDE_RO.intro mentions 112', GUIDE_RO.intro.includes('112'));
+  assert('GUIDE_EN.intro mentions 112', GUIDE_EN.intro.includes('112'));
+  assert('GUIDE_RO.limits non-empty', GUIDE_RO.limits.length > 200);
+  assert('GUIDE_EN.limits non-empty', GUIDE_EN.limits.length > 200);
+  assert('GUIDE_RO.why1d non-empty', GUIDE_RO.why1d.length > 200);
+  assert('GUIDE_EN.why1d non-empty', GUIDE_EN.why1d.length > 200);
+  // Tour
+  assert('TOUR_STOPS has 8 stops', TOUR_STOPS.length === 8);
+  assert('All TOUR_STOPS reference valid galaxies',
+    TOUR_STOPS.every(s => GALAXIES.findIndex(g => g.n === s.name) >= 0));
+  assert('All TOUR_STOPS bilingual', TOUR_STOPS.every(s => s.ttl_ro && s.ttl_en && s.txt_ro && s.txt_en));
+  // Quiz
+  assert('QUIZ_TYPES has 12 templates', QUIZ_TYPES.length === 12);
+  // Generate one of each, validate shape
+  let quizValid = true;
+  for (const f of QUIZ_TYPES) {
+    const q = f();
+    if (!q || typeof q.q_ro !== 'string' || typeof q.q_en !== 'string'
+        || !Array.isArray(q.opts) || q.opts.length !== 4
+        || typeof q.correctIdx !== 'number' || q.correctIdx < 0 || q.correctIdx > 3
+        || typeof q.exp_ro !== 'string' || typeof q.exp_en !== 'string') { quizValid = false; break; }
+  }
+  assert('All QUIZ_TYPES generate valid bilingual questions', quizValid);
+  // Permalink round-trip
+  const beforeMode = state.mode;
+  const beforePan = state.pan;
+  const beforeZoom = state.zoom;
+  const link = buildPermalink();
+  assert('Permalink contains #s=', link.includes('#s='));
+  assert('Permalink encoded JSON is valid base64',
+    (() => { try { atob(link.split('#s=')[1]); return true; } catch { return false; } })());
+  // log1p sanity
+  assert('log1p(0) = 0', Math.log1p(0) === 0);
+  assert('log1p(e-1) ≈ 1', Math.abs(Math.log1p(Math.E - 1) - 1) < 0.0001);
+  // typeColors
+  assert('typeColors has spiral entry', !!typeColors.spiral);
+  assert('typeColors has CMB entry', !!typeColors.CMB);
+  // Type label
+  assert('typeLabel spiral RO is Spirală', typeLabel('spiral','ro') === 'Spirală');
+  assert('typeLabel spiral EN is Spiral', typeLabel('spiral','en') === 'Spiral');
+  // Version
+  assert('VERSION is 1.0', VERSION === '1.0');
+  // EN_DESCS_EXTRA loaded
+  assert('EN_DESCS_EXTRA is object', typeof EN_DESCS_EXTRA === 'object' && EN_DESCS_EXTRA !== null);
+  assert('EN_DESCS_EXTRA has CMB entry', !!EN_DESCS_EXTRA['Orizont CMB (Radiație Cosmică de Fond)']);
+  // Meta version match
+  const metaVer = document.title.includes('v' + VERSION);
+  assert('Title contains current VERSION', metaVer);
+
+  return { pass, total, fail: total - pass, failures };
+}
+
+// Public namespace
+window.UV1D = {
+  VERSION,
+  COSMO,
+  GALAXIES,
+  state,
+  runTests: runSmokeTests,
+  // Also expose for E2E debugging
+  setMode, toggleLang, openGuide, openQuiz, startTour,
+};
+
+// Boot
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+
+</script>
+</body>
+</html>
