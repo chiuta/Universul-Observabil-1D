@@ -25,6 +25,7 @@
 }
 </style>
 <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; media-src 'self' blob: data:; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; script-src 'self' 'unsafe-inline' blob:; connect-src 'self'">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="theme-color" content="#01040c">
 <title>Observable Universe · 1D · v1.0 · The Cosmic Ray™</title>
@@ -1915,7 +1916,7 @@ let _activeTab = 'intro';
 const GUIDE_RO = {
   intro: `
     <h3>🌠 Universul Observabil 1D · v${VERSION} · Cosmic Ray™</h3>
-    <p>Aceeași bază reală de date astronomice ca <a href="https://alexio.tf/universul-observabil-2d" target="_blank" style="color:var(--accent)">versiunea 2D</a> și <a href="https://alexio.tf/universul-observabil-3d" target="_blank" style="color:var(--accent)">cea 3D</a>, redusă la o singură axă: <strong>distanța de la noi</strong>.</p>
+    <p>Aceeași bază reală de date astronomice ca <a href="https://alexio.tf/universul-observabil-2d" target="_blank" style="color:var(--accent)" rel="noopener noreferrer">versiunea 2D</a> și <a href="https://alexio.tf/universul-observabil-3d" target="_blank" style="color:var(--accent)" rel="noopener noreferrer">cea 3D</a>, redusă la o singură axă: <strong>distanța de la noi</strong>.</p>
     <div class="gnote">✓ <strong>112 galaxii</strong> proiectate pe o rază unică. Patru moduri de axă: timp lookback (Myr), distanță comoving (Mly), redshift (z), factor de scară (a). 12 marcaje de tick. Modelul cosmologic ΛCDM Planck 2018.</div>
     <h4>De ce 1D?</h4>
     <p>Pentru că <strong>distanța radială este singura dimensiune fără ambiguitate</strong> în cosmologie. Direcția pe cer (RA, Dec) e accidentală — depinde de unde se află Pământul în Calea Lactee. Dar lookback time este o coordonată invariantă: galaxia X se află la 13,4 miliarde de ani lumină <em>distanță în timp</em>, oricare ar fi orientarea ta.</p>
@@ -2031,13 +2032,13 @@ const GUIDE_RO = {
       <li>📑 Tab onestitate „De ce 1D?" + tab „Limitele simulării" cu 8 secțiuni.</li>
     </ul>
     <p style="margin-top:12px;font-size:11.5px;color:var(--dimmer)">
-    Companion la versiunile <a href="https://alexio.tf/universul-observabil-2d" target="_blank" style="color:var(--accent)">2D v5.9</a>
-    și <a href="https://alexio.tf/universul-observabil-3d" target="_blank" style="color:var(--accent)">3D</a>.</p>`,
+    Companion la versiunile <a href="https://alexio.tf/universul-observabil-2d" target="_blank" style="color:var(--accent)" rel="noopener noreferrer">2D v5.9</a>
+    și <a href="https://alexio.tf/universul-observabil-3d" target="_blank" style="color:var(--accent)" rel="noopener noreferrer">3D</a>.</p>`,
 
   credits: `
     <h3>🏅 Credite &amp; Surse</h3>
     <h4>Autor</h4>
-    <p><strong>Alexandru Ionuț Chiuță „Alexio"</strong> · ARES — Centrul STRING × ASFAN-România · <a href="https://alexio.tf" target="_blank" style="color:var(--accent)">alexio.tf</a></p>
+    <p><strong>Alexandru Ionuț Chiuță „Alexio"</strong> · ARES — Centrul STRING × ASFAN-România · <a href="https://alexio.tf" target="_blank" style="color:var(--accent)" rel="noopener noreferrer">alexio.tf</a></p>
     <h4>Surse de date</h4>
     <table>
       <tr><th>Sursă</th><th>Utilizare</th></tr>
@@ -2058,7 +2059,7 @@ const GUIDE_RO = {
 const GUIDE_EN = {
   intro: `
     <h3>🌠 Observable Universe 1D · v${VERSION} · Cosmic Ray™</h3>
-    <p>The same real astronomical database as the <a href="https://alexio.tf/universul-observabil-2d" target="_blank" style="color:var(--accent)">2D version</a> and <a href="https://alexio.tf/universul-observabil-3d" target="_blank" style="color:var(--accent)">3D version</a>, reduced to a single axis: <strong>distance from us</strong>.</p>
+    <p>The same real astronomical database as the <a href="https://alexio.tf/universul-observabil-2d" target="_blank" style="color:var(--accent)" rel="noopener noreferrer">2D version</a> and <a href="https://alexio.tf/universul-observabil-3d" target="_blank" style="color:var(--accent)" rel="noopener noreferrer">3D version</a>, reduced to a single axis: <strong>distance from us</strong>.</p>
     <div class="gnote">✓ <strong>112 galaxies</strong> projected onto a single ray. Four axis modes: lookback time (Myr), comoving distance (Mly), redshift (z), scale factor (a). 12 tick markers. ΛCDM Planck 2018 cosmology.</div>
     <h4>Why 1D?</h4>
     <p>Because <strong>radial distance is the only unambiguous dimension</strong> in cosmology. Direction on the sky (RA, Dec) is accidental — it depends on where Earth happens to be in the Milky Way. But lookback time is invariant: galaxy X is 13.4 billion years <em>away in time</em>, regardless of your orientation.</p>
@@ -2174,13 +2175,13 @@ const GUIDE_EN = {
       <li>📑 Honesty tab "Why 1D?" + "Simulation Limits" tab with 8 sections.</li>
     </ul>
     <p style="margin-top:12px;font-size:11.5px;color:var(--dimmer)">
-    Companion to <a href="https://alexio.tf/universul-observabil-2d" target="_blank" style="color:var(--accent)">2D v5.9</a>
-    and <a href="https://alexio.tf/universul-observabil-3d" target="_blank" style="color:var(--accent)">3D</a>.</p>`,
+    Companion to <a href="https://alexio.tf/universul-observabil-2d" target="_blank" style="color:var(--accent)" rel="noopener noreferrer">2D v5.9</a>
+    and <a href="https://alexio.tf/universul-observabil-3d" target="_blank" style="color:var(--accent)" rel="noopener noreferrer">3D</a>.</p>`,
 
   credits: `
     <h3>🏅 Credits &amp; Sources</h3>
     <h4>Author</h4>
-    <p><strong>Alexandru Ionuț Chiuță "Alexio"</strong> · ARES — Centrul STRING × ASFAN-România · <a href="https://alexio.tf" target="_blank" style="color:var(--accent)">alexio.tf</a></p>
+    <p><strong>Alexandru Ionuț Chiuță "Alexio"</strong> · ARES — Centrul STRING × ASFAN-România · <a href="https://alexio.tf" target="_blank" style="color:var(--accent)" rel="noopener noreferrer">alexio.tf</a></p>
     <h4>Data sources</h4>
     <table>
       <tr><th>Source</th><th>Usage</th></tr>
