@@ -1,4 +1,5 @@
 <!doctype html>
+<meta charset="utf-8">
 <!--
   ============================================================================
   Universul-Observabil-1D
@@ -24,7 +25,6 @@
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
 }
 </style>
-<meta charset="utf-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; media-src 'self' blob: data:; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; script-src 'self' 'unsafe-inline' blob:; connect-src 'self'">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="theme-color" content="#01040c">
@@ -1812,13 +1812,13 @@ function loadPermalink() {
     const b64 = hash.slice(3);
     const json = decodeURIComponent(escape(atob(b64)));
     const obj = JSON.parse(json);
-    if (obj.m) state.mode = obj.m;
+    if (['lookback','comoving','redshift','scale'].includes(obj.m)) state.mode = obj.m;
     if (typeof obj.z === 'number') state.zoom = Math.max(1, Math.min(60, obj.z));
     if (typeof obj.p === 'number') state.pan = Math.max(0, Math.min(1, obj.p));
     if (typeof obj.s === 'number' && obj.s >= 0 && obj.s < GALAXIES.length) state.selected = obj.s;
-    if (typeof obj.h === 'number') { userH0 = obj.h; invalidateCosmoCache(); }
-    if (obj.l) currentLang = obj.l;
-    if (obj.cvd) setCVD(obj.cvd);
+    if (typeof obj.h === 'number' && isFinite(obj.h)) { userH0 = Math.max(50, Math.min(100, obj.h)); invalidateCosmoCache(); }
+    if (obj.l === 'ro' || obj.l === 'en') currentLang = obj.l;
+    if (obj.cvd === 'cvd' || obj.cvd === 'normal') setCVD(obj.cvd);
     return true;
   } catch (e) { return false; }
 }
@@ -1981,7 +1981,7 @@ const GUIDE_RO = {
     <table>
       <tr><th>Termen</th><th>Sens</th></tr>
       <tr><td>z (redshift)</td><td>Decalaj spectral. Galaxie la z=1: lumina ei a fost întinsă cu 100%</td></tr>
-      <tr><td>Mly</td><td>Megaani-lumină. 1 Mly = 10⁶ ani-lumină ≈ 9,46×10²² m</td></tr>
+      <tr><td>Mly</td><td>Megaani-lumină. 1 Mly = 10⁶ ani-lumină ≈ 9,46×10²¹ m</td></tr>
       <tr><td>Gly</td><td>Gigaani-lumină. 1 Gly = 10⁹ ani-lumină = 1.000 Mly</td></tr>
       <tr><td>Lookback time</td><td>Cât timp a călătorit lumina de la sursă la noi</td></tr>
       <tr><td>Comoving distance</td><td>Distanța actuală, eliminând expansiunea</td></tr>
@@ -2124,7 +2124,7 @@ const GUIDE_EN = {
     <table>
       <tr><th>Term</th><th>Meaning</th></tr>
       <tr><td>z (redshift)</td><td>Spectral shift. A galaxy at z=1: its light was stretched 100%</td></tr>
-      <tr><td>Mly</td><td>Million light-years. 1 Mly = 10⁶ ly ≈ 9.46×10²² m</td></tr>
+      <tr><td>Mly</td><td>Million light-years. 1 Mly = 10⁶ ly ≈ 9.46×10²¹ m</td></tr>
       <tr><td>Gly</td><td>Billion light-years. 1 Gly = 10⁹ ly = 1,000 Mly</td></tr>
       <tr><td>Lookback time</td><td>How long the light has been traveling from source to us</td></tr>
       <tr><td>Comoving distance</td><td>Current distance with expansion factored out</td></tr>
@@ -2433,8 +2433,8 @@ const QUIZ_TYPES = [
     q_en: 'TON 618 is the quasar with the most massive confirmed black hole. How many solar masses?',
     opts: ['66 milioane', '660 milioane', '66 miliarde', '660 miliarde'],
     correctIdx: 2,
-    exp_ro: '66 miliarde mase solare. De 16.000× mai masivă decât M87* (6,5 miliarde).',
-    exp_en: '66 billion solar masses. 16,000× more massive than M87* (6.5 billion).',
+    exp_ro: '66 miliarde mase solare. De ~10× mai masivă decât M87* (6,5 miliarde).',
+    exp_en: '66 billion solar masses. ~10× more massive than M87* (6.5 billion).',
   }),
 ];
 
