@@ -49,7 +49,7 @@ Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf. Aplicația indic�
 
 ## Audit
 
-Audit: 2026-10-10; rundă 2: 2026-10-11 — eliminat din citare câmpul „DOI” cu valoare fictivă (nu există un DOI real); reformulată mențiunea „satirică și educațională” / „toate datele sunt corecte” (ghid RO+EN și README). Viewport și contrast corectate în runda 1.
+Audit: 2026-10-10; rundă 2: 2026-10-11 — eliminat din citare câmpul „DOI” cu valoare fictivă (nu există un DOI real); reformulată mențiunea „satirică și educațională” / „toate datele sunt corecte” (ghid RO+EN și README). Viewport și contrast corectate în runda 1. Runda 3 (2026-10-11): afirmațiile perisabile („record absolut/curent", „NOU", „cea mai apropiată/îndepărtată") reformulate „la data catalogului (mai 2026)", cu sursa (Naidu et al. 2025 pentru MoM-z14; arXiv 2603.15841 pentru EGS-z11-R0). Recordurile pot fi depășite după această dată.
 
 ## English summary
 
