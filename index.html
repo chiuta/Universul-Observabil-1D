@@ -28,9 +28,9 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; media-src 'self' blob: data:; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; script-src 'self' 'unsafe-inline' blob:; connect-src 'self'">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#01040c">
-<title>Observable Universe · 1D · v1.0 · The Cosmic Ray™</title>
+<title>Observable Universe · 1D · v1.0.1 · The Cosmic Ray™</title>
 <meta name="description" content="1D map of the observable universe — 112 galaxies projected on a single radial axis. Switch between lookback time, comoving distance, redshift, and scale factor. Logarithmic histogram of cosmic density. Quiz, guided tour, accessibility (prefers-reduced-motion, daltonism, keyboard nav), bilingual RO/EN, persistent preferences. v1.0 — The Cosmic Ray™ companion to the 2D and 3D versions.">
-<meta property="og:title" content="Observable Universe · 1D · v1.0 · The Cosmic Ray™">
+<meta property="og:title" content="Observable Universe · 1D · v1.0.1 · The Cosmic Ray™">
 <meta property="og:description" content="The radial truth: 112 galaxies on a single axis. Distance is the only honest dimension.">
 <meta property="og:type" content="website">
 
@@ -78,6 +78,13 @@ body.daltonism { --accent: #33bbee; --hot: #009988; }
   #title { font-size: 11.5px; }
   #title .ver { display: none; }
   .tbtn { padding: 6px 9px; font-size: 12px; }
+}
+@media (max-width: 420px) {
+  #topbar { gap: 4px; padding: 0 8px; }
+  #title { font-size: 10.5px; letter-spacing: 0; flex-shrink: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  #topbtns { flex-shrink: 0; }
+  #topbtns { gap: 3px; }
+  .tbtn { padding: 6px 7px; }
 }
 
 /* ─ MAIN STAGE ─ */
@@ -304,7 +311,7 @@ body.daltonism { --accent: #33bbee; --hot: #009988; }
 
 <!-- TOPBAR -->
 <header id="topbar" role="banner">
-  <div id="title">🌠 OBSERVABLE UNIVERSE · 1D <span class="ver">v1.0 · Cosmic Ray™</span></div>
+  <div id="title">🌠 OBSERVABLE UNIVERSE · 1D <span class="ver">v1.0.1 · Cosmic Ray™</span></div>
   <div id="topbtns">
     <button class="tbtn" id="btnSearch" aria-label="Search galaxies" title="Search (/)">🔍</button>
     <button class="tbtn" id="btnTour"   aria-label="Guided tour"     title="Tour">🚀</button>
@@ -333,7 +340,7 @@ body.daltonism { --accent: #33bbee; --hot: #009988; }
   </div>
   <div id="rayContainer">
     <canvas id="rayCanvas" tabindex="0" aria-label="1D cosmic distance visualization"></canvas>
-    <div id="vbadge">v1.0 · 1D · 112 galaxies</div>
+    <div id="vbadge">v1.0.1 · 1D · 112 galaxies</div>
   </div>
   <div id="histContainer">
     <canvas id="histCanvas" aria-hidden="true"></canvas>
@@ -624,7 +631,7 @@ const GALAXIES = [
   {n:"SMC (Micul Nor Magellanic)",ra:13,dec:-73,d:0.2,t:"irregular",m:"💫",z:0,lb:0.2,
    desc:"A doua galaxie satelit majoră. Nori Magellanic — nori de galaxii, nu de apă.",
    de:"The second major satellite galaxy. Magellanic Clouds — clouds of galaxies, not water. Contains some of the brightest young stars known."},
-  {n:"Andromeda (M31)",ra:10.7,dec:41.3,d:2.537,t:"spiral",m:"🌀",z:0.00100,lb:2.5,
+  {n:"Andromeda (M31)",ra:10.7,dec:41.3,d:2.537,t:"spiral",m:"🌀",z:-0.00100,lb:2.5,
    desc:"Cea mai apropiată galaxie spirală mare. Vine spre noi cu 110 km/s. Coliziune în ~4,5 Gyr.",
    de:"The nearest large spiral galaxy. Approaching us at ~110 km/s. Collision in ~4.5 Gyr forming 'Milkomeda'. The light you see left 2.5 million years ago."},
   {n:"Triunghiul (M33)",ra:23.5,dec:30.7,d:2.73,t:"spiral",m:"🌀",z:0.00060,lb:2.7,
@@ -1004,21 +1011,35 @@ let currentLang = getPref('lang', (navigator.language || 'en').slice(0,2) === 'r
 //  Each mode maps each galaxy.lb / .z / etc. to a 0..1
 //  fraction of the visible ray (after log).
 // ═══════════════════════════════════════════════════════
+// Derived cosmological values for a galaxy. For nearby galaxies the tabulated z is dominated by
+// peculiar velocity (e.g. Andromeda is blueshifted), so z-derived distances would be wrong; when the
+// z-implied comoving distance disagrees with the catalogued distance by >25% (and d < 100 Mly), use the catalogued
+// distance (Mly) for lookback/comoving and treat the scale factor as 1.
+function cosmoVals(g) {
+  const z = g.z || 0;
+  const zc = z > 0 ? comovingCached(z) : 0;
+  const local = !!(g.d > 0 && g.d < 100 && (z <= 0 || Math.abs(zc - g.d) / g.d > 0.25));   // only the peculiar-velocity regime (<100 Mly)
+  if (local) return { lb: g.lb != null ? g.lb : g.d, co: g.d, a: 1, zEff: 0, local: true };
+  return { lb: lookbackCached(z), co: zc, a: 1 / (1 + z), zEff: z, local: false };
+}
+function fmtZ(z) {
+  if (!z) return '0';
+  return (z > 0 ? '' : '\u2212') + Math.abs(z).toFixed(Math.abs(z) < 0.1 ? 4 : 2);
+}
 function axisValueFor(g, mode) {
   switch (mode) {
     case 'comoving': {
       // Comoving distance in Mly. For Milky Way (z=0, d=0) → 0.001 sentinel
-      if (g.z > 0) return comovingCached(g.z);
-      // For very close galaxies use g.d directly (negligible cosmological correction)
+      const cv = cosmoVals(g);
+      if (cv.co > 0) return cv.co;
       return g.d || 0.001;
     }
-    case 'redshift': return Math.max(g.z || 0, 0);
-    case 'scale':    return 1 / (1 + (g.z || 0)); // a; 1.0 = now, ↓ = past
+    case 'redshift': return Math.max(cosmoVals(g).zEff, 0);
+    case 'scale':    return cosmoVals(g).a; // a; 1.0 = now, ↓ = past
     case 'lookback':
     default: {
       // Use actual H₀-aware lookback when z>0; else g.lb (fallback / Local-Group consistency)
-      if (g.z > 0) return lookbackCached(g.z);
-      return g.lb || 0;
+      return cosmoVals(g).lb || 0;
     }
   }
 }
@@ -1210,8 +1231,11 @@ function drawRay() {
   ctx.fillStyle = 'rgba(170,221,255,0.55)';
   ctx.font = 'bold 11px monospace';
   ctx.textAlign = 'left';
+  ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(1,4,12,0.85)'; ctx.lineJoin = 'round';
+  ctx.strokeText(currentLang === 'ro' ? '◀ NOI' : '◀ US', 6, cy - 8);
   ctx.fillText(currentLang === 'ro' ? '◀ NOI' : '◀ US', 6, cy - 8);
   ctx.textAlign = 'right';
+  ctx.strokeText('BIG BANG ▶', W - 6, cy - 8);
   ctx.fillStyle = 'rgba(220,180,150,0.55)';
   ctx.fillText(currentLang === 'ro' ? 'BIG BANG ▶' : 'BIG BANG ▶', W - 6, cy - 8);
   ctx.restore();
@@ -1235,6 +1259,8 @@ function drawRay() {
     if (t.major) {
       ctx.fillStyle = 'rgba(180,210,240,0.7)';
       ctx.textAlign = 'center';
+      ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(1,4,12,0.85)'; ctx.lineJoin = 'round';
+      ctx.strokeText(t.label, x, cy + 14);   // dark halo keeps tick labels legible over needles
       ctx.fillText(t.label, x, cy + 14);
     }
   });
@@ -1259,7 +1285,7 @@ function drawRay() {
     // Hash side: name char codes parity → above (-1) or below (+1)
     const hashSide = ((g.n.charCodeAt(0) + g.n.charCodeAt(g.n.length - 1)) & 1) ? -1 : 1;
     // "Stem" length grows with redshift (or distance for nearby objects)
-    const lenBase = g.z > 0 ? Math.log1p(g.z) * 14 + 10 : Math.log1p(Math.max(0.1, g.d / 5)) * 10 + 6;
+    const lenBase = cosmoVals(g).zEff > 0 ? Math.log1p(cosmoVals(g).zEff) * 14 + 10 : Math.log1p(Math.max(0.1, g.d / 5)) * 10 + 6;
     const len = Math.min(H * 0.35, Math.max(8, lenBase));
     const isHov = (state.hovered === i);
     const isSel = (state.selected === i);
@@ -1362,7 +1388,7 @@ function findNearest(x, y) {
     const gx = fracToX(frac, W);
     if (gx < -20 || gx > W + 20) return;
     const hashSide = ((g.n.charCodeAt(0) + g.n.charCodeAt(g.n.length - 1)) & 1) ? -1 : 1;
-    const lenBase = g.z > 0 ? Math.log1p(g.z) * 14 + 10 : Math.log1p(Math.max(0.1, g.d / 5)) * 10 + 6;
+    const lenBase = cosmoVals(g).zEff > 0 ? Math.log1p(cosmoVals(g).zEff) * 14 + 10 : Math.log1p(Math.max(0.1, g.d / 5)) * 10 + 6;
     const len = Math.min(H * 0.35, Math.max(8, lenBase));
     const tipY = cy + hashSide * len;
     // Distance from (x,y) to the stem (line segment) AND to the tip (circle)
@@ -1605,10 +1631,10 @@ function updateTooltip(clientX, clientY) {
   if (!g) { hideTooltip(); return; }
   tip.querySelector('.tn').textContent = g.m + ' ' + g.n;
   // Compose subtitle: distance and redshift
-  const lookback = lookbackCached(g.z || 0);
+  const lookback = cosmoVals(g).lb;
   const tdParts = [];
   if (g.d > 0) tdParts.push(g.d.toLocaleString() + ' Mly');
-  if (g.z > 0) tdParts.push('z=' + g.z.toFixed(g.z < 0.1 ? 4 : 2));
+  if (g.z) tdParts.push('z=' + fmtZ(g.z));
   if (lookback > 0) tdParts.push((lookback/1000).toFixed(2) + ' Gyr ago');
   tip.querySelector('.td').textContent = tdParts.join(' · ') || '—';
   tip.classList.add('show');
@@ -1648,21 +1674,22 @@ function openPanel(g) {
   const pnl = document.getElementById('pnl');
   document.getElementById('pnlName').textContent = g.m + ' ' + g.n;
   document.getElementById('pnlType').textContent = (g.t === 'CMB' ? 'CMB · cosmological horizon' :
-    (typeLabel(g.t, currentLang) + (g.t === 'cluster' ? '' : ' galaxy')));
+    (typeLabel(g.t, currentLang) + (['cluster','quasar','blazar','EHZ'].indexOf(g.t) >= 0 ? '' : (currentLang === 'ro' ? ' galaxie' : ' galaxy'))));
   // Rows
   const rows = document.getElementById('pnlRows');
   rows.innerHTML = '';
-  const lb = lookbackCached(g.z || 0);
-  const co = comovingCached(g.z || 0);
-  const a = 1 / (1 + (g.z || 0));
-  const T_cmb = COSMO.T_CMB_NOW * (1 + (g.z || 0));
+  const cv = cosmoVals(g);
+  const lb = cv.lb;
+  const co = cv.co;
+  const a = cv.a;
+  const T_cmb = COSMO.T_CMB_NOW * (1 + cv.zEff);
   const ageEm = universeAge(userH0) - lb; // age of universe at emission
   const dataRows = [
     { k: currentLang === 'ro' ? 'Distanță (Mly)'    : 'Distance (Mly)',  v: (g.d > 0 ? g.d.toLocaleString() : '—') },
-    { k: 'z',                                                              v: (g.z > 0 ? g.z.toFixed(g.z < 0.1 ? 4 : 2) : '0') },
+    { k: 'z',                                                              v: fmtZ(g.z) + (cv.local && g.z ? (currentLang === 'ro' ? ' (viteză proprie)' : ' (peculiar)') : '') },
     { k: currentLang === 'ro' ? 'Lookback (Myr)'    : 'Lookback (Myr)',   v: lb > 0 ? lb.toFixed(0) : '0' },
     { k: currentLang === 'ro' ? 'Comoving (Mly)'    : 'Comoving (Mly)',   v: co > 0 ? co.toFixed(0) : '0' },
-    { k: currentLang === 'ro' ? 'Factor scară a'    : 'Scale factor a',   v: a.toFixed(g.z > 100 ? 5 : 4) },
+    { k: currentLang === 'ro' ? 'Factor scară a'    : 'Scale factor a',   v: a.toFixed(cv.zEff > 100 ? 5 : 4) },
     { k: 'T_CMB (K)',                                                      v: T_cmb.toFixed(2) },
     { k: currentLang === 'ro' ? 'Vârstă univ. la emisie' : 'Age of univ. at emission',
       v: ageEm > 0 ? ageEm.toFixed(0) + ' Myr' : '—' },
@@ -1836,12 +1863,13 @@ function shareLink() {
 function copyDetails() {
   if (state.selected === null) { toast('No galaxy selected'); return; }
   const g = GALAXIES[state.selected];
-  const lb = lookbackCached(g.z || 0);
-  const co = comovingCached(g.z || 0);
+  const cv = cosmoVals(g);
+  const lb = cv.lb;
+  const co = cv.co;
   const txt = `${g.m} ${g.n}\n` +
     `Type: ${typeLabel(g.t, currentLang)}\n` +
     `Distance: ${g.d > 0 ? g.d + ' Mly' : 'Local'}\n` +
-    `Redshift z: ${g.z}\n` +
+    `Redshift z: ${g.z}${cv.local && g.z ? ' (peculiar velocity)' : ''}\n` +
     `Lookback: ${lb.toFixed(0)} Myr\n` +
     `Comoving: ${co.toFixed(0)} Mly\n` +
     `RA/Dec: ${g.ra}°, ${g.dec}°\n\n` +
@@ -2017,6 +2045,11 @@ const GUIDE_RO = {
 
   changelog: `
     <h3>📋 Istoric versiuni</h3>
+    <h4>v1.0.1 (11 octombrie 2026) — Corecții</h4>
+    <ul>
+      <li>Galaxiile apropiate (d &lt; 100 Mly) folosesc distanța din catalog pentru lookback/comoving; z nu mai produce valori absurde (Andromeda: lookback ≈ 2,5 Myr, comoving ≈ 2,5 Mly; z = −0,001, deplasare spre albastru, din viteză proprie).</li>
+      <li>Eticheta mixtă „SPIRALĂ GALAXY” din română corectată în „Spirală galaxie”; etichete de ax cu contur pentru lizibilitate; antet și mesaj de donații adaptate la ecrane înguste.</li>
+    </ul>
     <h4>v1.0 (mai 2026) — Lansare 1D · The Cosmic Ray™</h4>
     <ul>
       <li>🌠 Catalog 112 galaxii proiectat pe o singură axă radială.</li>
@@ -2160,6 +2193,11 @@ const GUIDE_EN = {
 
   changelog: `
     <h3>📋 Changelog</h3>
+    <h4>v1.0.1 (October 11, 2026) — Fixes</h4>
+    <ul>
+      <li>Nearby galaxies (d &lt; 100 Mly) use the catalogued distance for lookback/comoving instead of z-derived values (Andromeda: lookback ≈ 2.5 Myr, comoving ≈ 2.5 Mly; z = −0.001, a blueshift from peculiar velocity).</li>
+      <li>Fixed mixed-language type label ("SPIRALĂ GALAXY"); axis labels get a halo for legibility; header and donation widget adapted to narrow screens.</li>
+    </ul>
     <h4>v1.0 (May 2026) — 1D launch · The Cosmic Ray™</h4>
     <ul>
       <li>🌠 112-galaxy catalog projected onto a single radial axis.</li>
@@ -2740,7 +2778,7 @@ if (document.readyState === 'loading') {
 
 </script>
 <!-- tf-donate: sprijin voluntar (Patreon + Buy Me a Coffee) — self-contained, fără resurse externe, fără JS -->
-<div id="tf-donate" aria-label="Sprijină autorul">
+<div id="tf-donate" role="complementary" aria-label="Sprijină autorul">
 <style>
 #tf-donate{position:fixed;right:14px;bottom:14px;z-index:2147483600;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1}
 #tf-donate *{box-sizing:border-box}
@@ -2758,6 +2796,7 @@ if (document.readyState === 'loading') {
 #tf-donate .tf-cb:checked ~ .tf-panel{display:none}
 #tf-donate .tf-cb:checked ~ .tf-open{display:inline-flex}
 @media (max-width:560px){#tf-donate .tf-lbl{display:none}}
+@media (max-width:700px){#tf-donate{bottom:68px}}
 @media print{#tf-donate{display:none}}
 </style>
 <input type="checkbox" id="tf-donate-cb" class="tf-cb" aria-hidden="true">

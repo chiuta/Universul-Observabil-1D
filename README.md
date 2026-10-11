@@ -8,7 +8,7 @@ Harta 1D a universului observabil: 112 galaxii proiectate pe o singură axă rad
 
 ## Ce este
 
-O vizualizare dintr-un singur fișier HTML (v1.0) care așază 112 galaxii pe o singură axă, în funcție de distanță, „cel mai onest" proiect al universului: fără distorsiuni unghiulare, dar cu galaxiile aflate pe aceeași direcție suprapuse în același punct. Este varianta 1D, însoțitoare a versiunilor 2D și 3D. Datele folosesc cosmologia ΛCDM Planck 2018 (H₀ = 67,4 km/s/Mpc); aplicația se descrie ca „educațională”, cu un ton ironic în unele texte (nu este o publicație științifică); valorile sunt rotunjite sau aproximative, conform surselor din Credite. Interfața este bilingvă, română și engleză (pagina pornește în engleză).
+O vizualizare dintr-un singur fișier HTML (v1.0.1) care așază 112 galaxii pe o singură axă, în funcție de distanță, „cel mai onest" proiect al universului: fără distorsiuni unghiulare, dar cu galaxiile aflate pe aceeași direcție suprapuse în același punct. Este varianta 1D, însoțitoare a versiunilor 2D și 3D. Datele folosesc cosmologia ΛCDM Planck 2018 (H₀ = 67,4 km/s/Mpc); aplicația se descrie ca „educațională”, cu un ton ironic în unele texte (nu este o publicație științifică); valorile sunt rotunjite sau aproximative, conform surselor din Credite. Interfața este bilingvă, română și engleză (pagina pornește în engleză).
 
 ## Funcții
 
@@ -42,6 +42,14 @@ Descarcă `index.html` și deschide-l în browser; funcționează fără interne
 ## Licență
 
 CC0 1.0 Universal (domeniu public) — vezi fișierul LICENSE
+
+## Istoric / Changelog
+
+Ultima actualizare: 11 octombrie 2026 — v1.0.1.
+- Valori derivate corecte pentru galaxiile apropiate (d < 100 Mly): Andromeda arată acum lookback ≈ 2,5 Myr și comoving ≈ 2,5 Mly (înainte 14 Myr / 15 Mly, derivate din z); z = −0,001 (blueshift), nu +0,001. Pozițiile pe axă folosesc aceleași valori.
+- Eticheta de tip în română: „Spirală galaxie” în loc de „SPIRALĂ GALAXY”.
+- Etichetele axei au contur; antetul și widgetul de donații nu mai acoperă controalele pe 360 px. axe-core = 0 violări (inclusiv `region`).
+- Recordurile de redshift rămân cele „la data catalogului (mai 2026)”; o căutare web la 11.10.2026 nu a găsit un record spectroscopic mai nou decât MoM-z14 (z = 14,44), dar catalogul nu a fost reverificat sistematic.
 
 ## Autor
 
