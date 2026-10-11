@@ -8,7 +8,7 @@ Harta 1D a universului observabil: 112 galaxii proiectate pe o singură axă rad
 
 ## Ce este
 
-O vizualizare dintr-un singur fișier HTML (v1.0.2) care așază 112 galaxii pe o singură axă, în funcție de distanță, „cel mai onest" proiect al universului: fără distorsiuni unghiulare, dar cu galaxiile aflate pe aceeași direcție suprapuse în același punct. Este varianta 1D, însoțitoare a versiunilor 2D și 3D. Datele folosesc cosmologia ΛCDM Planck 2018 (H₀ = 67,4 km/s/Mpc); aplicația se descrie ca „educațională”, cu un ton ironic în unele texte (nu este o publicație științifică); valorile sunt rotunjite sau aproximative, conform surselor din Credite. Interfața este bilingvă, română și engleză (pagina pornește în engleză).
+O vizualizare dintr-un singur fișier HTML (v1.0.3) care așază 112 galaxii pe o singură axă, în funcție de distanță, „cel mai onest" proiect al universului: fără distorsiuni unghiulare, dar cu galaxiile aflate pe aceeași direcție suprapuse în același punct. Este varianta 1D, însoțitoare a versiunilor 2D și 3D. Datele folosesc cosmologia ΛCDM Planck 2018 (H₀ = 67,4 km/s/Mpc); aplicația se descrie ca „educațională”, cu un ton ironic în unele texte (nu este o publicație științifică); valorile sunt rotunjite sau aproximative, conform surselor din Credite. Interfața este bilingvă, română și engleză (pagina pornește în engleză).
 
 ## Funcții
 
@@ -46,7 +46,12 @@ CC0 1.0 Universal (domeniu public) — vezi fișierul LICENSE
 
 ## Istoric / Changelog
 
-Ultima actualizare: 11 octombrie 2026 — v1.0.2.
+Ultima actualizare: 11 octombrie 2026 — v1.0.3.
+- Corectat: `Esc` nu închidea quiz-ul (acum îl închide; quiz-ul poate fi jucat și de la tastatură: `1`–`4`, Tab + Enter, focus mutat corect); tabelul de date și panoul de detalii rămâneau cu H₀ vechi după mutarea slider-ului (acum se actualizează imediat); în modul RO panoul de detalii afișa și descrierea în engleză (acum o singură limbă, cu fallback RO pentru intrările fără text EN); „CMB · orizont cosmologic” tradus.
+- Distanțe din catalog aduse în acord cu z, aceeași metodă ca în v1.0.2: IC 4296 (130 → ≈ 180 Mly), 3C 48 (5 200 → ≈ 4 150 Mly), Abell 370 (5 900 → ≈ 4 200 Mly), CL 0024+1654 (5 500 → ≈ 4 400 Mly). Alte intrări cu abateri mai mici (ex. 3C 273) rămân la valorile din catalog.
+- Hash-ul CSP recalculat; axe-core = 0 violări la 1280 și 360 px.
+
+v1.0.2 (11 octombrie 2026):
 - Nou: tabel de date sortabil/filtrabil cu export CSV (vezi „Funcții”).
 - Distanțe din catalog aduse în acord cu redshift-ul publicat pentru patru intrări cu valori incoerente: NGC 1132 (z = 0,0232: 1 020 → ≈ 330 Mly), Perseus / IC 310 (z = 0,0189: 780 → ≈ 270 Mly), Abell 1689 (z = 0,183: 7 200 → ≈ 2 330 Mly), SDSS J1004+4112 (z = 1,734: 7 000 → ≈ 10 050 Mly). Valorile sunt timpul de privire înapoi la z în cosmologia ΛCDM a aplicației (H₀ = 67,4); z-urile au fost confirmate la 11.10.2026 (Wikipedia pentru NGC 1132 și Abell 1689, Inada et al. 2003 pentru SDSS J1004+4112). Alte intrări (de ex. Abell 370, 3C 48) au distanțe care diferă de lookback-ul la z cu 20–40%, dar rămân între lookback și distanța comobilă, deci nu au fost modificate.
 - CSP: scriptul este acum permis prin hash (`script-src 'sha256-…'`), fără `'unsafe-inline'`; aplicația nu are handlere inline.

@@ -25,12 +25,12 @@
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
 }
 </style>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; media-src 'self' blob: data:; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; script-src 'self' 'sha256-WaLzOR77RKB3c0jzbO7V4q0lpVrAH0MFipmwVmMiIa4=' blob:; connect-src 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; media-src 'self' blob: data:; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; script-src 'self' blob: 'sha256-u36Unb+nQwLnL1kfFd8v0fxY8awA+7ychViCFRhCf58='; connect-src 'self'">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#01040c">
-<title>Observable Universe · 1D · v1.0.2 · The Cosmic Ray™</title>
+<title>Observable Universe · 1D · v1.0.3 · The Cosmic Ray™</title>
 <meta name="description" content="1D map of the observable universe — 112 galaxies projected on a single radial axis. Switch between lookback time, comoving distance, redshift, and scale factor. Logarithmic histogram of cosmic density. Quiz, guided tour, accessibility (prefers-reduced-motion, daltonism, keyboard nav), bilingual RO/EN, persistent preferences. v1.0 — The Cosmic Ray™ companion to the 2D and 3D versions.">
-<meta property="og:title" content="Observable Universe · 1D · v1.0.2 · The Cosmic Ray™">
+<meta property="og:title" content="Observable Universe · 1D · v1.0.3 · The Cosmic Ray™">
 <meta property="og:description" content="The radial truth: 112 galaxies on a single axis. Distance is the only honest dimension.">
 <meta property="og:type" content="website">
 
@@ -339,7 +339,7 @@ body.daltonism { --accent: #33bbee; --hot: #009988; }
 
 <!-- TOPBAR -->
 <header id="topbar" role="banner">
-  <div id="title">🌠 OBSERVABLE UNIVERSE · 1D <span class="ver">v1.0.2 · Cosmic Ray™</span></div>
+  <div id="title">🌠 OBSERVABLE UNIVERSE · 1D <span class="ver">v1.0.3 · Cosmic Ray™</span></div>
   <div id="topbtns">
     <button class="tbtn" id="btnSearch" aria-label="Search galaxies" title="Search (/)">🔍</button>
     <button class="tbtn" id="btnTour"   aria-label="Guided tour"     title="Tour">🚀</button>
@@ -369,7 +369,7 @@ body.daltonism { --accent: #33bbee; --hot: #009988; }
   </div>
   <div id="rayContainer">
     <canvas id="rayCanvas" tabindex="0" aria-label="1D cosmic distance visualization"></canvas>
-    <div id="vbadge">v1.0.2 · 1D · 112 galaxies</div>
+    <div id="vbadge">v1.0.3 · 1D · 112 galaxies</div>
   </div>
   <div id="histContainer">
     <canvas id="histCanvas" aria-hidden="true"></canvas>
@@ -510,7 +510,7 @@ body.daltonism { --accent: #33bbee; --hot: #009988; }
 //  the cosmic distance hierarchy becomes legible at a glance.
 // ═══════════════════════════════════════════════════════
 
-const VERSION = '1.0.2';
+const VERSION = '1.0.3';
 
 // ═══════════════════════════════════════════════════════
 //  COSMOLOGY (Planck 2018) — same single source of truth
@@ -903,7 +903,7 @@ const GALAXIES = [
    desc:"Centrul unui roi masiv de galaxii X."},
   {n:"Perseus (BCG IC 310)",ra:49.2,dec:41.3,d:270.0,t:"blazar",m:"⚡",z:0.0189,lb:270,
    desc:"Sursă TeV. Variabilitate extremă detectată de MAGIC."},
-  {n:"3C 48",ra:24.4,dec:33.2,d:5200.0,t:"quasar",m:"✨",z:0.367,lb:5200,
+  {n:"3C 48",ra:24.4,dec:33.2,d:4150.0,t:"quasar",m:"✨",z:0.367,lb:4150,
    desc:"Al doilea quasar identificat (1960). Sursă radio puternică."},
   {n:"3C 279",ra:194.0,dec:-5.8,d:5800.0,t:"blazar",m:"⚡",z:0.536,lb:5800,
    desc:"Blazar clasic. Prima sursă gamma extragalactică detectată (CGRO, 1991)."},
@@ -917,7 +917,7 @@ const GALAXIES = [
    desc:"Quasar la z=6,28 — Universul era de 900M ani. Gaură neagră de ~1 miliard M☉."},
   {n:"ULASJ1120+0641",ra:170.0,dec:6.7,d:28900.0,t:"quasar",m:"✨",z:7.085,lb:13100,
    desc:"Quasar la z~7. Gaura neagra de 2 miliarde M☉ la ~770M ani după Big Bang."},
-  {n:"Abell 370 (Arc gravitational)",ra:39.9,dec:-1.6,d:5900.0,t:"cluster",m:"🔵",z:0.375,lb:5900,
+  {n:"Abell 370 (Arc gravitational)",ra:39.9,dec:-1.6,d:4200.0,t:"cluster",m:"🔵",z:0.375,lb:4200,
    desc:"Roi de galaxii cu lentile gravitaționale spectaculoase (arc uriaș). Materie întunecată vizibilă."},
   {n:"MACS J0025 (Glonț)",ra:6.3,dec:-12.4,d:5200.0,t:"cluster",m:"🔵",z:0.586,lb:5200,
    desc:"Coliziune de roiuri — materia întunecată se separă de gaz. Dovadă directă a materiei întunecate."},
@@ -927,7 +927,7 @@ const GALAXIES = [
    desc:"Roi ultra-masiv cu cea mai rapidă formare stelară în galaxia centrală."},
   {n:"RXCJ0232 (Pandora)",ra:38.0,dec:-20.1,d:4700.0,t:"cluster",m:"🔵",z:0.4,lb:4700,
    desc:"Coliziune de mai multe roiuri — mai complexă decât Glonțul. Structură multi-corp."},
-  {n:"CL 0024+1654",ra:6.6,dec:17.2,d:5500.0,t:"cluster",m:"🔵",z:0.395,lb:5500,
+  {n:"CL 0024+1654",ra:6.6,dec:17.2,d:4400.0,t:"cluster",m:"🔵",z:0.395,lb:4400,
    desc:"Arc gravitațional multiplu — inele Einstein de la source la z>1."},
   {n:"SDSS J1004+4112 (Cvintuplu quasar)",ra:151.2,dec:41.2,d:10050.0,t:"lens",m:"🔵",z:1.734,lb:10050,
    desc:"Primul sistem quasar cu 5 imagini prin lentilare gravitațională."},
@@ -937,7 +937,7 @@ const GALAXIES = [
    desc:"Galaxie eliptică aproape perfect sferică."},
   {n:"M90",ra:188.9,dec:13.2,d:58.7,t:"elliptical",m:"⭕",z:-0.0004,lb:58.7,
    desc:"Una din puținele galaxii cu blueshift (se apropie de noi!)."},
-  {n:"IC 4296",ra:204.0,dec:-33.9,d:130.0,t:"elliptical",m:"⭕",z:0.0124,lb:130,
+  {n:"IC 4296",ra:204.0,dec:-33.9,d:180.0,t:"elliptical",m:"⭕",z:0.0124,lb:180,
    desc:"Galaxie gigantică radio din constelația Centaurus."},
   {n:"NGC 4261",ra:184.8,dec:5.8,d:100.0,t:"elliptical",m:"⭕",z:0.00749,lb:100,
    desc:"Jet relativistic HST fotografiat — gaura neagră centrală de 400 milioane M☉."},
@@ -1583,7 +1583,12 @@ function setupInteraction() {
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
     // Search modal handles its own keys
     if (document.getElementById('srchOvl').classList.contains('show')) return;
-    if (document.getElementById('quizOvl').classList.contains('open')) return;
+    if (document.getElementById('quizOvl').classList.contains('open')) {
+      if (e.key === 'Escape') { e.preventDefault(); closeQuiz(); }
+      else if (/^[1-9]$/.test(e.key)) { const o = document.querySelectorAll('#quizOpts .qopt')[+e.key - 1]; if (o && o.style.pointerEvents !== 'none') { e.preventDefault(); o.click(); } }
+      else if (e.key === 'Enter' && e.target.tagName !== 'BUTTON' && document.getElementById('quizNext').style.display !== 'none') { e.preventDefault(); document.getElementById('quizNext').click(); }
+      return;
+    }
     if (document.getElementById('tblOvl').classList.contains('open')) return;
     if (e.key === '/' || (e.key === 'k' && (e.ctrlKey || e.metaKey))) {
       e.preventDefault(); openSearch();
@@ -1723,7 +1728,7 @@ function selectGalaxy(idx) {
 function openPanel(g) {
   const pnl = document.getElementById('pnl');
   document.getElementById('pnlName').textContent = g.m + ' ' + g.n;
-  document.getElementById('pnlType').textContent = (g.t === 'CMB' ? 'CMB · cosmological horizon' :
+  document.getElementById('pnlType').textContent = (g.t === 'CMB' ? (currentLang === 'ro' ? 'CMB · orizont cosmologic' : 'CMB · cosmological horizon') :
     (typeLabel(g.t, currentLang) + (['cluster','quasar','blazar','EHZ'].indexOf(g.t) >= 0 ? '' : (currentLang === 'ro' ? ' galaxie' : ' galaxy'))));
   // Rows
   const rows = document.getElementById('pnlRows');
@@ -1753,11 +1758,13 @@ function openPanel(g) {
     rows.appendChild(div);
   });
   // Description
-  document.getElementById('pnlDesc').textContent = g.desc || '—';
-  // EN description: prefer inline `de:` field, else lookup in EN_DESCS_EXTRA
+  // One language at a time: RO text in RO mode; in EN mode the EN text (inline `de:` field or EN_DESCS_EXTRA), falling back to the RO original if no EN text exists
   const enDesc = g.de || (typeof EN_DESCS_EXTRA !== 'undefined' && EN_DESCS_EXTRA[g.n]) || '';
-  document.getElementById('pnlDescEn').textContent = enDesc;
-  document.getElementById('pnlDescEn').style.display = enDesc ? 'block' : 'none';
+  const descEl = document.getElementById('pnlDesc');
+  if (currentLang === 'en' && enDesc) { descEl.textContent = enDesc; descEl.setAttribute('lang', 'en'); }
+  else { descEl.textContent = g.desc || '—'; descEl.setAttribute('lang', 'ro'); }
+  document.getElementById('pnlDescEn').textContent = '';
+  document.getElementById('pnlDescEn').style.display = 'none';
   pnl.classList.add('open');
   pnl.setAttribute('aria-hidden', 'false');
 }
@@ -2030,6 +2037,11 @@ function copyDetails() {
 // ═══════════════════════════════════════════════════════
 //  LANGUAGE TOGGLE
 // ═══════════════════════════════════════════════════════
+// H0 changed (slider or permalink): refresh the views that show derived values (open table, open detail panel)
+function refreshH0Views() {
+  if (document.getElementById('tblOvl').classList.contains('open')) tblRender();
+  if (state.selected !== null && document.getElementById('pnl').classList.contains('open')) openPanel(GALAXIES[state.selected]);
+}
 function toggleLang() {
   currentLang = (currentLang === 'ro') ? 'en' : 'ro';
   setPref('lang', currentLang);
@@ -2192,6 +2204,13 @@ const GUIDE_RO = {
 
   changelog: `
     <h3>📋 Istoric versiuni</h3>
+    <h4>v1.0.3 (11 octombrie 2026) — Corecții</h4>
+    <ul>
+      <li>Tasta <kbd>Esc</kbd> închide acum quiz-ul; quiz-ul se poate parcurge de la tastatură (<kbd>1</kbd>–<kbd>4</kbd> sau Tab + Enter, Enter pentru următoarea întrebare) și mută focusul corect.</li>
+      <li>Tabelul de date și panoul de detalii se actualizează imediat când schimbi H₀ (înainte rămâneau cu valoarea veche; doar exportul CSV era corect).</li>
+      <li>Panoul de detalii afișează descrierea într-o singură limbă (RO sau EN), nu ambele; „CMB · orizont cosmologic” tradus.</li>
+      <li>Distanțe din catalog aduse în acord cu z (aceeași metodă ca în v1.0.2): IC 4296 (130 → ≈ 180 Mly), 3C 48 (5 200 → ≈ 4 150 Mly), Abell 370 (5 900 → ≈ 4 200 Mly), CL 0024+1654 (5 500 → ≈ 4 400 Mly).</li>
+    </ul>
     <h4>v1.0.2 (11 octombrie 2026) — Tabel și date</h4>
     <ul>
       <li>📊 Tabel de date (buton 📊 sau tasta <kbd>D</kbd>): toate galaxiile cu distanță, z, lookback și comoving calculate cu H₀ curent; sortabil, filtrabil, export CSV; alternativă accesibilă la hartă.</li>
@@ -2346,6 +2365,13 @@ const GUIDE_EN = {
 
   changelog: `
     <h3>📋 Changelog</h3>
+    <h4>v1.0.3 (October 11, 2026) — Fixes</h4>
+    <ul>
+      <li><kbd>Esc</kbd> now closes the quiz; the quiz can be played from the keyboard (<kbd>1</kbd>–<kbd>4</kbd> or Tab + Enter, Enter for the next question) and moves focus correctly.</li>
+      <li>The data table and the detail panel update immediately when H₀ changes (they used to keep the old value; only the CSV export was right).</li>
+      <li>The detail panel shows the description in one language (RO or EN) instead of both; "CMB · cosmological horizon" is translated.</li>
+      <li>Catalogue distances reconciled with z (same method as v1.0.2): IC 4296 (130 → ≈ 180 Mly), 3C 48 (5,200 → ≈ 4,150 Mly), Abell 370 (5,900 → ≈ 4,200 Mly), CL 0024+1654 (5,500 → ≈ 4,400 Mly).</li>
+    </ul>
     <h4>v1.0.2 (October 11, 2026) — Table and data</h4>
     <ul>
       <li>📊 Data table (📊 button or <kbd>D</kbd>): all galaxies with distance, z, lookback and comoving computed at the current H₀; sortable, filterable, CSV export; an accessible alternative to the map.</li>
@@ -2646,9 +2672,13 @@ function openQuiz() {
   _quizQuestions = QUIZ_TYPES.slice().sort(() => Math.random() - 0.5).slice(0, 10).map(f => f());
   showQuizQuestion();
   document.getElementById('quizOvl').classList.add('open');
+  const first = document.querySelector('#quizOpts .qopt'); if (first) first.focus();
 }
 function closeQuiz() {
-  document.getElementById('quizOvl').classList.remove('open');
+  const ovl = document.getElementById('quizOvl');
+  const wasOpen = ovl.classList.contains('open');
+  ovl.classList.remove('open');
+  if (wasOpen) { const b = document.getElementById('btnQuiz'); if (b) b.focus(); }
 }
 function showQuizQuestion() {
   if (_quizIdx >= _quizQuestions.length) {
@@ -2658,6 +2688,7 @@ function showQuizQuestion() {
     document.getElementById('quizOpts').innerHTML = '';
     document.getElementById('quizExp').classList.remove('show');
     document.getElementById('quizNext').style.display = 'none';
+    document.getElementById('quizClose').focus();
     return;
   }
   _quizCurrent = _quizQuestions[_quizIdx];
@@ -2670,11 +2701,14 @@ function showQuizQuestion() {
     const d = document.createElement('div');
     d.className = 'qopt';
     d.textContent = opt;
+    d.setAttribute('role', 'button'); d.tabIndex = 0;
     d.addEventListener('click', () => answerQuiz(i, d));
+    d.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); d.click(); } });
     optsDiv.appendChild(d);
   });
   document.getElementById('quizExp').classList.remove('show');
   document.getElementById('quizNext').style.display = 'none';
+  if (document.getElementById('quizOvl').classList.contains('open')) { const f = optsDiv.querySelector('.qopt'); if (f) f.focus(); }
 }
 function answerQuiz(i, el) {
   const opts = document.querySelectorAll('.qopt');
@@ -2691,6 +2725,7 @@ function answerQuiz(i, el) {
   exp.classList.add('show');
   document.getElementById('quizScore').textContent = (currentLang === 'ro' ? 'SCOR: ' : 'SCORE: ') + _quizScore;
   document.getElementById('quizNext').style.display = 'inline-block';
+  document.getElementById('quizNext').focus();
 }
 function setupQuiz() {
   document.getElementById('quizNext').addEventListener('click', () => {
@@ -2752,6 +2787,7 @@ function init() {
     userH0 = +e.target.value;
     invalidateCosmoCache();
     document.getElementById('h0Val').textContent = userH0.toFixed(1);
+    refreshH0Views();
     state.needsRedraw = true;
     draw();
   });
@@ -2788,6 +2824,7 @@ function init() {
       document.getElementById('h0Slider').value = userH0;
       document.getElementById('h0Val').textContent = userH0.toFixed(1);
       applyI18N();
+      refreshH0Views();
       updateZoomLabel();
       draw();
       if (state.selected !== null) openPanel(GALAXIES[state.selected]);
@@ -2906,7 +2943,7 @@ function runSmokeTests() {
   assert('typeLabel spiral RO is Spirală', typeLabel('spiral','ro') === 'Spirală');
   assert('typeLabel spiral EN is Spiral', typeLabel('spiral','en') === 'Spiral');
   // Version
-  assert('VERSION is 1.0.2', VERSION === '1.0.2');
+  assert('VERSION is 1.0.3', VERSION === '1.0.3');
   // EN_DESCS_EXTRA loaded
   assert('EN_DESCS_EXTRA is object', typeof EN_DESCS_EXTRA === 'object' && EN_DESCS_EXTRA !== null);
   assert('EN_DESCS_EXTRA has CMB entry', !!EN_DESCS_EXTRA['Orizont CMB (Radiație Cosmică de Fond)']);
