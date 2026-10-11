@@ -8,13 +8,14 @@ Harta 1D a universului observabil: 112 galaxii proiectate pe o singură axă rad
 
 ## Ce este
 
-O vizualizare dintr-un singur fișier HTML (v1.0.1) care așază 112 galaxii pe o singură axă, în funcție de distanță, „cel mai onest" proiect al universului: fără distorsiuni unghiulare, dar cu galaxiile aflate pe aceeași direcție suprapuse în același punct. Este varianta 1D, însoțitoare a versiunilor 2D și 3D. Datele folosesc cosmologia ΛCDM Planck 2018 (H₀ = 67,4 km/s/Mpc); aplicația se descrie ca „educațională”, cu un ton ironic în unele texte (nu este o publicație științifică); valorile sunt rotunjite sau aproximative, conform surselor din Credite. Interfața este bilingvă, română și engleză (pagina pornește în engleză).
+O vizualizare dintr-un singur fișier HTML (v1.0.2) care așază 112 galaxii pe o singură axă, în funcție de distanță, „cel mai onest" proiect al universului: fără distorsiuni unghiulare, dar cu galaxiile aflate pe aceeași direcție suprapuse în același punct. Este varianta 1D, însoțitoare a versiunilor 2D și 3D. Datele folosesc cosmologia ΛCDM Planck 2018 (H₀ = 67,4 km/s/Mpc); aplicația se descrie ca „educațională”, cu un ton ironic în unele texte (nu este o publicație științifică); valorile sunt rotunjite sau aproximative, conform surselor din Credite. Interfața este bilingvă, română și engleză (pagina pornește în engleză).
 
 ## Funcții
 
 - Patru moduri de axă: timp de privire înapoi (lookback time), distanță comobilă, redshift (z) și factor de scară (a = 1/(1+z)).
 - Histogramă logaritmică a densității galaxiilor.
 - Zoom pe axă, tooltip la hover, panou de detalii la click pe o galaxie.
+- **Tabel de date** (📊 sau tasta `D`): toate cele 112 de galaxii cu distanță, z, lookback și comoving calculate cu H₀ curent; coloane sortabile, filtru după nume/tip, export CSV (`observable-universe-1d-h0-<H₀>.csv`). Este și alternativa accesibilă la hartă (cititoare de ecran, navigare de la tastatură).
 - Căutare de galaxii (🔍), tur ghidat (🚀), quiz cosmic de 10 întrebări cu scor (🧩), ghid cu secțiunile Intro, Navigation, Axis Modes, Why 1D?, Terms, Limits, Changelog, Credits (📖).
 - Buton RO / EN pentru limbă și ⌂ pentru resetarea vizualizării.
 - „SHARE" generează un link permanent cu starea vizualizării în fragmentul URL (`#s=`); „COPY" copiază textul în clipboard.
@@ -25,7 +26,7 @@ O vizualizare dintr-un singur fișier HTML (v1.0.1) care așază 112 galaxii pe 
 1. Deschide pagina; alege modul de axă din antetul hărții (lookback time, comoving distance, redshift, scale factor) — tasta `M` le parcurge pe rând.
 2. Navighează: roata mouse-ului sau `+` / `-` pentru zoom, săgețile stânga/dreapta pentru a trece de la o galaxie la alta, click pe o galaxie pentru detalii.
 3. Căutare: apasă 🔍, tasta `/` sau `Ctrl/Cmd+K`; săgețile sus/jos aleg rezultatul, `Enter` îl selectează.
-4. Tastele `G` (ghid), `T` (tur), `Q` (quiz), `L` (limbă), `Esc` (închide panourile).
+4. Tastele `G` (ghid), `T` (tur), `Q` (quiz), `D` (tabel de date), `L` (limbă), `Esc` (închide panourile).
 5. În panoul unei galaxii apasă „SHARE" pentru link sau „COPY" pentru text.
 6. Butonul ⌂ resetează vizualizarea.
 
@@ -45,7 +46,12 @@ CC0 1.0 Universal (domeniu public) — vezi fișierul LICENSE
 
 ## Istoric / Changelog
 
-Ultima actualizare: 11 octombrie 2026 — v1.0.1.
+Ultima actualizare: 11 octombrie 2026 — v1.0.2.
+- Nou: tabel de date sortabil/filtrabil cu export CSV (vezi „Funcții”).
+- Distanțe din catalog aduse în acord cu redshift-ul publicat pentru patru intrări cu valori incoerente: NGC 1132 (z = 0,0232: 1 020 → ≈ 330 Mly), Perseus / IC 310 (z = 0,0189: 780 → ≈ 270 Mly), Abell 1689 (z = 0,183: 7 200 → ≈ 2 330 Mly), SDSS J1004+4112 (z = 1,734: 7 000 → ≈ 10 050 Mly). Valorile sunt timpul de privire înapoi la z în cosmologia ΛCDM a aplicației (H₀ = 67,4); z-urile au fost confirmate la 11.10.2026 (Wikipedia pentru NGC 1132 și Abell 1689, Inada et al. 2003 pentru SDSS J1004+4112). Alte intrări (de ex. Abell 370, 3C 48) au distanțe care diferă de lookback-ul la z cu 20–40%, dar rămân între lookback și distanța comobilă, deci nu au fost modificate.
+- CSP: scriptul este acum permis prin hash (`script-src 'sha256-…'`), fără `'unsafe-inline'`; aplicația nu are handlere inline.
+
+v1.0.1 (11 octombrie 2026):
 - Valori derivate corecte pentru galaxiile apropiate (d < 100 Mly): Andromeda arată acum lookback ≈ 2,5 Myr și comoving ≈ 2,5 Mly (înainte 14 Myr / 15 Mly, derivate din z); z = −0,001 (blueshift), nu +0,001. Pozițiile pe axă folosesc aceleași valori.
 - Eticheta de tip în română: „Spirală galaxie” în loc de „SPIRALĂ GALAXY”.
 - Etichetele axei au contur; antetul și widgetul de donații nu mai acoperă controalele pe 360 px. axe-core = 0 violări (inclusiv `region`).

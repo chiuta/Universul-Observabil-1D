@@ -25,12 +25,12 @@
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
 }
 </style>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; media-src 'self' blob: data:; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; script-src 'self' 'unsafe-inline' blob:; connect-src 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; media-src 'self' blob: data:; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; script-src 'self' 'sha256-WaLzOR77RKB3c0jzbO7V4q0lpVrAH0MFipmwVmMiIa4=' blob:; connect-src 'self'">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#01040c">
-<title>Observable Universe · 1D · v1.0.1 · The Cosmic Ray™</title>
+<title>Observable Universe · 1D · v1.0.2 · The Cosmic Ray™</title>
 <meta name="description" content="1D map of the observable universe — 112 galaxies projected on a single radial axis. Switch between lookback time, comoving distance, redshift, and scale factor. Logarithmic histogram of cosmic density. Quiz, guided tour, accessibility (prefers-reduced-motion, daltonism, keyboard nav), bilingual RO/EN, persistent preferences. v1.0 — The Cosmic Ray™ companion to the 2D and 3D versions.">
-<meta property="og:title" content="Observable Universe · 1D · v1.0.1 · The Cosmic Ray™">
+<meta property="og:title" content="Observable Universe · 1D · v1.0.2 · The Cosmic Ray™">
 <meta property="og:description" content="The radial truth: 112 galaxies on a single axis. Distance is the only honest dimension.">
 <meta property="og:type" content="website">
 
@@ -68,6 +68,7 @@ body.daltonism { --accent: #33bbee; --hot: #009988; }
 #title { font-weight: 900; font-size: 13.5px; letter-spacing: 1px; color: var(--accent);
   flex-shrink: 0; }
 #title .ver { color: var(--dim); font-weight: 400; font-size: 11px; margin-left: 4px; }
+@media (max-width: 420px) { #title { font-size: 11.5px; letter-spacing: 0.2px; } .tbtn { padding: 6px 9px; } #topbtns { gap: 4px; } }
 #topbtns { display: flex; gap: 6px; margin-left: auto; flex-wrap: nowrap; }
 .tbtn { background: rgba(70,130,255,0.05); border: 1px solid var(--line); color: var(--dim);
   padding: 6px 11px; border-radius: 8px; cursor: pointer; font-size: 13px; font-family: inherit;
@@ -181,6 +182,33 @@ body.daltonism { --accent: #33bbee; --hot: #009988; }
 #srchHint { display: flex; gap: 14px; margin-top: 12px; font-size: 10.5px; color: var(--dimmest); }
 #srchHint kbd { background: rgba(70,130,255,0.18); color: var(--accent); padding: 1px 6px;
   border-radius: 4px; font-family: 'Courier New', monospace; font-size: 10px; }
+
+/* ─ DATA TABLE OVERLAY ─ */
+#tblOvl { position: fixed; inset: 0; background: rgba(0,0,8,0.88); backdrop-filter: blur(10px);
+  z-index: 500; display: none; align-items: center; justify-content: center; }
+#tblOvl.open { display: flex; }
+#tblBox { background: var(--bg2); border: 1px solid var(--line); border-radius: 12px;
+  width: min(900px, 96vw); height: min(84vh, 760px); display: flex; flex-direction: column; overflow: hidden; }
+#tblHdr { display: flex; justify-content: space-between; align-items: center; padding: 13px 18px; border-bottom: 1px solid var(--line); flex-shrink: 0; }
+#tblTtl { color: var(--accent); font-weight: 900; font-size: 13px; letter-spacing: 0.5px; }
+#tblClose { cursor: pointer; color: var(--dim); padding: 4px 10px; border-radius: 6px; font-size: 16px; }
+#tblClose:hover { background: rgba(255,100,100,0.12); color: var(--crit); }
+#tblCtl { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; padding: 10px 18px; border-bottom: 1px solid var(--line); flex-shrink: 0; }
+#tblFilter { flex: 1 1 160px; min-width: 0; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); background: rgba(0,0,0,0.35); color: var(--fg); font-size: 13px; font-family: inherit; }
+#tblFilter:focus-visible, #tblWrap:focus-visible { outline: 2px solid var(--accent); }
+#tblCount { font-size: 11px; color: var(--dim); }
+#tblWrap { flex: 1; overflow: auto; scrollbar-width: thin; }
+#tblTable { border-collapse: collapse; width: 100%; font-size: 12px; }
+#tblTable th { position: sticky; top: 0; background: var(--bg2); border-bottom: 1px solid var(--line); text-align: left; padding: 0; white-space: nowrap; }
+#tblTable th button { all: unset; box-sizing: border-box; cursor: pointer; padding: 8px 10px; width: 100%; color: var(--accent); font-weight: 700; font-size: 11px; letter-spacing: 0.4px; }
+#tblTable th button:hover { background: rgba(70,130,255,0.1); }
+#tblTable th button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+#tblTable td { padding: 6px 10px; border-bottom: 1px solid var(--line2); white-space: nowrap; font-family: 'Courier New', monospace; color: var(--fg); }
+#tblTable td.nm { font-family: inherit; }
+#tblTable td.nm button { all: unset; cursor: pointer; color: var(--accent2); text-decoration: underline; text-underline-offset: 2px; }
+#tblTable td.nm button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+#tblTable td.ty { font-family: inherit; color: var(--dim); }
+#tblTable td.num { text-align: right; }
 
 /* ─ GUIDE OVERLAY ─ */
 #guideOvl { position: fixed; inset: 0; background: rgba(0,0,8,0.88); backdrop-filter: blur(10px);
@@ -311,11 +339,12 @@ body.daltonism { --accent: #33bbee; --hot: #009988; }
 
 <!-- TOPBAR -->
 <header id="topbar" role="banner">
-  <div id="title">🌠 OBSERVABLE UNIVERSE · 1D <span class="ver">v1.0.1 · Cosmic Ray™</span></div>
+  <div id="title">🌠 OBSERVABLE UNIVERSE · 1D <span class="ver">v1.0.2 · Cosmic Ray™</span></div>
   <div id="topbtns">
     <button class="tbtn" id="btnSearch" aria-label="Search galaxies" title="Search (/)">🔍</button>
     <button class="tbtn" id="btnTour"   aria-label="Guided tour"     title="Tour">🚀</button>
     <button class="tbtn" id="btnQuiz"   aria-label="Cosmic quiz"     title="Quiz">🧩</button>
+    <button class="tbtn" id="btnTable"  aria-label="Data table"      title="Data table (D)">📊</button>
     <button class="tbtn" id="btnGuide"  aria-label="User guide"      title="Guide">📖</button>
     <button class="tbtn" id="btnLang"   aria-label="Toggle language" title="Limba / Language">RO</button>
     <button class="tbtn" id="btnReset"  aria-label="Reset view"      title="Reset">⌂</button>
@@ -340,7 +369,7 @@ body.daltonism { --accent: #33bbee; --hot: #009988; }
   </div>
   <div id="rayContainer">
     <canvas id="rayCanvas" tabindex="0" aria-label="1D cosmic distance visualization"></canvas>
-    <div id="vbadge">v1.0.1 · 1D · 112 galaxies</div>
+    <div id="vbadge">v1.0.2 · 1D · 112 galaxies</div>
   </div>
   <div id="histContainer">
     <canvas id="histCanvas" aria-hidden="true"></canvas>
@@ -416,6 +445,24 @@ body.daltonism { --accent: #33bbee; --hot: #009988; }
   </div>
 </div>
 
+<!-- DATA TABLE OVERLAY -->
+<div id="tblOvl" role="dialog" aria-modal="true" aria-label="Data table">
+  <div id="tblBox">
+    <div id="tblHdr">
+      <span id="tblTtl">📊 DATA TABLE</span>
+      <span id="tblClose" role="button" tabindex="0" aria-label="Close">✕</span>
+    </div>
+    <div id="tblCtl">
+      <input id="tblFilter" type="search" autocomplete="off" aria-label="Filter galaxies" placeholder="Filter…">
+      <button class="actBtn" id="tblCsv" type="button">⬇ CSV</button>
+      <span id="tblCount" role="status" aria-live="polite"></span>
+    </div>
+    <div id="tblWrap" tabindex="0" role="region" aria-label="Galaxy table">
+      <table id="tblTable"><thead id="tblHead"></thead><tbody id="tblBody"></tbody></table>
+    </div>
+  </div>
+</div>
+
 <!-- QUIZ OVERLAY -->
 <div id="quizOvl" role="dialog" aria-modal="true" aria-label="Quiz">
   <div id="quizBox">
@@ -463,7 +510,7 @@ body.daltonism { --accent: #33bbee; --hot: #009988; }
 //  the cosmic distance hierarchy becomes legible at a glance.
 // ═══════════════════════════════════════════════════════
 
-const VERSION = '1.0';
+const VERSION = '1.0.2';
 
 // ═══════════════════════════════════════════════════════
 //  COSMOLOGY (Planck 2018) — same single source of truth
@@ -850,11 +897,11 @@ const GALAXIES = [
    desc:"Spirală neregulată, tovarăș al lui M97 pe cer."},
   {n:"Hoag's Object",ra:218.2,dec:21.2,d:600.0,t:"ring",m:"💍",z:0.0428,lb:600,
    desc:"Galaxie-inel perfectă. Centru eliptic înconjurat de un inel de stele tinere albastre."},
-  {n:"NGC 1132 (Relicvă Fosil)",ra:43.6,dec:-1.3,d:1020.0,t:"elliptical",m:"⭕",z:0.0232,lb:1020,
+  {n:"NGC 1132 (Relicvă Fosil)",ra:43.6,dec:-1.3,d:330.0,t:"elliptical",m:"⭕",z:0.0232,lb:330,
    desc:"Galaxie gigantică izolată — probabil restul fuzionat al unui grup întreg."},
   {n:"Abell 2029 (BCG)",ra:227.7,dec:5.7,d:1060.0,t:"elliptical",m:"⭕",z:0.0767,lb:1060,
    desc:"Centrul unui roi masiv de galaxii X."},
-  {n:"Perseus (BCG IC 310)",ra:49.2,dec:41.3,d:780.0,t:"blazar",m:"⚡",z:0.0189,lb:780,
+  {n:"Perseus (BCG IC 310)",ra:49.2,dec:41.3,d:270.0,t:"blazar",m:"⚡",z:0.0189,lb:270,
    desc:"Sursă TeV. Variabilitate extremă detectată de MAGIC."},
   {n:"3C 48",ra:24.4,dec:33.2,d:5200.0,t:"quasar",m:"✨",z:0.367,lb:5200,
    desc:"Al doilea quasar identificat (1960). Sursă radio puternică."},
@@ -882,7 +929,7 @@ const GALAXIES = [
    desc:"Coliziune de mai multe roiuri — mai complexă decât Glonțul. Structură multi-corp."},
   {n:"CL 0024+1654",ra:6.6,dec:17.2,d:5500.0,t:"cluster",m:"🔵",z:0.395,lb:5500,
    desc:"Arc gravitațional multiplu — inele Einstein de la source la z>1."},
-  {n:"SDSS J1004+4112 (Cvintuplu quasar)",ra:151.2,dec:41.2,d:7000.0,t:"lens",m:"🔵",z:1.734,lb:7000,
+  {n:"SDSS J1004+4112 (Cvintuplu quasar)",ra:151.2,dec:41.2,d:10050.0,t:"lens",m:"🔵",z:1.734,lb:10050,
    desc:"Primul sistem quasar cu 5 imagini prin lentilare gravitațională."},
   {n:"NGC 1277 (BH gigant)",ra:49.8,dec:41.6,d:220.0,t:"elliptical",m:"⭕",z:0.017,lb:220,
    desc:"Gaura neagră de 17 miliarde M☉ = 14% masa totală a galaxiei. Neobișnuit de masivă."},
@@ -894,7 +941,7 @@ const GALAXIES = [
    desc:"Galaxie gigantică radio din constelația Centaurus."},
   {n:"NGC 4261",ra:184.8,dec:5.8,d:100.0,t:"elliptical",m:"⭕",z:0.00749,lb:100,
    desc:"Jet relativistic HST fotografiat — gaura neagră centrală de 400 milioane M☉."},
-  {n:"Abell 1689 (Lentilă)",ra:197.9,dec:-1.3,d:7200.0,t:"cluster",m:"🔵",z:0.183,lb:7200,
+  {n:"Abell 1689 (Lentilă)",ra:197.9,dec:-1.3,d:2330.0,t:"cluster",m:"🔵",z:0.183,lb:2330,
    desc:"Cel mai puternic sistem de lentile gravitaționale cunoscut. Harta materiei întunecate."},
   {n:"COSMOS-AzTEC-1",ra:150.1,dec:2.3,d:12500.0,t:"starburst",m:"🔥",z:4.342,lb:12200,
    desc:"Galaxie starburst masivă la z~4. 1000 stele/an (față de 1-2 pe an în Calea Lactee)."},
@@ -1537,10 +1584,11 @@ function setupInteraction() {
     // Search modal handles its own keys
     if (document.getElementById('srchOvl').classList.contains('show')) return;
     if (document.getElementById('quizOvl').classList.contains('open')) return;
+    if (document.getElementById('tblOvl').classList.contains('open')) return;
     if (e.key === '/' || (e.key === 'k' && (e.ctrlKey || e.metaKey))) {
       e.preventDefault(); openSearch();
     } else if (e.key === 'Escape') {
-      closePanel(); closeSearch(); closeGuide(); closeQuiz(); endTour();
+      closePanel(); closeSearch(); closeGuide(); closeQuiz(); closeTable(); endTour();
     } else if (e.key === 'ArrowRight') {
       e.preventDefault(); stepGalaxy(+1);
     } else if (e.key === 'ArrowLeft') {
@@ -1549,6 +1597,8 @@ function setupInteraction() {
       e.preventDefault(); zoomBy(1.3);
     } else if (e.key === '-' || e.key === '_') {
       e.preventDefault(); zoomBy(1 / 1.3);
+    } else if (e.key === 'd' || e.key === 'D') {
+      e.preventDefault(); openTable();
     } else if (e.key === 'g' || e.key === 'G') {
       openGuide('intro');
     } else if (e.key === 't' || e.key === 'T') {
@@ -1816,6 +1866,99 @@ function setupSearch() {
 }
 
 // ═══════════════════════════════════════════════════════
+//  DATA TABLE — sortable, filterable, CSV export (accessible alternative to the canvas)
+// ═══════════════════════════════════════════════════════
+const TBL = { key: 'd', dir: 1, q: '' };
+function tblRows() {
+  return GALAXIES.map((g, i) => {
+    const cv = cosmoVals(g);
+    return { i, g, n: g.n, t: g.t, d: g.d || 0, z: g.z || 0, lb: cv.lb || 0, co: cv.co || 0, a: cv.a };
+  });
+}
+function tblCols() {
+  const ro = currentLang === 'ro';
+  return [
+    { k: 'n',  l: ro ? 'Galaxie' : 'Galaxy' },
+    { k: 't',  l: ro ? 'Tip' : 'Type' },
+    { k: 'd',  l: ro ? 'Distanță (Mly)' : 'Distance (Mly)', num: true },
+    { k: 'z',  l: 'z', num: true },
+    { k: 'lb', l: 'Lookback (Myr)', num: true },
+    { k: 'co', l: 'Comoving (Mly)', num: true },
+  ];
+}
+function tblNorm(x) { return String(x || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
+function tblRender() {
+  const ro = currentLang === 'ro', cols = tblCols();
+  document.getElementById('tblTtl').textContent = ro ? '📊 TABEL DE DATE' : '📊 DATA TABLE';
+  document.getElementById('tblFilter').placeholder = ro ? 'Filtrează după nume sau tip…' : 'Filter by name or type…';
+  document.getElementById('tblFilter').setAttribute('aria-label', ro ? 'Filtrează galaxii' : 'Filter galaxies');
+  document.getElementById('tblClose').setAttribute('aria-label', ro ? 'Închide' : 'Close');
+  document.getElementById('tblOvl').setAttribute('aria-label', ro ? 'Tabel de date' : 'Data table');
+  const q = tblNorm(TBL.q).trim();
+  let rows = tblRows().filter(r => !q || tblNorm(r.n + ' ' + typeLabel(r.t, currentLang)).indexOf(q) >= 0);
+  const k = TBL.key, dir = TBL.dir;
+  rows.sort((a, b) => {
+    const x = a[k], y = b[k];
+    const c = (typeof x === 'string') ? x.localeCompare(y) : (x - y);
+    return (c || (a.i - b.i)) * dir;
+  });
+  document.getElementById('tblHead').innerHTML = '<tr>' + cols.map(c =>
+    '<th scope="col" aria-sort="' + (c.k === k ? (dir > 0 ? 'ascending' : 'descending') : 'none') + '"><button type="button" data-k="' + c.k + '">' + c.l + (c.k === k ? (dir > 0 ? ' ▲' : ' ▼') : '') + '</button></th>').join('') + '</tr>';
+  const fmt = v => v > 0 ? v.toLocaleString(ro ? 'ro-RO' : 'en-US', { maximumFractionDigits: v < 100 ? 1 : 0 }) : '0';
+  document.getElementById('tblBody').innerHTML = rows.map(r =>
+    '<tr><td class="nm"><button type="button" data-i="' + r.i + '">' + r.g.m + ' ' + r.n.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</button></td>' +
+    '<td class="ty">' + typeLabel(r.t, currentLang) + '</td>' +
+    '<td class="num">' + (r.d > 0 ? r.d.toLocaleString(ro ? 'ro-RO' : 'en-US') : '—') + '</td>' +
+    '<td class="num">' + fmtZ(r.z) + '</td>' +
+    '<td class="num">' + fmt(r.lb) + '</td>' +
+    '<td class="num">' + fmt(r.co) + '</td></tr>').join('');
+  document.getElementById('tblCount').textContent = rows.length + (ro ? ' din ' : ' of ') + GALAXIES.length + (ro ? ' galaxii · H₀ = ' : ' galaxies · H₀ = ') + userH0.toFixed(1);
+}
+function tblCsvCell(v) {
+  let s = String(v == null ? '' : v);
+  if (typeof v === 'string' && /^[=+\-@\t\r]/.test(s)) s = "'" + s;   // anti formula-injection, text cells only (numbers keep their sign)
+  return /[",\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+}
+function tblExportCsv() {
+  const rows = tblRows();
+  const out = [['name', 'type', 'distance_mly', 'z', 'lookback_myr', 'comoving_mly', 'scale_factor', 'ra_deg', 'dec_deg']];
+  rows.forEach(r => out.push([r.n, r.t, r.d, r.z, +r.lb.toFixed(1), +r.co.toFixed(1), +r.a.toFixed(5), r.g.ra, r.g.dec]));
+  const csv = '\ufeff' + out.map(r => r.map(tblCsvCell).join(',')).join('\r\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'observable-universe-1d-h0-' + userH0.toFixed(1) + '.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  toast(currentLang === 'ro' ? 'CSV exportat (H₀ = ' + userH0.toFixed(1) + ')' : 'CSV exported (H₀ = ' + userH0.toFixed(1) + ')');
+}
+function openTable() {
+  document.getElementById('tblOvl').classList.add('open');
+  tblRender();
+  document.getElementById('tblFilter').focus();
+}
+function closeTable() { document.getElementById('tblOvl').classList.remove('open'); }
+function setupTable() {
+  document.getElementById('btnTable').addEventListener('click', openTable);
+  document.getElementById('tblClose').addEventListener('click', closeTable);
+  document.getElementById('tblClose').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); closeTable(); } });
+  document.getElementById('tblOvl').addEventListener('click', e => { if (e.target.id === 'tblOvl') closeTable(); });
+  document.getElementById('tblOvl').addEventListener('keydown', e => { if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); closeTable(); } });
+  document.getElementById('tblFilter').addEventListener('input', e => { TBL.q = e.target.value; tblRender(); });
+  document.getElementById('tblCsv').addEventListener('click', tblExportCsv);
+  document.getElementById('tblHead').addEventListener('click', e => {
+    const b = e.target.closest('button[data-k]'); if (!b) return;
+    if (TBL.key === b.dataset.k) TBL.dir = -TBL.dir; else { TBL.key = b.dataset.k; TBL.dir = 1; }
+    tblRender();
+    const nb = document.querySelector('#tblHead button[data-k="' + TBL.key + '"]'); if (nb) nb.focus();
+  });
+  document.getElementById('tblBody').addEventListener('click', e => {
+    const b = e.target.closest('button[data-i]'); if (!b) return;
+    closeTable(); selectGalaxy(+b.dataset.i);
+  });
+}
+
+// ═══════════════════════════════════════════════════════
 //  PERMALINK — encode state in URL hash, restore on load
 // ═══════════════════════════════════════════════════════
 function buildPermalink() {
@@ -1931,6 +2074,9 @@ function applyI18N() {
   if (document.getElementById('guideOvl').classList.contains('open')) showTab(_activeTab);
   // Refresh open panel
   if (state.selected !== null) openPanel(GALAXIES[state.selected]);
+  if (document.getElementById('tblOvl').classList.contains('open')) tblRender();
+  document.getElementById('btnTable').title = isRO ? 'Tabel de date (D)' : 'Data table (D)';
+  document.getElementById('btnTable').setAttribute('aria-label', isRO ? 'Tabel de date' : 'Data table');
   // Search placeholder
   document.getElementById('srchInp').placeholder = isRO
     ? '🔍  Caută galaxie · Search galaxy...'
@@ -1971,6 +2117,7 @@ const GUIDE_RO = {
       <tr><td>Tour ghidat</td><td><kbd>T</kbd> sau 🚀</td><td>🚀</td></tr>
       <tr><td>Quiz</td><td><kbd>Q</kbd> sau 🧩</td><td>🧩</td></tr>
       <tr><td>Ghid</td><td><kbd>G</kbd> sau 📖</td><td>📖</td></tr>
+      <tr><td>Tabel de date (sortare, CSV)</td><td><kbd>D</kbd> sau 📊</td><td>📊</td></tr>
       <tr><td>Reset vedere</td><td>⌂</td><td>⌂</td></tr>
       <tr><td>Închide overlay</td><td><kbd>Esc</kbd></td><td>Tap în afara</td></tr>
     </table>
@@ -2045,6 +2192,11 @@ const GUIDE_RO = {
 
   changelog: `
     <h3>📋 Istoric versiuni</h3>
+    <h4>v1.0.2 (11 octombrie 2026) — Tabel și date</h4>
+    <ul>
+      <li>📊 Tabel de date (buton 📊 sau tasta <kbd>D</kbd>): toate galaxiile cu distanță, z, lookback și comoving calculate cu H₀ curent; sortabil, filtrabil, export CSV; alternativă accesibilă la hartă.</li>
+      <li>Distanțe din catalog aduse în acord cu z pentru NGC 1132 (≈ 330 Mly), Perseus/IC 310 (≈ 270 Mly), Abell 1689 (≈ 2 330 Mly) și SDSS J1004+4112 (≈ 10 050 Mly); valorile = timp de privire înapoi la z-ul publicat, în cosmologia ΛCDM a aplicației.</li>
+    </ul>
     <h4>v1.0.1 (11 octombrie 2026) — Corecții</h4>
     <ul>
       <li>Galaxiile apropiate (d &lt; 100 Mly) folosesc distanța din catalog pentru lookback/comoving; z nu mai produce valori absurde (Andromeda: lookback ≈ 2,5 Myr, comoving ≈ 2,5 Mly; z = −0,001, deplasare spre albastru, din viteză proprie).</li>
@@ -2119,6 +2271,7 @@ const GUIDE_EN = {
       <tr><td>Guided tour</td><td><kbd>T</kbd> or 🚀</td><td>🚀</td></tr>
       <tr><td>Quiz</td><td><kbd>Q</kbd> or 🧩</td><td>🧩</td></tr>
       <tr><td>Guide</td><td><kbd>G</kbd> or 📖</td><td>📖</td></tr>
+      <tr><td>Data table (sort, CSV)</td><td><kbd>D</kbd> or 📊</td><td>📊</td></tr>
       <tr><td>Reset view</td><td>⌂</td><td>⌂</td></tr>
       <tr><td>Close overlay</td><td><kbd>Esc</kbd></td><td>Tap outside</td></tr>
     </table>
@@ -2193,6 +2346,11 @@ const GUIDE_EN = {
 
   changelog: `
     <h3>📋 Changelog</h3>
+    <h4>v1.0.2 (October 11, 2026) — Table and data</h4>
+    <ul>
+      <li>📊 Data table (📊 button or <kbd>D</kbd>): all galaxies with distance, z, lookback and comoving computed at the current H₀; sortable, filterable, CSV export; an accessible alternative to the map.</li>
+      <li>Catalogue distances reconciled with z for NGC 1132 (≈ 330 Mly), Perseus/IC 310 (≈ 270 Mly), Abell 1689 (≈ 2,330 Mly) and SDSS J1004+4112 (≈ 10,050 Mly); values = lookback time at the published z in the app's ΛCDM cosmology.</li>
+    </ul>
     <h4>v1.0.1 (October 11, 2026) — Fixes</h4>
     <ul>
       <li>Nearby galaxies (d &lt; 100 Mly) use the catalogued distance for lookback/comoving instead of z-derived values (Andromeda: lookback ≈ 2.5 Myr, comoving ≈ 2.5 Mly; z = −0.001, a blueshift from peculiar velocity).</li>
@@ -2610,6 +2768,7 @@ function init() {
 
   // 9) Setup overlays + interaction
   setupSearch();
+  setupTable();
   setupGuide();
   setupTour();
   setupQuiz();
@@ -2747,7 +2906,7 @@ function runSmokeTests() {
   assert('typeLabel spiral RO is Spirală', typeLabel('spiral','ro') === 'Spirală');
   assert('typeLabel spiral EN is Spiral', typeLabel('spiral','en') === 'Spiral');
   // Version
-  assert('VERSION is 1.0', VERSION === '1.0');
+  assert('VERSION is 1.0.2', VERSION === '1.0.2');
   // EN_DESCS_EXTRA loaded
   assert('EN_DESCS_EXTRA is object', typeof EN_DESCS_EXTRA === 'object' && EN_DESCS_EXTRA !== null);
   assert('EN_DESCS_EXTRA has CMB entry', !!EN_DESCS_EXTRA['Orizont CMB (Radiație Cosmică de Fond)']);
