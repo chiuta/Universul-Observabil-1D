@@ -8,7 +8,7 @@ Harta 1D a universului observabil: 112 galaxii proiectate pe o singură axă rad
 
 ## Ce este
 
-O vizualizare dintr-un singur fișier HTML (v1.0) care așază 112 galaxii pe o singură axă, în funcție de distanță, „cel mai onest" proiect al universului: fără distorsiuni unghiulare, dar cu galaxiile aflate pe aceeași direcție suprapuse în același punct. Este varianta 1D, însoțitoare a versiunilor 2D și 3D. Datele folosesc cosmologia ΛCDM Planck 2018 (H₀ = 67,4 km/s/Mpc); aplicația se descrie ca „satirică și educațională". Interfața este bilingvă, română și engleză (pagina pornește în engleză).
+O vizualizare dintr-un singur fișier HTML (v1.0) care așază 112 galaxii pe o singură axă, în funcție de distanță, „cel mai onest" proiect al universului: fără distorsiuni unghiulare, dar cu galaxiile aflate pe aceeași direcție suprapuse în același punct. Este varianta 1D, însoțitoare a versiunilor 2D și 3D. Datele folosesc cosmologia ΛCDM Planck 2018 (H₀ = 67,4 km/s/Mpc); aplicația se descrie ca „educațională”, cu un ton ironic în unele texte (nu este o publicație științifică); valorile sunt rotunjite sau aproximative, conform surselor din Credite. Interfața este bilingvă, română și engleză (pagina pornește în engleză).
 
 ## Funcții
 
@@ -46,6 +46,10 @@ CC0 1.0 Universal (domeniu public) — vezi fișierul LICENSE
 ## Autor
 
 Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf. Aplicația indică și Centrul StrING în creditele ei.
+
+## Audit
+
+Audit: 2026-10-10; rundă 2: 2026-10-11 — eliminat din citare câmpul „DOI” cu valoare fictivă (nu există un DOI real); reformulată mențiunea „satirică și educațională” / „toate datele sunt corecte” (ghid RO+EN și README). Viewport și contrast corectate în runda 1.
 
 ## English summary
 
