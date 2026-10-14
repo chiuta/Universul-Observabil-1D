@@ -1,6 +1,6 @@
 # Observable Universe 1D · The Cosmic Ray™
 
-**Versiune:** 1.0.4 · **Ultima actualizare:** 12 octombrie 2026
+**Versiune:** 1.1.0 · **Ultima actualizare:** 14 octombrie 2026
 
 Harta 1D a universului observabil: 112 galaxii proiectate pe o singură axă radială.
 
@@ -47,6 +47,8 @@ Descarcă `index.html` și deschide-l în browser; funcționează fără interne
 CC0 1.0 Universal (domeniu public) — vezi fișierul LICENSE
 
 ## Istoric / Changelog
+
+- 1.1.0 — 2026-10-14: Copie de rezervă și etichetare date (fff-kit).
 
 - 1.0.4 — 2026-10-12: versiunea și data ultimei actualizări sunt afișate în aplicație.
 
