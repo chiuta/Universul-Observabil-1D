@@ -44,7 +44,7 @@ Descarcă `index.html` și deschide-l în browser; funcționează fără interne
 
 ## Licență
 
-CC0 1.0 Universal (domeniu public) — vezi fișierul LICENSE
+MIT — vezi fișierul LICENSE
 
 ## Istoric / Changelog
 
@@ -78,4 +78,4 @@ Audit: 2026-10-10; rundă 2: 2026-10-11 — eliminat din citare câmpul „DOI�
 
 ## English summary
 
-A single-file 1D map of the observable universe: 112 galaxies on one radial axis, switchable between lookback time, comoving distance, redshift and scale factor, with a log density histogram, search, guided tour, 10-question quiz, bilingual RO/EN UI and shareable permalinks. Preferences are kept in localStorage; no external requests were found in the code. CC0.
+A single-file 1D map of the observable universe: 112 galaxies on one radial axis, switchable between lookback time, comoving distance, redshift and scale factor, with a log density histogram, search, guided tour, 10-question quiz, bilingual RO/EN UI and shareable permalinks. Preferences are kept in localStorage; no external requests were found in the code. MIT licence.
