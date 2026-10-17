@@ -35,7 +35,7 @@ O vizualizare dintr-un singur fișier HTML (v1.0.4) care așază 112 galaxii pe 
 ## Confidențialitate și rețea
 
 - Local: preferințele se păstrează în `localStorage` (cheia `uv1d_prefs_v1`). Linkul de partajare stochează starea doar în URL.
-- Rețea: nu am găsit apeluri `fetch`, scripturi sau fonturi externe; datele galaxiilor sunt incluse în fișier. Linkurile de susținere și de credit (alexio.tf, Patreon, Buy Me a Coffee) se deschid doar dacă le apeși.
+- Rețea: nu am găsit apeluri `fetch`, scripturi sau fonturi externe; datele galaxiilor sunt incluse în fișier. Linkurile de susținere și de credit (alexio.tf, Buy Me a Coffee) se deschid doar dacă le apeși.
 - În ghid, secțiunea de credite menționează ca surse de date: Planck 2018, NASA/IPAC NED, SIMBAD, JWST/JADES și Naidu et al. 2025. Nu sunt interogate în timpul rulării.
 
 ## Rulare locală / offline
