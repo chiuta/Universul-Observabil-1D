@@ -82,6 +82,5 @@ Alexio — Alexandru-Ionuț Chiuță, contatto: alexio@trom.tf. L'applicazione c
 
 Audit: 2026-10-10; turno 2: 2026-10-11 — rimosso dalla citazione il campo «DOI» con valore fittizio (non esiste un DOI reale); riformulata l'indicazione «satirico ed educativo» / «tutti i dati sono corretti» (guida RO+EN e README). Viewport e contrasto corretti nel turno 1. Turno 3 (2026-10-11): le affermazioni deperibili («record assoluto/attuale», «NUOVO», «la più vicina/lontana») riformulate come «alla data del catalogo (maggio 2026)», con la fonte (Naidu et al. 2025 per MoM-z14; arXiv 2603.15841 per EGS-z11-R0). I record possono essere superati dopo questa data.
 
-## Riepilogo in inglese
-
+## Riepilogo
 Una mappa 1D dell'universo osservabile a file singolo: 112 galassie su un unico asse radiale, commutabile tra tempo di retrospezione, distanza comovente, redshift e fattore di scala, con istogramma logaritmico della densità, ricerca, tour guidato, quiz di 10 domande, interfaccia in 8 lingue e permalink condivisibili. Le preferenze sono conservate in localStorage; nel codice non sono state trovate richieste esterne. Licenza MIT.

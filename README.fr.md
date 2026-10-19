@@ -82,6 +82,5 @@ Alexio — Alexandru-Ionuț Chiuță, contact : alexio@trom.tf. L'application ci
 
 Audit : 2026-10-10 ; tour 2 : 2026-10-11 — suppression de la citation du champ « DOI » à valeur fictive (il n'existe pas de DOI réel) ; reformulation de la mention « satirique et éducatif » / « toutes les données sont correctes » (guide RO+EN et README). Viewport et contraste corrigés au tour 1. Tour 3 (2026-10-11) : les affirmations périssables (« record absolu/actuel », « NOUVEAU », « le plus proche/le plus lointain ») reformulées en « à la date du catalogue (mai 2026) », avec la source (Naidu et al. 2025 pour MoM-z14 ; arXiv 2603.15841 pour EGS-z11-R0). Les records peuvent être dépassés après cette date.
 
-## Résumé en anglais
-
+## Résumé
 Une carte 1D de l'univers observable en un seul fichier : 112 galaxies sur un axe radial unique, commutable entre temps de regard en arrière, distance comobile, décalage vers le rouge et facteur d'échelle, avec histogramme logarithmique de densité, recherche, visite guidée, quiz de 10 questions, interface en 8 langues et permaliens partageables. Les préférences sont conservées dans localStorage ; aucune requête externe n'a été trouvée dans le code. Licence MIT.

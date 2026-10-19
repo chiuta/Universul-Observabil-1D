@@ -82,6 +82,5 @@ Alexio — Alexandru-Ionuț Chiuță, kapcsolat: alexio@trom.tf. Az alkalmazás 
 
 Audit: 2026-10-10; 2. kör: 2026-10-11 — a hivatkozásból eltávolítva a fiktív értékű „DOI” mező (nincs valódi DOI); átfogalmazva a „szatirikus és oktató” / „minden adat helyes” megjegyzés (RO+EN útmutató és README). A viewport és a kontraszt az 1. körben javítva. 3. kör (2026-10-11): az idővel avuló állítások („abszolút/aktuális rekord”, „ÚJ”, „legközelebbi/legtávolabbi”) átfogalmazva „a katalógus dátuma (2026. május)” szerint, a forrással (Naidu és mtsai 2025 a MoM-z14-hez; arXiv 2603.15841 az EGS-z11-R0-hoz). A rekordok e dátum után túlszárnyalhatók.
 
-## Angol nyelvű összefoglaló
-
+## Összefoglaló
 A megfigyelhető univerzum egyfájlos 1D-s térképe: 112 galaxis egyetlen sugárirányú tengelyen, átkapcsolható visszatekintési idő, együttmozgó távolság, vöröseltolódás és skálafaktor között, logaritmikus sűrűséghisztogrammal, kereséssel, vezetett túrával, 10 kérdéses kvízzel, 8 nyelvű felülettel és megosztható permalinkekkel. A beállítások a localStorage-ban tárolódnak; a kódban nem találtunk külső kéréseket. MIT licenc.
