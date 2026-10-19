@@ -2,7 +2,9 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 1.2.0 · **Ultima actualizare:** 2026-10-19
+**Versiune:** 1.3.0 · **Ultima actualizare:** 2026-10-19
+
+Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
 Harta 1D a universului observabil: 112 galaxii proiectate pe o singură axă radială.
 
@@ -12,7 +14,7 @@ Harta 1D a universului observabil: 112 galaxii proiectate pe o singură axă rad
 
 ## Ce este
 
-O vizualizare dintr-un singur fișier HTML (v1.0.4) care așază 112 galaxii pe o singură axă, în funcție de distanță, „cel mai onest" proiect al universului: fără distorsiuni unghiulare, dar cu galaxiile aflate pe aceeași direcție suprapuse în același punct. Este varianta 1D, însoțitoare a versiunilor 2D și 3D. Datele folosesc cosmologia ΛCDM Planck 2018 (H₀ = 67,4 km/s/Mpc); aplicația se descrie ca „educațională”, cu un ton ironic în unele texte (nu este o publicație științifică); valorile sunt rotunjite sau aproximative, conform surselor din Credite. Interfața este bilingvă, română și engleză (pagina pornește în engleză).
+O vizualizare dintr-un singur fișier HTML (v1.0.4) care așază 112 galaxii pe o singură axă, în funcție de distanță, „cel mai onest" proiect al universului: fără distorsiuni unghiulare, dar cu galaxiile aflate pe aceeași direcție suprapuse în același punct. Este varianta 1D, însoțitoare a versiunilor 2D și 3D. Datele folosesc cosmologia ΛCDM Planck 2018 (H₀ = 67,4 km/s/Mpc); aplicația se descrie ca „educațională”, cu un ton ironic în unele texte (nu este o publicație științifică); valorile sunt rotunjite sau aproximative, conform surselor din Credite. Interfața are 8 limbi (RO, EN, FR, IT, ES, PT, DE, HU); pagina pornește în limba browserului, altfel în engleză.
 
 ## Funcții
 
@@ -21,7 +23,7 @@ O vizualizare dintr-un singur fișier HTML (v1.0.4) care așază 112 galaxii pe 
 - Zoom pe axă, tooltip la hover, panou de detalii la click pe o galaxie.
 - **Tabel de date** (📊 sau tasta `D`): toate cele 112 de galaxii cu distanță, z, lookback și comoving calculate cu H₀ curent; coloane sortabile, filtru după nume/tip, export CSV (`observable-universe-1d-h0-<H₀>.csv`). Este și alternativa accesibilă la hartă (cititoare de ecran, navigare de la tastatură).
 - Căutare de galaxii (🔍), tur ghidat (🚀), quiz cosmic de 10 întrebări cu scor (🧩), ghid cu secțiunile Intro, Navigation, Axis Modes, Why 1D?, Terms, Limits, Changelog, Credits (📖).
-- Buton RO / EN pentru limbă și ⌂ pentru resetarea vizualizării.
+- Selector de limbă și ⌂ pentru resetarea vizualizării.
 - „SHARE" generează un link permanent cu starea vizualizării în fragmentul URL (`#s=`); „COPY" copiază textul în clipboard.
 - Accesibilitate declarată în pagină: respectă `prefers-reduced-motion`, mod pentru daltonism, navigare de la tastatură.
 
@@ -82,4 +84,4 @@ Audit: 2026-10-10; rundă 2: 2026-10-11 — eliminat din citare câmpul „DOI�
 
 ## English summary
 
-A single-file 1D map of the observable universe: 112 galaxies on one radial axis, switchable between lookback time, comoving distance, redshift and scale factor, with a log density histogram, search, guided tour, 10-question quiz, bilingual RO/EN UI and shareable permalinks. Preferences are kept in localStorage; no external requests were found in the code. MIT licence.
+A single-file 1D map of the observable universe: 112 galaxies on one radial axis, switchable between lookback time, comoving distance, redshift and scale factor, with a log density histogram, search, guided tour, 10-question quiz, 8-language UI and shareable permalinks. Preferences are kept in localStorage; no external requests were found in the code. MIT licence.

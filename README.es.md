@@ -2,7 +2,9 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · **Español** · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versión:** 1.2.0 · **Última actualización:** 2026-10-19
+**Versión:** 1.3.0 · **Última actualización:** 2026-10-19
+
+Idiomas de la interfaz: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
 Mapa 1D del universo observable: 112 galaxias proyectadas sobre un único eje radial.
 
@@ -12,7 +14,7 @@ Mapa 1D del universo observable: 112 galaxias proyectadas sobre un único eje ra
 
 ## Qué es
 
-Una visualización en un solo archivo HTML (v1.0.4) que coloca 112 galaxias sobre un único eje según la distancia, la proyección «más honesta» del universo: sin distorsiones angulares, pero con las galaxias situadas en la misma dirección superpuestas en el mismo punto. Es la versión 1D, compañera de las versiones 2D y 3D. Los datos usan la cosmología ΛCDM de Planck 2018 (H₀ = 67,4 km/s/Mpc); la aplicación se describe como «educativa», con un tono irónico en algunos textos (no es una publicación científica); los valores están redondeados o son aproximados, según las fuentes de los Créditos. La interfaz es bilingüe, rumano e inglés (la página arranca en inglés).
+Una visualización en un solo archivo HTML (v1.0.4) que coloca 112 galaxias sobre un único eje según la distancia, la proyección «más honesta» del universo: sin distorsiones angulares, pero con las galaxias situadas en la misma dirección superpuestas en el mismo punto. Es la versión 1D, compañera de las versiones 2D y 3D. Los datos usan la cosmología ΛCDM de Planck 2018 (H₀ = 67,4 km/s/Mpc); la aplicación se describe como «educativa», con un tono irónico en algunos textos (no es una publicación científica); los valores están redondeados o son aproximados, según las fuentes de los Créditos. La interfaz tiene 8 idiomas (RO, EN, FR, IT, ES, PT, DE, HU); la página arranca en el idioma del navegador y, si no, en inglés.
 
 ## Funciones
 
@@ -21,7 +23,7 @@ Una visualización en un solo archivo HTML (v1.0.4) que coloca 112 galaxias sobr
 - Zoom sobre el eje, información emergente al pasar el ratón, panel de detalles al hacer clic en una galaxia.
 - **Tabla de datos** (📊 o tecla `D`): las 112 galaxias con distancia, z, lookback y distancia comóvil calculados con el H₀ actual; columnas ordenables, filtro por nombre/tipo, exportación CSV (`observable-universe-1d-h0-<H₀>.csv`). Es también la alternativa accesible al mapa (lectores de pantalla, navegación con teclado).
 - Búsqueda de galaxias (🔍), recorrido guiado (🚀), cuestionario cósmico de 10 preguntas con puntuación (🧩), guía con las secciones Intro, Navigation, Axis Modes, Why 1D?, Terms, Limits, Changelog, Credits (📖).
-- Botón RO / EN para el idioma y ⌂ para restablecer la vista.
+- Selector de idioma y ⌂ para restablecer la vista.
 - «SHARE» genera un enlace permanente con el estado de la vista en el fragmento de la URL (`#s=`); «COPY» copia el texto al portapapeles.
 - Accesibilidad declarada en la página: respeta `prefers-reduced-motion`, modo para daltonismo, navegación con teclado.
 
@@ -82,4 +84,4 @@ Auditoría: 2026-10-10; ronda 2: 2026-10-11 — eliminado de la cita el campo «
 
 ## Resumen en inglés
 
-Un mapa 1D del universo observable en un solo archivo: 112 galaxias sobre un único eje radial, conmutable entre tiempo de retrospección, distancia comóvil, corrimiento al rojo y factor de escala, con histograma logarítmico de densidad, búsqueda, recorrido guiado, cuestionario de 10 preguntas, interfaz bilingüe RO/EN y permalinks compartibles. Las preferencias se guardan en localStorage; no se encontraron solicitudes externas en el código. Licencia MIT.
+Un mapa 1D del universo observable en un solo archivo: 112 galaxias sobre un único eje radial, conmutable entre tiempo de retrospección, distancia comóvil, corrimiento al rojo y factor de escala, con histograma logarítmico de densidad, búsqueda, recorrido guiado, cuestionario de 10 preguntas, interfaz en 8 idiomas y permalinks compartibles. Las preferencias se guardan en localStorage; no se encontraron solicitudes externas en el código. Licencia MIT.

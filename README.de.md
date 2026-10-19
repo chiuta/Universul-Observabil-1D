@@ -2,7 +2,9 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 1.2.0 · **Zuletzt aktualisiert:** 2026-10-19
+**Version:** 1.3.0 · **Zuletzt aktualisiert:** 2026-10-19
+
+Oberflächensprachen: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
 1D-Karte des beobachtbaren Universums: 112 Galaxien, projiziert auf eine einzige radiale Achse.
 
@@ -12,7 +14,7 @@
 
 ## Was es ist
 
-Eine Visualisierung in einer einzigen HTML-Datei (v1.0.4), die 112 Galaxien nach Entfernung auf einer einzigen Achse anordnet – die „ehrlichste“ Projektion des Universums: ohne Winkelverzerrung, aber mit Galaxien in derselben Richtung, die im selben Punkt übereinanderliegen. Es ist die 1D-Variante, Begleiterin der 2D- und 3D-Versionen. Die Daten verwenden die ΛCDM-Kosmologie von Planck 2018 (H₀ = 67,4 km/s/Mpc); die Anwendung bezeichnet sich als „lehrreich“, mit ironischem Ton in einigen Texten (sie ist keine wissenschaftliche Publikation); die Werte sind gerundet oder angenähert, gemäß den Quellen unter Credits. Die Oberfläche ist zweisprachig, Rumänisch und Englisch (die Seite startet auf Englisch).
+Eine Visualisierung in einer einzigen HTML-Datei (v1.0.4), die 112 Galaxien nach Entfernung auf einer einzigen Achse anordnet – die „ehrlichste“ Projektion des Universums: ohne Winkelverzerrung, aber mit Galaxien in derselben Richtung, die im selben Punkt übereinanderliegen. Es ist die 1D-Variante, Begleiterin der 2D- und 3D-Versionen. Die Daten verwenden die ΛCDM-Kosmologie von Planck 2018 (H₀ = 67,4 km/s/Mpc); die Anwendung bezeichnet sich als „lehrreich“, mit ironischem Ton in einigen Texten (sie ist keine wissenschaftliche Publikation); die Werte sind gerundet oder angenähert, gemäß den Quellen unter Credits. Die Oberfläche hat 8 Sprachen (RO, EN, FR, IT, ES, PT, DE, HU); die Seite startet in der Browsersprache, sonst auf Englisch.
 
 ## Funktionen
 
@@ -82,4 +84,4 @@ Audit: 2026-10-10; Runde 2: 2026-10-11 — das Feld „DOI“ mit fiktivem Wert 
 
 ## Englische Zusammenfassung
 
-Eine 1D-Karte des beobachtbaren Universums in einer einzigen Datei: 112 Galaxien auf einer radialen Achse, umschaltbar zwischen Rückblickzeit, mitbewegter Entfernung, Rotverschiebung und Skalenfaktor, mit logarithmischem Dichtehistogramm, Suche, geführter Tour, Quiz mit 10 Fragen, zweisprachiger RO/EN-Oberfläche und teilbaren Permalinks. Einstellungen werden in localStorage gespeichert; im Code wurden keine externen Anfragen gefunden. MIT-Lizenz.
+Eine 1D-Karte des beobachtbaren Universums in einer einzigen Datei: 112 Galaxien auf einer radialen Achse, umschaltbar zwischen Rückblickzeit, mitbewegter Entfernung, Rotverschiebung und Skalenfaktor, mit logarithmischem Dichtehistogramm, Suche, geführter Tour, Quiz mit 10 Fragen, einer Oberfläche in 8 Sprachen und teilbaren Permalinks. Einstellungen werden in localStorage gespeichert; im Code wurden keine externen Anfragen gefunden. MIT-Lizenz.

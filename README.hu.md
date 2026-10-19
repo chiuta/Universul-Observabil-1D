@@ -2,7 +2,9 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 1.2.0 · **Utolsó frissítés:** 2026-10-19
+**Verzió:** 1.3.0 · **Utolsó frissítés:** 2026-10-19
+
+A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
 A megfigyelhető univerzum 1D-s térképe: 112 galaxis egyetlen sugárirányú tengelyre vetítve.
 
@@ -12,7 +14,7 @@ A megfigyelhető univerzum 1D-s térképe: 112 galaxis egyetlen sugárirányú t
 
 ## Mi ez
 
-Egyetlen HTML-fájlból álló vizualizáció (v1.0.4), amely 112 galaxist helyez el egyetlen tengelyen a távolságuk szerint – az univerzum „legőszintébb” vetítése: szögtorzítás nélkül, de az azonos irányban lévő galaxisok ugyanabba a pontba esnek, egymásra vetülve. Ez az 1D változat, a 2D és 3D verziók társa. Az adatok a Planck 2018 ΛCDM kozmológiáját használják (H₀ = 67,4 km/s/Mpc); az alkalmazás „oktató jellegűnek” írja le magát, egyes szövegekben ironikus hangnemmel (nem tudományos publikáció); az értékek kerekítettek vagy hozzávetőlegesek, a Köszönetnyilvánításban szereplő források szerint. A felület kétnyelvű, román és angol (az oldal angolul indul).
+Egyetlen HTML-fájlból álló vizualizáció (v1.0.4), amely 112 galaxist helyez el egyetlen tengelyen a távolságuk szerint – az univerzum „legőszintébb” vetítése: szögtorzítás nélkül, de az azonos irányban lévő galaxisok ugyanabba a pontba esnek, egymásra vetülve. Ez az 1D változat, a 2D és 3D verziók társa. Az adatok a Planck 2018 ΛCDM kozmológiáját használják (H₀ = 67,4 km/s/Mpc); az alkalmazás „oktató jellegűnek” írja le magát, egyes szövegekben ironikus hangnemmel (nem tudományos publikáció); az értékek kerekítettek vagy hozzávetőlegesek, a Köszönetnyilvánításban szereplő források szerint. A felület 8 nyelvű (RO, EN, FR, IT, ES, PT, DE, HU); az oldal a böngésző nyelvén indul, egyébként angolul.
 
 ## Funkciók
 
@@ -21,7 +23,7 @@ Egyetlen HTML-fájlból álló vizualizáció (v1.0.4), amely 112 galaxist helye
 - Nagyítás a tengelyen, szúrópróba-súgó (tooltip) lebegtetéskor, részletek panel egy galaxisra kattintva.
 - **Adattábla** (📊 vagy a `D` billentyű): mind a 112 galaxis távolsággal, z-vel, lookback és együttmozgó értékkel, az aktuális H₀-val számolva; rendezhető oszlopok, szűrés név/típus szerint, CSV-export (`observable-universe-1d-h0-<H₀>.csv`). Egyben a térkép akadálymentes alternatívája (képernyőolvasók, billentyűzetes navigáció).
 - Galaxiskeresés (🔍), vezetett túra (🚀), 10 kérdéses kozmikus kvíz pontszámmal (🧩), útmutató az Intro, Navigation, Axis Modes, Why 1D?, Terms, Limits, Changelog, Credits szakaszokkal (📖).
-- RO / EN gomb a nyelvhez és ⌂ a nézet visszaállításához.
+- Nyelvválasztó és ⌂ a nézet visszaállításához.
 - A „SHARE” állandó hivatkozást hoz létre a nézet állapotával az URL töredékében (`#s=`); a „COPY” a szöveget a vágólapra másolja.
 - Az oldalon deklarált hozzáférhetőség: tiszteletben tartja a `prefers-reduced-motion` beállítást, színtévesztő mód, billentyűzetes navigáció.
 
@@ -82,4 +84,4 @@ Audit: 2026-10-10; 2. kör: 2026-10-11 — a hivatkozásból eltávolítva a fik
 
 ## Angol nyelvű összefoglaló
 
-A megfigyelhető univerzum egyfájlos 1D-s térképe: 112 galaxis egyetlen sugárirányú tengelyen, átkapcsolható visszatekintési idő, együttmozgó távolság, vöröseltolódás és skálafaktor között, logaritmikus sűrűséghisztogrammal, kereséssel, vezetett túrával, 10 kérdéses kvízzel, kétnyelvű RO/EN felülettel és megosztható permalinkekkel. A beállítások a localStorage-ban tárolódnak; a kódban nem találtunk külső kéréseket. MIT licenc.
+A megfigyelhető univerzum egyfájlos 1D-s térképe: 112 galaxis egyetlen sugárirányú tengelyen, átkapcsolható visszatekintési idő, együttmozgó távolság, vöröseltolódás és skálafaktor között, logaritmikus sűrűséghisztogrammal, kereséssel, vezetett túrával, 10 kérdéses kvízzel, 8 nyelvű felülettel és megosztható permalinkekkel. A beállítások a localStorage-ban tárolódnak; a kódban nem találtunk külső kéréseket. MIT licenc.

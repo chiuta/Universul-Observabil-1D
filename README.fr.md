@@ -2,7 +2,9 @@
 
 [English](README.md) · [Română](README.ro.md) · **Français** · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version :** 1.2.0 · **Dernière mise à jour :** 2026-10-19
+**Version :** 1.3.0 · **Dernière mise à jour :** 2026-10-19
+
+Langues de l'interface : **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
 Carte 1D de l'univers observable : 112 galaxies projetées sur un seul axe radial.
 
@@ -12,7 +14,7 @@ Carte 1D de l'univers observable : 112 galaxies projetées sur un seul axe radia
 
 ## Présentation
 
-Une visualisation dans un seul fichier HTML (v1.0.4) qui place 112 galaxies sur un seul axe en fonction de la distance, la projection « la plus honnête » de l'univers : sans distorsion angulaire, mais avec les galaxies situées dans la même direction superposées au même point. C'est la version 1D, compagne des versions 2D et 3D. Les données reposent sur la cosmologie ΛCDM de Planck 2018 (H₀ = 67,4 km/s/Mpc) ; l'application se décrit comme « éducative », avec un ton ironique dans certains textes (ce n'est pas une publication scientifique) ; les valeurs sont arrondies ou approximatives, d'après les sources indiquées dans les Crédits. L'interface est bilingue, roumain et anglais (la page démarre en anglais).
+Une visualisation dans un seul fichier HTML (v1.0.4) qui place 112 galaxies sur un seul axe en fonction de la distance, la projection « la plus honnête » de l'univers : sans distorsion angulaire, mais avec les galaxies situées dans la même direction superposées au même point. C'est la version 1D, compagne des versions 2D et 3D. Les données reposent sur la cosmologie ΛCDM de Planck 2018 (H₀ = 67,4 km/s/Mpc) ; l'application se décrit comme « éducative », avec un ton ironique dans certains textes (ce n'est pas une publication scientifique) ; les valeurs sont arrondies ou approximatives, d'après les sources indiquées dans les Crédits. L'interface compte 8 langues (RO, EN, FR, IT, ES, PT, DE, HU) ; la page démarre dans la langue du navigateur, sinon en anglais.
 
 ## Fonctionnalités
 
@@ -21,7 +23,7 @@ Une visualisation dans un seul fichier HTML (v1.0.4) qui place 112 galaxies sur 
 - Zoom sur l'axe, infobulle au survol, panneau de détails au clic sur une galaxie.
 - **Tableau de données** (📊 ou touche `D`) : les 112 galaxies avec distance, z, lookback et distance comobile calculés avec le H₀ courant ; colonnes triables, filtre par nom/type, export CSV (`observable-universe-1d-h0-<H₀>.csv`). C'est aussi l'alternative accessible à la carte (lecteurs d'écran, navigation au clavier).
 - Recherche de galaxies (🔍), visite guidée (🚀), quiz cosmique de 10 questions avec score (🧩), guide avec les sections Intro, Navigation, Axis Modes, Why 1D?, Terms, Limits, Changelog, Credits (📖).
-- Bouton RO / EN pour la langue et ⌂ pour réinitialiser la vue.
+- Sélecteur de langue et ⌂ pour réinitialiser la vue.
 - « SHARE » génère un lien permanent avec l'état de la vue dans le fragment d'URL (`#s=`) ; « COPY » copie le texte dans le presse-papiers.
 - Accessibilité déclarée dans la page : respecte `prefers-reduced-motion`, mode daltonien, navigation au clavier.
 
@@ -82,4 +84,4 @@ Audit : 2026-10-10 ; tour 2 : 2026-10-11 — suppression de la citation du champ
 
 ## Résumé en anglais
 
-Une carte 1D de l'univers observable en un seul fichier : 112 galaxies sur un axe radial unique, commutable entre temps de regard en arrière, distance comobile, décalage vers le rouge et facteur d'échelle, avec histogramme logarithmique de densité, recherche, visite guidée, quiz de 10 questions, interface bilingue RO/EN et permaliens partageables. Les préférences sont conservées dans localStorage ; aucune requête externe n'a été trouvée dans le code. Licence MIT.
+Une carte 1D de l'univers observable en un seul fichier : 112 galaxies sur un axe radial unique, commutable entre temps de regard en arrière, distance comobile, décalage vers le rouge et facteur d'échelle, avec histogramme logarithmique de densité, recherche, visite guidée, quiz de 10 questions, interface en 8 langues et permaliens partageables. Les préférences sont conservées dans localStorage ; aucune requête externe n'a été trouvée dans le code. Licence MIT.

@@ -2,7 +2,9 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · **Italiano** · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versione:** 1.2.0 · **Ultimo aggiornamento:** 2026-10-19
+**Versione:** 1.3.0 · **Ultimo aggiornamento:** 2026-10-19
+
+Lingue dell'interfaccia: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
 Mappa 1D dell'universo osservabile: 112 galassie proiettate su un unico asse radiale.
 
@@ -12,7 +14,7 @@ Mappa 1D dell'universo osservabile: 112 galassie proiettate su un unico asse rad
 
 ## Che cos'è
 
-Una visualizzazione in un unico file HTML (v1.0.4) che dispone 112 galassie su un solo asse in funzione della distanza, la proiezione «più onesta» dell'universo: senza distorsioni angolari, ma con le galassie che si trovano nella stessa direzione sovrapposte nello stesso punto. È la versione 1D, compagna delle versioni 2D e 3D. I dati usano la cosmologia ΛCDM di Planck 2018 (H₀ = 67,4 km/s/Mpc); l'applicazione si descrive come «educativa», con un tono ironico in alcuni testi (non è una pubblicazione scientifica); i valori sono arrotondati o approssimativi, secondo le fonti indicate nei Crediti. L'interfaccia è bilingue, rumeno e inglese (la pagina parte in inglese).
+Una visualizzazione in un unico file HTML (v1.0.4) che dispone 112 galassie su un solo asse in funzione della distanza, la proiezione «più onesta» dell'universo: senza distorsioni angolari, ma con le galassie che si trovano nella stessa direzione sovrapposte nello stesso punto. È la versione 1D, compagna delle versioni 2D e 3D. I dati usano la cosmologia ΛCDM di Planck 2018 (H₀ = 67,4 km/s/Mpc); l'applicazione si descrive come «educativa», con un tono ironico in alcuni testi (non è una pubblicazione scientifica); i valori sono arrotondati o approssimativi, secondo le fonti indicate nei Crediti. L'interfaccia ha 8 lingue (RO, EN, FR, IT, ES, PT, DE, HU); la pagina parte nella lingua del browser, altrimenti in inglese.
 
 ## Funzionalità
 
@@ -21,7 +23,7 @@ Una visualizzazione in un unico file HTML (v1.0.4) che dispone 112 galassie su u
 - Zoom sull'asse, tooltip al passaggio del mouse, pannello di dettagli al clic su una galassia.
 - **Tabella dei dati** (📊 o tasto `D`): tutte le 112 galassie con distanza, z, lookback e distanza comovente calcolati con l'H₀ corrente; colonne ordinabili, filtro per nome/tipo, esportazione CSV (`observable-universe-1d-h0-<H₀>.csv`). È anche l'alternativa accessibile alla mappa (lettori di schermo, navigazione da tastiera).
 - Ricerca di galassie (🔍), tour guidato (🚀), quiz cosmico di 10 domande con punteggio (🧩), guida con le sezioni Intro, Navigation, Axis Modes, Why 1D?, Terms, Limits, Changelog, Credits (📖).
-- Pulsante RO / EN per la lingua e ⌂ per reimpostare la vista.
+- Selettore di lingua e ⌂ per reimpostare la vista.
 - «SHARE» genera un link permanente con lo stato della vista nel frammento dell'URL (`#s=`); «COPY» copia il testo negli appunti.
 - Accessibilità dichiarata nella pagina: rispetta `prefers-reduced-motion`, modalità per il daltonismo, navigazione da tastiera.
 
@@ -82,4 +84,4 @@ Audit: 2026-10-10; turno 2: 2026-10-11 — rimosso dalla citazione il campo «DO
 
 ## Riepilogo in inglese
 
-Una mappa 1D dell'universo osservabile a file singolo: 112 galassie su un unico asse radiale, commutabile tra tempo di retrospezione, distanza comovente, redshift e fattore di scala, con istogramma logaritmico della densità, ricerca, tour guidato, quiz di 10 domande, interfaccia bilingue RO/EN e permalink condivisibili. Le preferenze sono conservate in localStorage; nel codice non sono state trovate richieste esterne. Licenza MIT.
+Una mappa 1D dell'universo osservabile a file singolo: 112 galassie su un unico asse radiale, commutabile tra tempo di retrospezione, distanza comovente, redshift e fattore di scala, con istogramma logaritmico della densità, ricerca, tour guidato, quiz di 10 domande, interfaccia in 8 lingue e permalink condivisibili. Le preferenze sono conservate in localStorage; nel codice non sono state trovate richieste esterne. Licenza MIT.

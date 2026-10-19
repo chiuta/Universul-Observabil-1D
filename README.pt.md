@@ -2,7 +2,9 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · **Português** · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versão:** 1.2.0 · **Última atualização:** 2026-10-19
+**Versão:** 1.3.0 · **Última atualização:** 2026-10-19
+
+Idiomas da interface: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
 Mapa 1D do universo observável: 112 galáxias projetadas num único eixo radial.
 
@@ -12,7 +14,7 @@ Mapa 1D do universo observável: 112 galáxias projetadas num único eixo radial
 
 ## O que é
 
-Uma visualização num único ficheiro HTML (v1.0.4) que coloca 112 galáxias num só eixo em função da distância, a projeção «mais honesta» do universo: sem distorções angulares, mas com as galáxias situadas na mesma direção sobrepostas no mesmo ponto. É a versão 1D, companheira das versões 2D e 3D. Os dados usam a cosmologia ΛCDM de Planck 2018 (H₀ = 67,4 km/s/Mpc); a aplicação descreve-se como «educativa», com um tom irónico em alguns textos (não é uma publicação científica); os valores são arredondados ou aproximados, de acordo com as fontes dos Créditos. A interface é bilingue, romeno e inglês (a página arranca em inglês).
+Uma visualização num único ficheiro HTML (v1.0.4) que coloca 112 galáxias num só eixo em função da distância, a projeção «mais honesta» do universo: sem distorções angulares, mas com as galáxias situadas na mesma direção sobrepostas no mesmo ponto. É a versão 1D, companheira das versões 2D e 3D. Os dados usam a cosmologia ΛCDM de Planck 2018 (H₀ = 67,4 km/s/Mpc); a aplicação descreve-se como «educativa», com um tom irónico em alguns textos (não é uma publicação científica); os valores são arredondados ou aproximados, de acordo com as fontes dos Créditos. A interface tem 8 idiomas (RO, EN, FR, IT, ES, PT, DE, HU); a página arranca no idioma do navegador e, caso contrário, em inglês.
 
 ## Funcionalidades
 
@@ -21,7 +23,7 @@ Uma visualização num único ficheiro HTML (v1.0.4) que coloca 112 galáxias nu
 - Zoom no eixo, dica ao passar o rato, painel de detalhes ao clicar numa galáxia.
 - **Tabela de dados** (📊 ou tecla `D`): as 112 galáxias com distância, z, lookback e distância comóvel calculados com o H₀ atual; colunas ordenáveis, filtro por nome/tipo, exportação CSV (`observable-universe-1d-h0-<H₀>.csv`). É também a alternativa acessível ao mapa (leitores de ecrã, navegação por teclado).
 - Pesquisa de galáxias (🔍), visita guiada (🚀), questionário cósmico de 10 perguntas com pontuação (🧩), guia com as secções Intro, Navigation, Axis Modes, Why 1D?, Terms, Limits, Changelog, Credits (📖).
-- Botão RO / EN para o idioma e ⌂ para repor a vista.
+- Seletor de idioma e ⌂ para repor a vista.
 - «SHARE» gera uma ligação permanente com o estado da vista no fragmento do URL (`#s=`); «COPY» copia o texto para a área de transferência.
 - Acessibilidade declarada na página: respeita `prefers-reduced-motion`, modo para daltonismo, navegação por teclado.
 
@@ -82,4 +84,4 @@ Auditoria: 2026-10-10; ronda 2: 2026-10-11 — removido da citação o campo «D
 
 ## Resumo em inglês
 
-Um mapa 1D do universo observável num único ficheiro: 112 galáxias num só eixo radial, comutável entre tempo de retrospeção, distância comóvel, desvio para o vermelho e fator de escala, com histograma logarítmico de densidade, pesquisa, visita guiada, questionário de 10 perguntas, interface bilingue RO/EN e permalinks partilháveis. As preferências são guardadas em localStorage; não foram encontrados pedidos externos no código. Licença MIT.
+Um mapa 1D do universo observável num único ficheiro: 112 galáxias num só eixo radial, comutável entre tempo de retrospeção, distância comóvel, desvio para o vermelho e fator de escala, com histograma logarítmico de densidade, pesquisa, visita guiada, questionário de 10 perguntas, interface em 8 idiomas e permalinks partilháveis. As preferências são guardadas em localStorage; não foram encontrados pedidos externos no código. Licença MIT.

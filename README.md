@@ -2,7 +2,9 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 1.2.0 · **Last updated:** 2026-10-19
+**Version:** 1.3.0 · **Last updated:** 2026-10-19
+
+Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
 A 1D map of the observable universe: 112 galaxies projected onto a single radial axis.
 
@@ -12,7 +14,7 @@ A 1D map of the observable universe: 112 galaxies projected onto a single radial
 
 ## What it is
 
-A visualization in a single HTML file (v1.0.4) that places 112 galaxies on one axis according to distance, "the most honest" projection of the universe: no angular distortion, but with galaxies lying in the same direction superimposed at the same point. It is the 1D version, a companion to the 2D and 3D versions. The data use the Planck 2018 ΛCDM cosmology (H₀ = 67.4 km/s/Mpc); the application describes itself as "educational", with an ironic tone in some texts (it is not a scientific publication); values are rounded or approximate, according to the sources in the Credits. The interface is bilingual, Romanian and English (the page starts in English).
+A visualization in a single HTML file (v1.0.4) that places 112 galaxies on one axis according to distance, "the most honest" projection of the universe: no angular distortion, but with galaxies lying in the same direction superimposed at the same point. It is the 1D version, a companion to the 2D and 3D versions. The data use the Planck 2018 ΛCDM cosmology (H₀ = 67.4 km/s/Mpc); the application describes itself as "educational", with an ironic tone in some texts (it is not a scientific publication); values are rounded or approximate, according to the sources in the Credits. The interface has 8 languages (RO, EN, FR, IT, ES, PT, DE, HU); the page starts in the browser language, otherwise in English.
 
 ## Features
 
@@ -21,7 +23,7 @@ A visualization in a single HTML file (v1.0.4) that places 112 galaxies on one a
 - Zoom on the axis, hover tooltip, details panel on clicking a galaxy.
 - **Data table** (📊 or the `D` key): all 112 galaxies with distance, z, lookback and comoving computed with the current H₀; sortable columns, filter by name/type, CSV export (`observable-universe-1d-h0-<H₀>.csv`). It is also the accessible alternative to the map (screen readers, keyboard navigation).
 - Galaxy search (🔍), guided tour (🚀), 10-question cosmic quiz with a score (🧩), guide with the sections Intro, Navigation, Axis Modes, Why 1D?, Terms, Limits, Changelog, Credits (📖).
-- RO / EN button for language and ⌂ for resetting the view.
+- Language selector and ⌂ for resetting the view.
 - "SHARE" generates a permanent link with the view state in the URL fragment (`#s=`); "COPY" copies the text to the clipboard.
 - Accessibility declared in the page: respects `prefers-reduced-motion`, colour-blind mode, keyboard navigation.
 
@@ -82,4 +84,4 @@ Audit: 2026-10-10; round 2: 2026-10-11 — removed from the citation the "DOI" f
 
 ## English summary
 
-A single-file 1D map of the observable universe: 112 galaxies on one radial axis, switchable between lookback time, comoving distance, redshift and scale factor, with a log density histogram, search, guided tour, 10-question quiz, bilingual RO/EN UI and shareable permalinks. Preferences are kept in localStorage; no external requests were found in the code. MIT licence.
+A single-file 1D map of the observable universe: 112 galaxies on one radial axis, switchable between lookback time, comoving distance, redshift and scale factor, with a log density histogram, search, guided tour, 10-question quiz, 8-language UI and shareable permalinks. Preferences are kept in localStorage; no external requests were found in the code. MIT licence.
