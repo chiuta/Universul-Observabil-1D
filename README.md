@@ -1,82 +1,84 @@
 # Observable Universe 1D · The Cosmic Ray™
 
-**Versiune:** 1.2.0 · **Ultima actualizare:** 19 octombrie 2026
+**English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-Harta 1D a universului observabil: 112 galaxii proiectate pe o singură axă radială.
+**Version:** 1.2.0 · **Last updated:** 2026-10-19
 
-**Live:** https://chiuta.github.io/Universul-Observabil-1D/
+A 1D map of the observable universe: 112 galaxies projected onto a single radial axis.
 
-![Captura de ecran](screenshot.png)
+**Live app:** https://chiuta.github.io/Universul-Observabil-1D/
 
-## Ce este
+![Screenshot](screenshot.png)
 
-O vizualizare dintr-un singur fișier HTML (v1.0.4) care așază 112 galaxii pe o singură axă, în funcție de distanță, „cel mai onest" proiect al universului: fără distorsiuni unghiulare, dar cu galaxiile aflate pe aceeași direcție suprapuse în același punct. Este varianta 1D, însoțitoare a versiunilor 2D și 3D. Datele folosesc cosmologia ΛCDM Planck 2018 (H₀ = 67,4 km/s/Mpc); aplicația se descrie ca „educațională”, cu un ton ironic în unele texte (nu este o publicație științifică); valorile sunt rotunjite sau aproximative, conform surselor din Credite. Interfața este bilingvă, română și engleză (pagina pornește în engleză).
+## What it is
 
-## Funcții
+A visualization in a single HTML file (v1.0.4) that places 112 galaxies on one axis according to distance, "the most honest" projection of the universe: no angular distortion, but with galaxies lying in the same direction superimposed at the same point. It is the 1D version, a companion to the 2D and 3D versions. The data use the Planck 2018 ΛCDM cosmology (H₀ = 67.4 km/s/Mpc); the application describes itself as "educational", with an ironic tone in some texts (it is not a scientific publication); values are rounded or approximate, according to the sources in the Credits. The interface is bilingual, Romanian and English (the page starts in English).
 
-- Patru moduri de axă: timp de privire înapoi (lookback time), distanță comobilă, redshift (z) și factor de scară (a = 1/(1+z)).
-- Histogramă logaritmică a densității galaxiilor.
-- Zoom pe axă, tooltip la hover, panou de detalii la click pe o galaxie.
-- **Tabel de date** (📊 sau tasta `D`): toate cele 112 de galaxii cu distanță, z, lookback și comoving calculate cu H₀ curent; coloane sortabile, filtru după nume/tip, export CSV (`observable-universe-1d-h0-<H₀>.csv`). Este și alternativa accesibilă la hartă (cititoare de ecran, navigare de la tastatură).
-- Căutare de galaxii (🔍), tur ghidat (🚀), quiz cosmic de 10 întrebări cu scor (🧩), ghid cu secțiunile Intro, Navigation, Axis Modes, Why 1D?, Terms, Limits, Changelog, Credits (📖).
-- Buton RO / EN pentru limbă și ⌂ pentru resetarea vizualizării.
-- „SHARE" generează un link permanent cu starea vizualizării în fragmentul URL (`#s=`); „COPY" copiază textul în clipboard.
-- Accesibilitate declarată în pagină: respectă `prefers-reduced-motion`, mod pentru daltonism, navigare de la tastatură.
+## Features
 
-## Manual de utilizare
+- Four axis modes: lookback time, comoving distance, redshift (z) and scale factor (a = 1/(1+z)).
+- Logarithmic histogram of galaxy density.
+- Zoom on the axis, hover tooltip, details panel on clicking a galaxy.
+- **Data table** (📊 or the `D` key): all 112 galaxies with distance, z, lookback and comoving computed with the current H₀; sortable columns, filter by name/type, CSV export (`observable-universe-1d-h0-<H₀>.csv`). It is also the accessible alternative to the map (screen readers, keyboard navigation).
+- Galaxy search (🔍), guided tour (🚀), 10-question cosmic quiz with a score (🧩), guide with the sections Intro, Navigation, Axis Modes, Why 1D?, Terms, Limits, Changelog, Credits (📖).
+- RO / EN button for language and ⌂ for resetting the view.
+- "SHARE" generates a permanent link with the view state in the URL fragment (`#s=`); "COPY" copies the text to the clipboard.
+- Accessibility declared in the page: respects `prefers-reduced-motion`, colour-blind mode, keyboard navigation.
 
-1. Deschide pagina; alege modul de axă din antetul hărții (lookback time, comoving distance, redshift, scale factor) — tasta `M` le parcurge pe rând.
-2. Navighează: roata mouse-ului sau `+` / `-` pentru zoom, săgețile stânga/dreapta pentru a trece de la o galaxie la alta, click pe o galaxie pentru detalii.
-3. Căutare: apasă 🔍, tasta `/` sau `Ctrl/Cmd+K`; săgețile sus/jos aleg rezultatul, `Enter` îl selectează.
-4. Tastele `G` (ghid), `T` (tur), `Q` (quiz), `D` (tabel de date), `L` (limbă), `Esc` (închide panourile).
-5. În panoul unei galaxii apasă „SHARE" pentru link sau „COPY" pentru text.
-6. Butonul ⌂ resetează vizualizarea.
+## User guide
 
-## Confidențialitate și rețea
+1. Open the page; choose the axis mode from the map header (lookback time, comoving distance, redshift, scale factor) — the `M` key cycles through them.
+2. Navigate: mouse wheel or `+` / `-` to zoom, left/right arrows to move from one galaxy to another, click a galaxy for details.
+3. Search: press 🔍, the `/` key or `Ctrl/Cmd+K`; the up/down arrows pick the result, `Enter` selects it.
+4. The keys `G` (guide), `T` (tour), `Q` (quiz), `D` (data table), `L` (language), `Esc` (close panels).
+5. In a galaxy's panel press "SHARE" for a link or "COPY" for text.
+6. The ⌂ button resets the view.
 
-- Local: preferințele se păstrează în `localStorage` (cheia `uv1d_prefs_v1`). Linkul de partajare stochează starea doar în URL.
-- Rețea: nu am găsit apeluri `fetch`, scripturi sau fonturi externe; datele galaxiilor sunt incluse în fișier. Linkurile de susținere și de credit (alexio.tf, Buy Me a Coffee) se deschid doar dacă le apeși.
-- În ghid, secțiunea de credite menționează ca surse de date: Planck 2018, NASA/IPAC NED, SIMBAD, JWST/JADES și Naidu et al. 2025. Nu sunt interogate în timpul rulării.
+## Privacy and network
 
-## Rulare locală / offline
+- Local: preferences are kept in `localStorage` (key `uv1d_prefs_v1`). The share link stores the state only in the URL.
+- Network: I found no `fetch` calls and no external scripts or fonts; the galaxy data is included in the file. The support and credit links (alexio.tf, Buy Me a Coffee) open only if you click them.
+- In the guide, the credits section lists as data sources: Planck 2018, NASA/IPAC NED, SIMBAD, JWST/JADES and Naidu et al. 2025. They are not queried at runtime.
 
-Descarcă `index.html` și deschide-l în browser; funcționează fără internet.
+## Running locally / offline
 
-## Licență
+Download `index.html` and open it in a browser; it works without internet.
 
-MIT — vezi fișierul LICENSE
+## License
 
-## Istoric / Changelog
+MIT — see the LICENSE file
 
-- 1.2.0 — 2026-10-19: buton „🗺️ HARTA 2D ↗” în panoul galaxiei (aceeași galaxie, limba curentă); permalink `#s=` acceptă garda `gn`.
+## History / Changelog
 
-- 1.1.0 — 2026-10-14: Copie de rezervă și etichetare date (fff-kit).
+- 1.2.0 — 2026-10-19: "🗺️ 2D MAP ↗" button in the galaxy panel (same galaxy, current language); the `#s=` permalink accepts the `gn` guard.
 
-- 1.0.4 — 2026-10-12: versiunea și data ultimei actualizări sunt afișate în aplicație.
+- 1.1.0 — 2026-10-14: Backup and data labelling (fff-kit).
 
-v1.0.3 (11 octombrie 2026):
-- Corectat: `Esc` nu închidea quiz-ul (acum îl închide; quiz-ul poate fi jucat și de la tastatură: `1`–`4`, Tab + Enter, focus mutat corect); tabelul de date și panoul de detalii rămâneau cu H₀ vechi după mutarea slider-ului (acum se actualizează imediat); în modul RO panoul de detalii afișa și descrierea în engleză (acum o singură limbă, cu fallback RO pentru intrările fără text EN); „CMB · orizont cosmologic” tradus.
-- Distanțe din catalog aduse în acord cu z, aceeași metodă ca în v1.0.2: IC 4296 (130 → ≈ 180 Mly), 3C 48 (5 200 → ≈ 4 150 Mly), Abell 370 (5 900 → ≈ 4 200 Mly), CL 0024+1654 (5 500 → ≈ 4 400 Mly). Alte intrări cu abateri mai mici (ex. 3C 273) rămân la valorile din catalog.
-- Hash-ul CSP recalculat; axe-core = 0 violări la 1280 și 360 px.
+- 1.0.4 — 2026-10-12: the version and the last-updated date are shown in the app.
 
-v1.0.2 (11 octombrie 2026):
-- Nou: tabel de date sortabil/filtrabil cu export CSV (vezi „Funcții”).
-- Distanțe din catalog aduse în acord cu redshift-ul publicat pentru patru intrări cu valori incoerente: NGC 1132 (z = 0,0232: 1 020 → ≈ 330 Mly), Perseus / IC 310 (z = 0,0189: 780 → ≈ 270 Mly), Abell 1689 (z = 0,183: 7 200 → ≈ 2 330 Mly), SDSS J1004+4112 (z = 1,734: 7 000 → ≈ 10 050 Mly). Valorile sunt timpul de privire înapoi la z în cosmologia ΛCDM a aplicației (H₀ = 67,4); z-urile au fost confirmate la 11.10.2026 (Wikipedia pentru NGC 1132 și Abell 1689, Inada et al. 2003 pentru SDSS J1004+4112). Alte intrări (de ex. Abell 370, 3C 48) au distanțe care diferă de lookback-ul la z cu 20–40%, dar rămân între lookback și distanța comobilă, deci nu au fost modificate.
-- CSP: scriptul este acum permis prin hash (`script-src 'sha256-…'`), fără `'unsafe-inline'`; aplicația nu are handlere inline.
+v1.0.3 (11 October 2026):
+- Fixed: `Esc` did not close the quiz (now it does; the quiz can also be played from the keyboard: `1`–`4`, Tab + Enter, focus moved correctly); the data table and the details panel kept the old H₀ after moving the slider (now they update immediately); in RO mode the details panel also showed the description in English (now a single language, with an RO fallback for entries without EN text); "CMB · cosmological horizon" translated.
+- Catalogue distances brought into line with z, same method as in v1.0.2: IC 4296 (130 → ≈ 180 Mly), 3C 48 (5,200 → ≈ 4,150 Mly), Abell 370 (5,900 → ≈ 4,200 Mly), CL 0024+1654 (5,500 → ≈ 4,400 Mly). Other entries with smaller deviations (e.g. 3C 273) remain at the catalogue values.
+- CSP hash recalculated; axe-core = 0 violations at 1280 and 360 px.
 
-v1.0.1 (11 octombrie 2026):
-- Valori derivate corecte pentru galaxiile apropiate (d < 100 Mly): Andromeda arată acum lookback ≈ 2,5 Myr și comoving ≈ 2,5 Mly (înainte 14 Myr / 15 Mly, derivate din z); z = −0,001 (blueshift), nu +0,001. Pozițiile pe axă folosesc aceleași valori.
-- Eticheta de tip în română: „Spirală galaxie” în loc de „SPIRALĂ GALAXY”.
-- Etichetele axei au contur; antetul și widgetul de donații nu mai acoperă controalele pe 360 px. axe-core = 0 violări (inclusiv `region`).
-- Recordurile de redshift rămân cele „la data catalogului (mai 2026)”; o căutare web la 11.10.2026 nu a găsit un record spectroscopic mai nou decât MoM-z14 (z = 14,44), dar catalogul nu a fost reverificat sistematic.
+v1.0.2 (11 October 2026):
+- New: sortable/filterable data table with CSV export (see "Features").
+- Catalogue distances brought into line with the published redshift for four entries with inconsistent values: NGC 1132 (z = 0.0232: 1,020 → ≈ 330 Mly), Perseus / IC 310 (z = 0.0189: 780 → ≈ 270 Mly), Abell 1689 (z = 0.183: 7,200 → ≈ 2,330 Mly), SDSS J1004+4112 (z = 1.734: 7,000 → ≈ 10,050 Mly). The values are the lookback time at z in the application's ΛCDM cosmology (H₀ = 67.4); the z values were confirmed on 11.10.2026 (Wikipedia for NGC 1132 and Abell 1689, Inada et al. 2003 for SDSS J1004+4112). Other entries (e.g. Abell 370, 3C 48) have distances that differ from the lookback at z by 20–40%, but remain between the lookback and the comoving distance, so they were not changed.
+- CSP: the script is now allowed by hash (`script-src 'sha256-…'`), without `'unsafe-inline'`; the application has no inline handlers.
 
-## Autor
+v1.0.1 (11 October 2026):
+- Correct derived values for nearby galaxies (d < 100 Mly): Andromeda now shows lookback ≈ 2.5 Myr and comoving ≈ 2.5 Mly (previously 14 Myr / 15 Mly, derived from z); z = −0.001 (blueshift), not +0.001. Positions on the axis use the same values.
+- Type label in Romanian: "Spirală galaxie" instead of "SPIRALĂ GALAXY".
+- Axis labels have an outline; the header and the donations widget no longer cover the controls at 360 px. axe-core = 0 violations (including `region`).
+- The redshift records remain those "as of the catalogue date (May 2026)"; a web search on 11.10.2026 found no spectroscopic record newer than MoM-z14 (z = 14.44), but the catalogue was not systematically rechecked.
 
-Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf. Aplicația indică și Centrul StrING în creditele ei.
+## Author
+
+Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf. The application also names Centrul StrING in its credits.
 
 ## Audit
 
-Audit: 2026-10-10; rundă 2: 2026-10-11 — eliminat din citare câmpul „DOI” cu valoare fictivă (nu există un DOI real); reformulată mențiunea „satirică și educațională” / „toate datele sunt corecte” (ghid RO+EN și README). Viewport și contrast corectate în runda 1. Runda 3 (2026-10-11): afirmațiile perisabile („record absolut/curent", „NOU", „cea mai apropiată/îndepărtată") reformulate „la data catalogului (mai 2026)", cu sursa (Naidu et al. 2025 pentru MoM-z14; arXiv 2603.15841 pentru EGS-z11-R0). Recordurile pot fi depășite după această dată.
+Audit: 2026-10-10; round 2: 2026-10-11 — removed from the citation the "DOI" field with a fictitious value (there is no real DOI); reworded the "satirical and educational" / "all data are correct" statement (RO+EN guide and README). Viewport and contrast fixed in round 1. Round 3 (2026-10-11): perishable claims ("absolute/current record", "NEW", "nearest/farthest") reworded as "as of the catalogue date (May 2026)", with the source (Naidu et al. 2025 for MoM-z14; arXiv 2603.15841 for EGS-z11-R0). Records may be surpassed after this date.
 
 ## English summary
 
