@@ -82,6 +82,6 @@ Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf. Aplicația indic�
 
 Audit: 2026-10-10; rundă 2: 2026-10-11 — eliminat din citare câmpul „DOI” cu valoare fictivă (nu există un DOI real); reformulată mențiunea „satirică și educațională” / „toate datele sunt corecte” (ghid RO+EN și README). Viewport și contrast corectate în runda 1. Runda 3 (2026-10-11): afirmațiile perisabile („record absolut/curent", „NOU", „cea mai apropiată/îndepărtată") reformulate „la data catalogului (mai 2026)", cu sursa (Naidu et al. 2025 pentru MoM-z14; arXiv 2603.15841 pentru EGS-z11-R0). Recordurile pot fi depășite după această dată.
 
-## English summary
+## Rezumat
 
-A single-file 1D map of the observable universe: 112 galaxies on one radial axis, switchable between lookback time, comoving distance, redshift and scale factor, with a log density histogram, search, guided tour, 10-question quiz, 8-language UI and shareable permalinks. Preferences are kept in localStorage; no external requests were found in the code. MIT licence.
+O hartă 1D a universului observabil într-un singur fișier: 112 galaxii pe o singură axă radială, comutabilă între timp de privire înapoi, distanță comobilă, deplasare spre roșu și factor de scală, cu histogramă logaritmică a densității, căutare, tur ghidat, test de 10 întrebări, interfață în 8 limbi și permalinkuri partajabile. Preferințele se păstrează în localStorage; nu s-au găsit cereri externe în cod. Licență MIT.
