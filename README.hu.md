@@ -10,7 +10,7 @@ A megfigyelhető univerzum 1D-s térképe: 112 galaxis egyetlen sugárirányú t
 
 **Online alkalmazás:** https://chiuta.github.io/Universul-Observabil-1D/
 
-![Képernyőkép](screenshot.png)
+![Képernyőkép](screenshot.hu.png)
 
 ## Mi ez
 

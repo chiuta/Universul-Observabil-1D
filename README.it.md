@@ -10,7 +10,7 @@ Mappa 1D dell'universo osservabile: 112 galassie proiettate su un unico asse rad
 
 **App online:** https://chiuta.github.io/Universul-Observabil-1D/
 
-![Schermata](screenshot.png)
+![Schermata](screenshot.it.png)
 
 ## Che cos'è
 

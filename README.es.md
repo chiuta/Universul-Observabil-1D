@@ -10,7 +10,7 @@ Mapa 1D del universo observable: 112 galaxias proyectadas sobre un único eje ra
 
 **Aplicación en línea:** https://chiuta.github.io/Universul-Observabil-1D/
 
-![Captura de pantalla](screenshot.png)
+![Captura de pantalla](screenshot.es.png)
 
 ## Qué es
 

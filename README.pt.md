@@ -10,7 +10,7 @@ Mapa 1D do universo observável: 112 galáxias projetadas num único eixo radial
 
 **Aplicação online:** https://chiuta.github.io/Universul-Observabil-1D/
 
-![Captura de ecrã](screenshot.png)
+![Captura de ecrã](screenshot.pt.png)
 
 ## O que é
 

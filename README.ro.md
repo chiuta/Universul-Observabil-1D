@@ -10,7 +10,7 @@ Harta 1D a universului observabil: 112 galaxii proiectate pe o singură axă rad
 
 **Live:** https://chiuta.github.io/Universul-Observabil-1D/
 
-![Captura de ecran](screenshot.png)
+![Captura de ecran](screenshot.ro.png)
 
 ## Ce este
 

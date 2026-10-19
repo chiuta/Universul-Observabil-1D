@@ -10,7 +10,7 @@ A 1D map of the observable universe: 112 galaxies projected onto a single radial
 
 **Live app:** https://chiuta.github.io/Universul-Observabil-1D/
 
-![Screenshot](screenshot.png)
+![Screenshot](screenshot.en.png)
 
 ## What it is
 

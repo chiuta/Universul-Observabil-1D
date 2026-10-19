@@ -10,7 +10,7 @@ Carte 1D de l'univers observable : 112 galaxies projetées sur un seul axe radia
 
 **Application en ligne :** https://chiuta.github.io/Universul-Observabil-1D/
 
-![Capture d'écran](screenshot.png)
+![Capture d'écran](screenshot.fr.png)
 
 ## Présentation
 

@@ -10,7 +10,7 @@ Oberflächensprachen: **Română, English, Français, Italiano, Español, Portug
 
 **Online-App:** https://chiuta.github.io/Universul-Observabil-1D/
 
-![Screenshot](screenshot.png)
+![Screenshot](screenshot.de.png)
 
 ## Was es ist
 
