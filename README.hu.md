@@ -14,7 +14,9 @@ A megfigyelhető univerzum 1D-s térképe: 112 galaxis egyetlen sugárirányú t
 
 ## Mi ez
 
-Egyetlen HTML-fájlból álló vizualizáció (v1.0.4), amely 112 galaxist helyez el egyetlen tengelyen a távolságuk szerint – az univerzum „legőszintébb” vetítése: szögtorzítás nélkül, de az azonos irányban lévő galaxisok ugyanabba a pontba esnek, egymásra vetülve. Ez az 1D változat, a 2D és 3D verziók társa. Az adatok a Planck 2018 ΛCDM kozmológiáját használják (H₀ = 67,4 km/s/Mpc); az alkalmazás „oktató jellegűnek” írja le magát, egyes szövegekben ironikus hangnemmel (nem tudományos publikáció); az értékek kerekítettek vagy hozzávetőlegesek, a Köszönetnyilvánításban szereplő források szerint. A felület 8 nyelvű (RO, EN, FR, IT, ES, PT, DE, HU); az oldal a böngésző nyelvén indul, egyébként angolul.
+Egyetlen HTML-fájlból álló vizualizáció (v1.3.1), amely 112 galaxist helyez el egyetlen tengelyen a távolságuk szerint – az univerzum „legőszintébb” vetítése: szögtorzítás nélkül, de az azonos irányban lévő galaxisok ugyanabba a pontba esnek, egymásra vetülve. Ez az 1D változat, a 2D és 3D verziók társa. Az adatok a Planck 2018 ΛCDM kozmológiáját használják (H₀ = 67,4 km/s/Mpc); az alkalmazás „oktató jellegűnek” írja le magát, egyes szövegekben ironikus hangnemmel (nem tudományos publikáció); az értékek kerekítettek vagy hozzávetőlegesek, a Köszönetnyilvánításban szereplő források szerint. A felület 8 nyelvű (RO, EN, FR, IT, ES, PT, DE, HU); az oldal a böngésző nyelvén indul, egyébként angolul.
+
+**Nyelvek:** az összes szöveg (útmutató, a 8 állomásos vezetett túra, a kvíz válaszlehetőségekkel és magyarázatokkal, a 112 galaxis leírása) mind a 8 nyelven elérhető; csak a tulajdonnevek, az idézett források és az exportformátumok maradnak változatlanul. A fordítások automatikusak; anyanyelvi lektorálás ajánlott, különösen a csillagászati szakkifejezésekhez.
 
 ## Funkciók
 
@@ -52,6 +54,7 @@ MIT — lásd a LICENSE fájlt
 
 ## Előzmények / Changelog
 
+- 1.3.1 — 2026-10-19: az útmutató, a vezetett túra, a kvíz (mind a 12 kérdéstípus, válaszlehetőségekkel és magyarázatokkal) és a 112 galaxisleírás le van fordítva fr, it, es, pt, de, hu nyelvre; eltávolítottuk azt az állítást, hogy a hosszú szövegek „ro/en nyelven maradnak”.
 - 1.2.0 — 2026-10-19: „🗺️ 2D TÉRKÉP ↗” gomb a galaxis paneljén (ugyanaz a galaxis, az aktuális nyelven); a `#s=` permalink elfogadja a `gn` őrt.
 
 - 1.1.0 — 2026-10-14: adatmentés és adatcímkézés (fff-kit).

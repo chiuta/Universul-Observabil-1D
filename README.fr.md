@@ -14,7 +14,9 @@ Carte 1D de l'univers observable : 112 galaxies projetées sur un seul axe radia
 
 ## Présentation
 
-Une visualisation dans un seul fichier HTML (v1.0.4) qui place 112 galaxies sur un seul axe en fonction de la distance, la projection « la plus honnête » de l'univers : sans distorsion angulaire, mais avec les galaxies situées dans la même direction superposées au même point. C'est la version 1D, compagne des versions 2D et 3D. Les données reposent sur la cosmologie ΛCDM de Planck 2018 (H₀ = 67,4 km/s/Mpc) ; l'application se décrit comme « éducative », avec un ton ironique dans certains textes (ce n'est pas une publication scientifique) ; les valeurs sont arrondies ou approximatives, d'après les sources indiquées dans les Crédits. L'interface compte 8 langues (RO, EN, FR, IT, ES, PT, DE, HU) ; la page démarre dans la langue du navigateur, sinon en anglais.
+Une visualisation dans un seul fichier HTML (v1.3.1) qui place 112 galaxies sur un seul axe en fonction de la distance, la projection « la plus honnête » de l'univers : sans distorsion angulaire, mais avec les galaxies situées dans la même direction superposées au même point. C'est la version 1D, compagne des versions 2D et 3D. Les données reposent sur la cosmologie ΛCDM de Planck 2018 (H₀ = 67,4 km/s/Mpc) ; l'application se décrit comme « éducative », avec un ton ironique dans certains textes (ce n'est pas une publication scientifique) ; les valeurs sont arrondies ou approximatives, d'après les sources indiquées dans les Crédits. L'interface compte 8 langues (RO, EN, FR, IT, ES, PT, DE, HU) ; la page démarre dans la langue du navigateur, sinon en anglais.
+
+**Langues :** tout le texte (guide, visite guidée avec ses 8 étapes, quiz avec options et explications, descriptions des 112 galaxies) est disponible dans les 8 langues ; seuls les noms propres, les sources citées et les formats d'export restent tels quels. Les traductions sont automatiques ; une relecture native est recommandée, surtout pour la terminologie astronomique.
 
 ## Fonctionnalités
 
@@ -52,6 +54,7 @@ MIT — voir le fichier LICENSE
 
 ## Historique / Changelog
 
+- 1.3.1 — 2026-10-19 : le guide, la visite guidée, le quiz (les 12 types de questions, options et explications) et les 112 descriptions de galaxies sont traduits en fr, it, es, pt, de, hu ; l'affirmation selon laquelle les longs textes « restent en ro/en » a été supprimée.
 - 1.2.0 — 2026-10-19 : bouton « 🗺️ CARTE 2D ↗ » dans le panneau de la galaxie (même galaxie, langue courante) ; le permalien `#s=` accepte la garde `gn`.
 
 - 1.1.0 — 2026-10-14 : sauvegarde et étiquetage des données (fff-kit).

@@ -14,7 +14,9 @@ Mapa 1D do universo observável: 112 galáxias projetadas num único eixo radial
 
 ## O que é
 
-Uma visualização num único ficheiro HTML (v1.0.4) que coloca 112 galáxias num só eixo em função da distância, a projeção «mais honesta» do universo: sem distorções angulares, mas com as galáxias situadas na mesma direção sobrepostas no mesmo ponto. É a versão 1D, companheira das versões 2D e 3D. Os dados usam a cosmologia ΛCDM de Planck 2018 (H₀ = 67,4 km/s/Mpc); a aplicação descreve-se como «educativa», com um tom irónico em alguns textos (não é uma publicação científica); os valores são arredondados ou aproximados, de acordo com as fontes dos Créditos. A interface tem 8 idiomas (RO, EN, FR, IT, ES, PT, DE, HU); a página arranca no idioma do navegador e, caso contrário, em inglês.
+Uma visualização num único ficheiro HTML (v1.3.1) que coloca 112 galáxias num só eixo em função da distância, a projeção «mais honesta» do universo: sem distorções angulares, mas com as galáxias situadas na mesma direção sobrepostas no mesmo ponto. É a versão 1D, companheira das versões 2D e 3D. Os dados usam a cosmologia ΛCDM de Planck 2018 (H₀ = 67,4 km/s/Mpc); a aplicação descreve-se como «educativa», com um tom irónico em alguns textos (não é uma publicação científica); os valores são arredondados ou aproximados, de acordo com as fontes dos Créditos. A interface tem 8 idiomas (RO, EN, FR, IT, ES, PT, DE, HU); a página arranca no idioma do navegador e, caso contrário, em inglês.
+
+**Idiomas:** todo o texto (guia, visita guiada com as suas 8 paragens, questionário com opções e explicações, descrições das 112 galáxias) está disponível nos 8 idiomas; só permanecem inalterados os nomes próprios, as fontes citadas e os formatos de exportação. As traduções são automáticas; recomenda-se revisão nativa, sobretudo da terminologia astronómica.
 
 ## Funcionalidades
 
@@ -52,6 +54,7 @@ MIT — veja o ficheiro LICENSE
 
 ## Histórico / Changelog
 
+- 1.3.1 — 2026-10-19: o guia, a visita guiada, o questionário (os 12 tipos de perguntas, opções e explicações) e as 112 descrições de galáxias estão traduzidos para fr, it, es, pt, de, hu; foi removida a afirmação de que os textos longos «permanecem em ro/en».
 - 1.2.0 — 2026-10-19: botão «🗺️ MAPA 2D ↗» no painel da galáxia (a mesma galáxia, idioma atual); o permalink `#s=` aceita a guarda `gn`.
 
 - 1.1.0 — 2026-10-14: cópia de segurança e etiquetagem de dados (fff-kit).

@@ -14,7 +14,9 @@ A 1D map of the observable universe: 112 galaxies projected onto a single radial
 
 ## What it is
 
-A visualization in a single HTML file (v1.0.4) that places 112 galaxies on one axis according to distance, "the most honest" projection of the universe: no angular distortion, but with galaxies lying in the same direction superimposed at the same point. It is the 1D version, a companion to the 2D and 3D versions. The data use the Planck 2018 ΛCDM cosmology (H₀ = 67.4 km/s/Mpc); the application describes itself as "educational", with an ironic tone in some texts (it is not a scientific publication); values are rounded or approximate, according to the sources in the Credits. The interface has 8 languages (RO, EN, FR, IT, ES, PT, DE, HU); the page starts in the browser language, otherwise in English.
+A visualization in a single HTML file (v1.3.1) that places 112 galaxies on one axis according to distance, "the most honest" projection of the universe: no angular distortion, but with galaxies lying in the same direction superimposed at the same point. It is the 1D version, a companion to the 2D and 3D versions. The data use the Planck 2018 ΛCDM cosmology (H₀ = 67.4 km/s/Mpc); the application describes itself as "educational", with an ironic tone in some texts (it is not a scientific publication); values are rounded or approximate, according to the sources in the Credits. The interface has 8 languages (RO, EN, FR, IT, ES, PT, DE, HU); the page starts in the browser language, otherwise in English.
+
+**Languages:** all the text (guide, guided tour with its 8 stops, quiz with options and explanations, descriptions of the 112 galaxies) is available in the 8 languages; only proper names, cited sources and export formats are left as they are. The translations are automatic; a native review is recommended, especially for astronomical terminology.
 
 ## Features
 
@@ -52,6 +54,7 @@ MIT — see the LICENSE file
 
 ## History / Changelog
 
+- 1.3.1 — 2026-10-19: guide, guided tour, quiz (all 12 question types, options and explanations) and the 112 galaxy descriptions translated into fr, it, es, pt, de, hu; the statement that the long texts "remain in ro/en" was removed.
 - 1.2.0 — 2026-10-19: "🗺️ 2D MAP ↗" button in the galaxy panel (same galaxy, current language); the `#s=` permalink accepts the `gn` guard.
 
 - 1.1.0 — 2026-10-14: Backup and data labelling (fff-kit).

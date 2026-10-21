@@ -14,7 +14,9 @@ Mappa 1D dell'universo osservabile: 112 galassie proiettate su un unico asse rad
 
 ## Che cos'è
 
-Una visualizzazione in un unico file HTML (v1.0.4) che dispone 112 galassie su un solo asse in funzione della distanza, la proiezione «più onesta» dell'universo: senza distorsioni angolari, ma con le galassie che si trovano nella stessa direzione sovrapposte nello stesso punto. È la versione 1D, compagna delle versioni 2D e 3D. I dati usano la cosmologia ΛCDM di Planck 2018 (H₀ = 67,4 km/s/Mpc); l'applicazione si descrive come «educativa», con un tono ironico in alcuni testi (non è una pubblicazione scientifica); i valori sono arrotondati o approssimativi, secondo le fonti indicate nei Crediti. L'interfaccia ha 8 lingue (RO, EN, FR, IT, ES, PT, DE, HU); la pagina parte nella lingua del browser, altrimenti in inglese.
+Una visualizzazione in un unico file HTML (v1.3.1) che dispone 112 galassie su un solo asse in funzione della distanza, la proiezione «più onesta» dell'universo: senza distorsioni angolari, ma con le galassie che si trovano nella stessa direzione sovrapposte nello stesso punto. È la versione 1D, compagna delle versioni 2D e 3D. I dati usano la cosmologia ΛCDM di Planck 2018 (H₀ = 67,4 km/s/Mpc); l'applicazione si descrive come «educativa», con un tono ironico in alcuni testi (non è una pubblicazione scientifica); i valori sono arrotondati o approssimativi, secondo le fonti indicate nei Crediti. L'interfaccia ha 8 lingue (RO, EN, FR, IT, ES, PT, DE, HU); la pagina parte nella lingua del browser, altrimenti in inglese.
+
+**Lingue:** tutto il testo (guida, tour guidato con le sue 8 tappe, quiz con opzioni e spiegazioni, descrizioni delle 112 galassie) è disponibile nelle 8 lingue; restano invariati solo i nomi propri, le fonti citate e i formati di esportazione. Le traduzioni sono automatiche; si consiglia una revisione da parte di madrelingua, soprattutto per la terminologia astronomica.
 
 ## Funzionalità
 
@@ -52,6 +54,7 @@ MIT — vedi il file LICENSE
 
 ## Cronologia / Changelog
 
+- 1.3.1 — 2026-10-19: la guida, il tour guidato, il quiz (tutti i 12 tipi di domande, opzioni e spiegazioni) e le 112 descrizioni di galassie sono tradotti in fr, it, es, pt, de, hu; l'affermazione che i testi lunghi «restano in ro/en» è stata rimossa.
 - 1.2.0 — 2026-10-19: pulsante «🗺️ MAPPA 2D ↗» nel pannello della galassia (stessa galassia, lingua corrente); il permalink `#s=` accetta la guardia `gn`.
 
 - 1.1.0 — 2026-10-14: backup ed etichettatura dei dati (fff-kit).

@@ -14,7 +14,9 @@ Harta 1D a universului observabil: 112 galaxii proiectate pe o singură axă rad
 
 ## Ce este
 
-O vizualizare dintr-un singur fișier HTML (v1.0.4) care așază 112 galaxii pe o singură axă, în funcție de distanță, „cel mai onest" proiect al universului: fără distorsiuni unghiulare, dar cu galaxiile aflate pe aceeași direcție suprapuse în același punct. Este varianta 1D, însoțitoare a versiunilor 2D și 3D. Datele folosesc cosmologia ΛCDM Planck 2018 (H₀ = 67,4 km/s/Mpc); aplicația se descrie ca „educațională”, cu un ton ironic în unele texte (nu este o publicație științifică); valorile sunt rotunjite sau aproximative, conform surselor din Credite. Interfața are 8 limbi (RO, EN, FR, IT, ES, PT, DE, HU); pagina pornește în limba browserului, altfel în engleză.
+O vizualizare dintr-un singur fișier HTML (v1.3.1) care așază 112 galaxii pe o singură axă, în funcție de distanță, „cel mai onest" proiect al universului: fără distorsiuni unghiulare, dar cu galaxiile aflate pe aceeași direcție suprapuse în același punct. Este varianta 1D, însoțitoare a versiunilor 2D și 3D. Datele folosesc cosmologia ΛCDM Planck 2018 (H₀ = 67,4 km/s/Mpc); aplicația se descrie ca „educațională”, cu un ton ironic în unele texte (nu este o publicație științifică); valorile sunt rotunjite sau aproximative, conform surselor din Credite. Interfața are 8 limbi (RO, EN, FR, IT, ES, PT, DE, HU); pagina pornește în limba browserului, altfel în engleză.
+
+**Limbi:** tot textul (ghid, tur ghidat cu cele 8 opriri, quiz cu variante și explicații, descrierile celor 112 galaxii) este disponibil în cele 8 limbi; rămân neschimbate doar numele proprii, sursele citate și formatele de export. Traducerile sunt automate; se recomandă revizie nativă, mai ales pentru terminologia astronomică.
 
 ## Funcții
 
@@ -52,6 +54,7 @@ MIT — vezi fișierul LICENSE
 
 ## Istoric / Changelog
 
+- 1.3.1 — 2026-10-19: ghidul, turul ghidat, quizul (toate cele 12 tipuri de întrebări, variante și explicații) și cele 112 descrieri de galaxii sunt traduse în fr, it, es, pt, de, hu; afirmația că textele lungi „rămân în ro/en” a fost eliminată.
 - 1.2.0 — 2026-10-19: buton „🗺️ HARTA 2D ↗” în panoul galaxiei (aceeași galaxie, limba curentă); permalink `#s=` acceptă garda `gn`.
 
 - 1.1.0 — 2026-10-14: Copie de rezervă și etichetare date (fff-kit).

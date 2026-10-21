@@ -14,7 +14,9 @@ Oberflächensprachen: **Română, English, Français, Italiano, Español, Portug
 
 ## Was es ist
 
-Eine Visualisierung in einer einzigen HTML-Datei (v1.0.4), die 112 Galaxien nach Entfernung auf einer einzigen Achse anordnet – die „ehrlichste“ Projektion des Universums: ohne Winkelverzerrung, aber mit Galaxien in derselben Richtung, die im selben Punkt übereinanderliegen. Es ist die 1D-Variante, Begleiterin der 2D- und 3D-Versionen. Die Daten verwenden die ΛCDM-Kosmologie von Planck 2018 (H₀ = 67,4 km/s/Mpc); die Anwendung bezeichnet sich als „lehrreich“, mit ironischem Ton in einigen Texten (sie ist keine wissenschaftliche Publikation); die Werte sind gerundet oder angenähert, gemäß den Quellen unter Credits. Die Oberfläche hat 8 Sprachen (RO, EN, FR, IT, ES, PT, DE, HU); die Seite startet in der Browsersprache, sonst auf Englisch.
+Eine Visualisierung in einer einzigen HTML-Datei (v1.3.1), die 112 Galaxien nach Entfernung auf einer einzigen Achse anordnet – die „ehrlichste“ Projektion des Universums: ohne Winkelverzerrung, aber mit Galaxien in derselben Richtung, die im selben Punkt übereinanderliegen. Es ist die 1D-Variante, Begleiterin der 2D- und 3D-Versionen. Die Daten verwenden die ΛCDM-Kosmologie von Planck 2018 (H₀ = 67,4 km/s/Mpc); die Anwendung bezeichnet sich als „lehrreich“, mit ironischem Ton in einigen Texten (sie ist keine wissenschaftliche Publikation); die Werte sind gerundet oder angenähert, gemäß den Quellen unter Credits. Die Oberfläche hat 8 Sprachen (RO, EN, FR, IT, ES, PT, DE, HU); die Seite startet in der Browsersprache, sonst auf Englisch.
+
+**Sprachen:** der gesamte Text (Anleitung, geführte Tour mit ihren 8 Stationen, Quiz mit Optionen und Erklärungen, Beschreibungen der 112 Galaxien) liegt in den 8 Sprachen vor; unverändert bleiben nur Eigennamen, zitierte Quellen und Exportformate. Die Übersetzungen sind automatisch; eine muttersprachliche Prüfung wird empfohlen, besonders für die astronomische Terminologie.
 
 ## Funktionen
 
@@ -52,6 +54,7 @@ MIT — siehe Datei LICENSE
 
 ## Verlauf / Changelog
 
+- 1.3.1 — 2026-10-19: Anleitung, geführte Tour, Quiz (alle 12 Fragetypen, Optionen und Erklärungen) und die 112 Galaxienbeschreibungen sind nach fr, it, es, pt, de, hu übersetzt; die Aussage, die langen Texte „bleiben auf ro/en“, wurde entfernt.
 - 1.2.0 — 2026-10-19: Schaltfläche „🗺️ 2D-KARTE ↗“ im Galaxienfenster (dieselbe Galaxie, aktuelle Sprache); der Permalink `#s=` akzeptiert den Guard `gn`.
 
 - 1.1.0 — 2026-10-14: Datensicherung und Datenkennzeichnung (fff-kit).
