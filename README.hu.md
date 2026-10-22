@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 1.3.1 · **Utolsó frissítés:** 2026-10-19
+**Verzió:** 1.3.2 · **Utolsó frissítés:** 2026-10-22
 
 A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -53,6 +53,8 @@ Töltsd le az `index.html` fájlt, és nyisd meg böngészőben; internet nélk�
 MIT — lásd a LICENSE fájlt
 
 ## Előzmények / Changelog
+
+- 1.3.2 — 2026-10-22: a galaxisok és objektumok nevei mind a 8 nyelven lokalizáltak (Tejútrendszer, Szélkerék, Örvény stb. már nem maradnak románul); az oldal címe és a meta-leírások követik a felület nyelvét.
 
 - 1.3.1 — 2026-10-19: az útmutató, a vezetett túra, a kvíz (mind a 12 kérdéstípus, válaszlehetőségekkel és magyarázatokkal) és a 112 galaxisleírás le van fordítva fr, it, es, pt, de, hu nyelvre; eltávolítottuk azt az állítást, hogy a hosszú szövegek „ro/en nyelven maradnak”.
 - 1.2.0 — 2026-10-19: „🗺️ 2D TÉRKÉP ↗” gomb a galaxis paneljén (ugyanaz a galaxis, az aktuális nyelven); a `#s=` permalink elfogadja a `gn` őrt.

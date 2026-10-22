@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · **Italiano** · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versione:** 1.3.1 · **Ultimo aggiornamento:** 2026-10-19
+**Versione:** 1.3.2 · **Ultimo aggiornamento:** 2026-10-22
 
 Lingue dell'interfaccia: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -53,6 +53,8 @@ Scarica `index.html` e aprilo in un browser; funziona senza internet.
 MIT — vedi il file LICENSE
 
 ## Cronologia / Changelog
+
+- 1.3.2 — 2026-10-22: nomi di galassie e oggetti localizzati nelle 8 lingue (Via Lattea, Girandola, Vortice, ecc. non restano più in rumeno); titolo della pagina e meta-descrizioni seguono la lingua dell'interfaccia.
 
 - 1.3.1 — 2026-10-19: la guida, il tour guidato, il quiz (tutti i 12 tipi di domande, opzioni e spiegazioni) e le 112 descrizioni di galassie sono tradotti in fr, it, es, pt, de, hu; l'affermazione che i testi lunghi «restano in ro/en» è stata rimossa.
 - 1.2.0 — 2026-10-19: pulsante «🗺️ MAPPA 2D ↗» nel pannello della galassia (stessa galassia, lingua corrente); il permalink `#s=` accetta la guardia `gn`.

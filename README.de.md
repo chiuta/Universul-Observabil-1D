@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 1.3.1 · **Zuletzt aktualisiert:** 2026-10-19
+**Version:** 1.3.2 · **Zuletzt aktualisiert:** 2026-10-22
 
 Oberflächensprachen: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -53,6 +53,8 @@ Lade `index.html` herunter und öffne sie in einem Browser; sie funktioniert ohn
 MIT — siehe Datei LICENSE
 
 ## Verlauf / Changelog
+
+- 1.3.2 — 2026-10-22: Namen der Galaxien und Objekte in allen 8 Sprachen lokalisiert (Milchstraße, Feuerrad, Strudel usw. bleiben nicht mehr rumänisch); Seitentitel und Meta-Beschreibungen folgen der Oberflächensprache.
 
 - 1.3.1 — 2026-10-19: Anleitung, geführte Tour, Quiz (alle 12 Fragetypen, Optionen und Erklärungen) und die 112 Galaxienbeschreibungen sind nach fr, it, es, pt, de, hu übersetzt; die Aussage, die langen Texte „bleiben auf ro/en“, wurde entfernt.
 - 1.2.0 — 2026-10-19: Schaltfläche „🗺️ 2D-KARTE ↗“ im Galaxienfenster (dieselbe Galaxie, aktuelle Sprache); der Permalink `#s=` akzeptiert den Guard `gn`.

@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 1.3.1 · **Last updated:** 2026-10-19
+**Version:** 1.3.2 · **Last updated:** 2026-10-22
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -53,6 +53,8 @@ Download `index.html` and open it in a browser; it works without internet.
 MIT — see the LICENSE file
 
 ## History / Changelog
+
+- 1.3.2 — 2026-10-22: localized names of the galaxies and objects in all 8 languages (Milky Way, Pinwheel, Whirlpool, etc. no longer stay in Romanian); page title and meta descriptions follow the interface language.
 
 - 1.3.1 — 2026-10-19: guide, guided tour, quiz (all 12 question types, options and explanations) and the 112 galaxy descriptions translated into fr, it, es, pt, de, hu; the statement that the long texts "remain in ro/en" was removed.
 - 1.2.0 — 2026-10-19: "🗺️ 2D MAP ↗" button in the galaxy panel (same galaxy, current language); the `#s=` permalink accepts the `gn` guard.

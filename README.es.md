@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · **Español** · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versión:** 1.3.1 · **Última actualización:** 2026-10-19
+**Versión:** 1.3.2 · **Última actualización:** 2026-10-22
 
 Idiomas de la interfaz: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -53,6 +53,8 @@ Descarga `index.html` y ábrelo en un navegador; funciona sin internet.
 MIT — véase el archivo LICENSE
 
 ## Historial / Changelog
+
+- 1.3.2 — 2026-10-22: nombres de galaxias y objetos localizados en los 8 idiomas (Vía Láctea, Molinete, Remolino, etc. ya no quedan en rumano); el título de la página y las metadescripciones siguen el idioma de la interfaz.
 
 - 1.3.1 — 2026-10-19: la guía, la visita guiada, el cuestionario (los 12 tipos de preguntas, opciones y explicaciones) y las 112 descripciones de galaxias están traducidos a fr, it, es, pt, de, hu; se eliminó la afirmación de que los textos largos «permanecen en ro/en».
 - 1.2.0 — 2026-10-19: botón «🗺️ MAPA 2D ↗» en el panel de la galaxia (la misma galaxia, idioma actual); el permalink `#s=` acepta la guarda `gn`.

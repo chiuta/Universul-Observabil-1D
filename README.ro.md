@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 1.3.1 · **Ultima actualizare:** 2026-10-19
+**Versiune:** 1.3.2 · **Ultima actualizare:** 2026-10-22
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -53,6 +53,8 @@ Descarcă `index.html` și deschide-l în browser; funcționează fără interne
 MIT — vezi fișierul LICENSE
 
 ## Istoric / Changelog
+
+- 1.3.2 — 2026-10-22: denumirile galaxiilor și obiectelor sunt localizate în toate cele 8 limbi (Calea Lactee, Morișca, Vârtejul etc. nu mai rămân în română); titlul paginii și meta-descrierile urmează limba interfeței.
 
 - 1.3.1 — 2026-10-19: ghidul, turul ghidat, quizul (toate cele 12 tipuri de întrebări, variante și explicații) și cele 112 descrieri de galaxii sunt traduse în fr, it, es, pt, de, hu; afirmația că textele lungi „rămân în ro/en” a fost eliminată.
 - 1.2.0 — 2026-10-19: buton „🗺️ HARTA 2D ↗” în panoul galaxiei (aceeași galaxie, limba curentă); permalink `#s=` acceptă garda `gn`.
