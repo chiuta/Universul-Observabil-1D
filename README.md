@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 1.3.7 · **Last updated:** 2026-10-23
+**Version:** 1.3.9 · **Last updated:** 2026-10-23
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -40,7 +40,7 @@ A visualization in a single HTML file (v1.3.1) that places 112 galaxies on one a
 
 ## Privacy and network
 
-- Local: preferences are kept in `localStorage` (key `uv1d_prefs_v1`). The share link stores the state only in the URL.
+- Local: preferences are kept in `localStorage` (key `universul-observabil-1d.prefs`). The share link stores the state only in the URL.
 - Network: I found no `fetch` calls and no external scripts or fonts; the galaxy data is included in the file. The support and credit links (alexio.tf, Buy Me a Coffee) open only if you click them.
 - In the guide, the credits section lists as data sources: Planck 2018, NASA/IPAC NED, SIMBAD, JWST/JADES and Naidu et al. 2025. They are not queried at runtime.
 
@@ -53,6 +53,9 @@ Download `index.html` and open it in a browser; it works without internet.
 MIT — see the LICENSE file
 
 ## History / Changelog
+
+### 1.3.9 — 2026-10-23
+- fff-kit 1.2.0: the preferences key is now `universul-observabil-1d.prefs`; the old `uv1d_prefs_v1` is migrated automatically at start-up, also after importing an old .fff.json backup. The “copy link / copy details” fallback no longer uses the native browser prompt but an accessible dialog.
 
 ### 1.3.6 — 2026-10-22
 - fff-kit 1.1.4: touch targets and minimum text size; touch targets/text fixed

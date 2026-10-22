@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · **Français** · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version :** 1.3.7 · **Dernière mise à jour :** 2026-10-23
+**Version :** 1.3.9 · **Dernière mise à jour :** 2026-10-23
 
 Langues de l'interface : **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -40,7 +40,7 @@ Une visualisation dans un seul fichier HTML (v1.3.1) qui place 112 galaxies sur 
 
 ## Confidentialité et réseau
 
-- Local : les préférences sont conservées dans `localStorage` (clé `uv1d_prefs_v1`). Le lien de partage ne stocke l'état que dans l'URL.
+- Local : les préférences sont conservées dans `localStorage` (clé `universul-observabil-1d.prefs`). Le lien de partage ne stocke l'état que dans l'URL.
 - Réseau : je n'ai trouvé aucun appel `fetch`, ni script ou police externe ; les données des galaxies sont incluses dans le fichier. Les liens de soutien et de crédit (alexio.tf, Buy Me a Coffee) ne s'ouvrent que si vous cliquez dessus.
 - Dans le guide, la section des crédits mentionne comme sources de données : Planck 2018, NASA/IPAC NED, SIMBAD, JWST/JADES et Naidu et al. 2025. Elles ne sont pas interrogées à l'exécution.
 
@@ -53,6 +53,9 @@ Téléchargez `index.html` et ouvrez-le dans un navigateur ; il fonctionne sans 
 MIT — voir le fichier LICENSE
 
 ## Historique / Changelog
+
+### 1.3.9 — 2026-10-23
+- fff-kit 1.2.0 : la clé des préférences est désormais `universul-observabil-1d.prefs` ; l'ancienne `uv1d_prefs_v1` est migrée automatiquement au démarrage, y compris après l'import d'une ancienne sauvegarde .fff.json. Le repli « copier le lien / les détails » n'utilise plus la boîte native du navigateur, mais un dialogue accessible.
 
 ### 1.3.6 — 2026-10-22
 - fff-kit 1.1.4 : cibles tactiles et taille de texte minimale; cibles tactiles/texte corrigés

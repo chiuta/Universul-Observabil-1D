@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 1.3.7 · **Ultima actualizare:** 2026-10-23
+**Versiune:** 1.3.9 · **Ultima actualizare:** 2026-10-23
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -40,7 +40,7 @@ O vizualizare dintr-un singur fișier HTML (v1.3.1) care așază 112 galaxii pe 
 
 ## Confidențialitate și rețea
 
-- Local: preferințele se păstrează în `localStorage` (cheia `uv1d_prefs_v1`). Linkul de partajare stochează starea doar în URL.
+- Local: preferințele se păstrează în `localStorage` (cheia `universul-observabil-1d.prefs`). Linkul de partajare stochează starea doar în URL.
 - Rețea: nu am găsit apeluri `fetch`, scripturi sau fonturi externe; datele galaxiilor sunt incluse în fișier. Linkurile de susținere și de credit (alexio.tf, Buy Me a Coffee) se deschid doar dacă le apeși.
 - În ghid, secțiunea de credite menționează ca surse de date: Planck 2018, NASA/IPAC NED, SIMBAD, JWST/JADES și Naidu et al. 2025. Nu sunt interogate în timpul rulării.
 
@@ -53,6 +53,9 @@ Descarcă `index.html` și deschide-l în browser; funcționează fără interne
 MIT — vezi fișierul LICENSE
 
 ## Istoric / Changelog
+
+### 1.3.9 — 2026-10-23
+- fff-kit 1.2.0: cheia preferințelor este acum `universul-observabil-1d.prefs`; vechea `uv1d_prefs_v1` este migrată automat la pornire, inclusiv după importul unei copii .fff.json vechi. Alternativa „copiază linkul / detaliile” nu mai folosește fereastra nativă a browserului, ci un dialog accesibil.
 
 ### 1.3.6 — 2026-10-22
 - fff-kit 1.1.4: ținte tactile și text minim; ținte tactile/text corectate
