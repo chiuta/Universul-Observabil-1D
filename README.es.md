@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · **Español** · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versión:** 1.3.4 · **Última actualización:** 2026-10-22
+**Versión:** 1.3.5 · **Última actualización:** 2026-10-22
 
 Idiomas de la interfaz: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -53,6 +53,9 @@ Descarga `index.html` y ábrelo en un navegador; funciona sin internet.
 MIT — véase el archivo LICENSE
 
 ## Historial / Changelog
+
+### 1.3.5 — 2026-10-22
+- fff-kit 1.1.2: PBKDF2 con 600.000 iteraciones, protección anti-clickjacking.
 
 ### 1.3.4 — 2026-10-22
 - Accesibilidad: la página tiene ahora exactamente un H1 (la barra de título) y el campo de búsqueda de galaxias tiene un nombre que anuncian los lectores de pantalla (8 idiomas).
