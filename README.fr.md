@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · **Français** · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version :** 1.3.3 · **Dernière mise à jour :** 2026-10-22
+**Version :** 1.3.4 · **Dernière mise à jour :** 2026-10-22
 
 Langues de l'interface : **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -53,6 +53,11 @@ Téléchargez `index.html` et ouvrez-le dans un navigateur ; il fonctionne sans 
 MIT — voir le fichier LICENSE
 
 ## Historique / Changelog
+
+### 1.3.4 — 2026-10-22
+- Accessibilité : la page comporte désormais exactement un H1 (la barre de titre) et le champ de recherche de galaxies a un nom annoncé par les lecteurs d'écran (8 langues).
+- Mobile : le bouton de réinitialisation et le curseur de la constante de Hubble ont des cibles tactiles plus grandes.
+- Le tiroir de détails est masqué au clavier et aux lecteurs d'écran tant qu'il est fermé (plus de contenu hors écran).
 
 - **1.3.3 — 2026-10-22:** le champ de filtre du tableau de données (texte indicatif et étiquette d'accessibilité) est traduit dès le départ, et non plus seulement après l'ouverture du tableau.
 - 1.3.2 — 2026-10-22: noms des galaxies et objets localisés dans les 8 langues (Voie lactée, Moulinet, Tourbillon, etc. ne restent plus en roumain) ; le titre de la page et les méta-descriptions suivent la langue de l'interface.

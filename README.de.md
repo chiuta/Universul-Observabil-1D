@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 1.3.3 · **Zuletzt aktualisiert:** 2026-10-22
+**Version:** 1.3.4 · **Zuletzt aktualisiert:** 2026-10-22
 
 Oberflächensprachen: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -53,6 +53,11 @@ Lade `index.html` herunter und öffne sie in einem Browser; sie funktioniert ohn
 MIT — siehe Datei LICENSE
 
 ## Verlauf / Changelog
+
+### 1.3.4 — 2026-10-22
+- Barrierefreiheit: Die Seite hat jetzt genau eine H1 (die Titelleiste), und das Galaxiensuchfeld hat einen Namen, den Screenreader ansagen (8 Sprachen).
+- Mobil: Die Zurücksetzen-Schaltfläche und der Hubble-Konstanten-Regler haben größere Touch-Flächen.
+- Die Detailleiste ist für Tastatur und Screenreader verborgen, solange sie geschlossen ist (kein Inhalt mehr außerhalb des Bildschirms).
 
 - **1.3.3 — 2026-10-22:** das Filterfeld der Datentabelle (Platzhalter und Barrierefreiheits-Label) wird von Anfang an übersetzt, nicht erst nach dem Öffnen der Tabelle.
 - 1.3.2 — 2026-10-22: Namen der Galaxien und Objekte in allen 8 Sprachen lokalisiert (Milchstraße, Feuerrad, Strudel usw. bleiben nicht mehr rumänisch); Seitentitel und Meta-Beschreibungen folgen der Oberflächensprache.

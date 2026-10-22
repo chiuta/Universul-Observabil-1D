@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 1.3.3 · **Last updated:** 2026-10-22
+**Version:** 1.3.4 · **Last updated:** 2026-10-22
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -53,6 +53,11 @@ Download `index.html` and open it in a browser; it works without internet.
 MIT — see the LICENSE file
 
 ## History / Changelog
+
+### 1.3.4 — 2026-10-22
+- Accessibility: the page now has exactly one H1 (the title bar), and the galaxy search field has a name announced by screen readers (8 languages).
+- Mobile: the reset button and the Hubble-constant slider have larger touch targets.
+- The details drawer is hidden from keyboard and screen readers while closed (no more off-screen content).
 
 - **1.3.3 — 2026-10-22:** the data-table filter field (placeholder and accessibility label) is now translated from the start, not only after opening the table.
 - 1.3.2 — 2026-10-22: localized names of the galaxies and objects in all 8 languages (Milky Way, Pinwheel, Whirlpool, etc. no longer stay in Romanian); page title and meta descriptions follow the interface language.

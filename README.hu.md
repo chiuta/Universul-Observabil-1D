@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 1.3.3 · **Utolsó frissítés:** 2026-10-22
+**Verzió:** 1.3.4 · **Utolsó frissítés:** 2026-10-22
 
 A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -53,6 +53,11 @@ Töltsd le az `index.html` fájlt, és nyisd meg böngészőben; internet nélk�
 MIT — lásd a LICENSE fájlt
 
 ## Előzmények / Changelog
+
+### 1.3.4 — 2026-10-22
+- Akadálymentesség: az oldalon mostantól pontosan egy H1 van (a címsor), a galaxiskereső mező pedig a képernyőolvasók által felolvasott névvel rendelkezik (8 nyelv).
+- Mobil: az alaphelyzet gomb és a Hubble-állandó csúszkája nagyobb érintési felülettel rendelkezik.
+- A részletek fiókja zárt állapotban rejtve van a billentyűzet és a képernyőolvasók elől (nincs több képernyőn kívüli tartalom).
 
 - **1.3.3 — 2026-10-22:** az adattábla szűrőmezője (helyőrző szöveg és hozzáférhetőségi címke) az elejétől fogva le van fordítva, nem csak a tábla megnyitása után.
 - 1.3.2 — 2026-10-22: a galaxisok és objektumok nevei mind a 8 nyelven lokalizáltak (Tejútrendszer, Szélkerék, Örvény stb. már nem maradnak románul); az oldal címe és a meta-leírások követik a felület nyelvét.

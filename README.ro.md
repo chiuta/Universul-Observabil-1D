@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 1.3.3 · **Ultima actualizare:** 2026-10-22
+**Versiune:** 1.3.4 · **Ultima actualizare:** 2026-10-22
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -53,6 +53,11 @@ Descarcă `index.html` și deschide-l în browser; funcționează fără interne
 MIT — vezi fișierul LICENSE
 
 ## Istoric / Changelog
+
+### 1.3.4 — 2026-10-22
+- Accesibilitate: pagina are acum exact un H1 (bara de titlu), iar câmpul de căutare a galaxiilor are un nume anunțat de cititoarele de ecran (8 limbi).
+- Mobil: butonul de resetare și glisorul constantei Hubble au ținte tactile mai mari.
+- Sertarul de detalii este ascuns de tastatură și de cititoarele de ecran cât timp e închis (nu mai există conținut în afara ecranului).
 
 - **1.3.3 — 2026-10-22:** câmpul de filtrare al tabelului de date (text-indicator și etichetă de accesibilitate) este tradus de la început, nu doar după deschiderea tabelului.
 - 1.3.2 — 2026-10-22: denumirile galaxiilor și obiectelor sunt localizate în toate cele 8 limbi (Calea Lactee, Morișca, Vârtejul etc. nu mai rămân în română); titlul paginii și meta-descrierile urmează limba interfeței.
