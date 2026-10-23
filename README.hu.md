@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 1.3.9 · **Utolsó frissítés:** 2026-10-23
+**Verzió:** 1.3.10 · **Utolsó frissítés:** 2026-10-23
 
 A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -53,6 +53,9 @@ Töltsd le az `index.html` fájlt, és nyisd meg böngészőben; internet nélk�
 MIT — lásd a LICENSE fájlt
 
 ## Előzmények / Changelog
+
+### 1.3.10 — 2026-10-23
+- Robusztusság: a sérült `localStorage` beállítások (pl. `null`) figyelmen kívül maradnak ahelyett, hogy megakasztanák az indulást; a címben, az Útmutatóban és az önteszten megjelenő verzió újra a valós.
 
 ### 1.3.9 — 2026-10-23
 - fff-kit 1.2.0: a beállítások kulcsa mostantól `universul-observabil-1d.prefs`; a régi `uv1d_prefs_v1` kulcsot az alkalmazás induláskor automatikusan átköltözteti, régi .fff.json mentés importálása után is. A „hivatkozás / részletek másolása” tartalék már nem a böngésző natív ablakát, hanem egy akadálymentes párbeszédablakot használ.
