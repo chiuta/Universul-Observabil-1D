@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · **Español** · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versión:** 1.3.9 · **Última actualización:** 2026-10-23
+**Versión:** 1.3.10 · **Última actualización:** 2026-10-23
 
 Idiomas de la interfaz: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -53,6 +53,9 @@ Descarga `index.html` y ábrelo en un navegador; funciona sin internet.
 MIT — véase el archivo LICENSE
 
 ## Historial / Changelog
+
+### 1.3.10 — 2026-10-23
+- Robustez: las preferencias corruptas en `localStorage` (p. ej. `null`) se ignoran en vez de bloquear el arranque; la versión mostrada en el título, la Guía y el autotest vuelve a ser la real.
 
 ### 1.3.9 — 2026-10-23
 - fff-kit 1.2.0: la clave de las preferencias es ahora `universul-observabil-1d.prefs`; la antigua `uv1d_prefs_v1` se migra automáticamente al iniciar, también tras importar una copia .fff.json antigua. La alternativa «copiar el enlace / los detalles» ya no usa el cuadro nativo del navegador, sino un diálogo accesible.

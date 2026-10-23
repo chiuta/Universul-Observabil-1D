@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 1.3.9 · **Zuletzt aktualisiert:** 2026-10-23
+**Version:** 1.3.10 · **Zuletzt aktualisiert:** 2026-10-23
 
 Oberflächensprachen: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -53,6 +53,9 @@ Lade `index.html` herunter und öffne sie in einem Browser; sie funktioniert ohn
 MIT — siehe Datei LICENSE
 
 ## Verlauf / Changelog
+
+### 1.3.10 — 2026-10-23
+- Robustheit: beschädigte Einstellungen in `localStorage` (z. B. `null`) werden ignoriert, statt den Start zu blockieren; die im Titel, im Leitfaden und im Selbsttest angezeigte Version ist wieder die echte.
 
 ### 1.3.9 — 2026-10-23
 - fff-kit 1.2.0: Der Schlüssel der Einstellungen lautet jetzt `universul-observabil-1d.prefs`; der alte `uv1d_prefs_v1` wird beim Start automatisch migriert, auch nach dem Import einer alten .fff.json-Sicherung. Die Ausweichlösung „Link / Details kopieren“ nutzt nicht mehr das native Browser-Fenster, sondern einen barrierefreien Dialog.

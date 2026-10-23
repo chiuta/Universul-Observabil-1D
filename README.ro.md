@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 1.3.9 · **Ultima actualizare:** 2026-10-23
+**Versiune:** 1.3.10 · **Ultima actualizare:** 2026-10-23
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -53,6 +53,9 @@ Descarcă `index.html` și deschide-l în browser; funcționează fără interne
 MIT — vezi fișierul LICENSE
 
 ## Istoric / Changelog
+
+### 1.3.10 — 2026-10-23
+- Robustețe: preferințele corupte din `localStorage` (ex. `null`) sunt ignorate în loc să blocheze pornirea; versiunea afișată în titlu, în Ghid și în autotest este din nou cea reală.
 
 ### 1.3.9 — 2026-10-23
 - fff-kit 1.2.0: cheia preferințelor este acum `universul-observabil-1d.prefs`; vechea `uv1d_prefs_v1` este migrată automat la pornire, inclusiv după importul unei copii .fff.json vechi. Alternativa „copiază linkul / detaliile” nu mai folosește fereastra nativă a browserului, ci un dialog accesibil.
