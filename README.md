@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 1.3.11 · **Last updated:** 2026-10-26
+**Version:** 2.0.0 · **Last updated:** 2026-10-26
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -24,6 +24,7 @@ A visualization in a single HTML file (v1.3.1) that places 112 galaxies on one a
 - Logarithmic histogram of galaxy density.
 - Zoom on the axis, hover tooltip, details panel on clicking a galaxy.
 - **Data table** (📊 or the `D` key): all 112 galaxies with distance, z, lookback and comoving computed with the current H₀; sortable columns, filter by name/type, CSV export (`observable-universe-1d-h0-<H₀>.csv`). It is also the accessible alternative to the map (screen readers, keyboard navigation).
+- **Light journey** (💡 or the `J` key, v2.0): a photon starts along the axis, either from a galaxy to us with the timeline of the trip (age of the Universe at emission, travel time, proper and comoving distance, Earth events in between) or from us, today, into the future up to the cosmic event horizon (≈16.5 Gly comoving in ΛCDM with constant dark energy). The “💡 JOURNEY” button in the galaxy panel opens it directly; the data table now also has “2D ↗” links.
 - Galaxy search (🔍), guided tour (🚀), 10-question cosmic quiz with a score (🧩), guide with the sections Intro, Navigation, Axis Modes, Why 1D?, Terms, Limits, Changelog, Credits (📖).
 - Language selector and ⌂ for resetting the view.
 - "SHARE" generates a permanent link with the view state in the URL fragment (`#s=`); "COPY" copies the text to the clipboard.
@@ -53,6 +54,9 @@ Download `index.html` and open it in a browser; it works without internet.
 MIT — see the LICENSE file
 
 ## History / Changelog
+
+### 2.0.0 — 2026-10-26
+- Light journey (photon on the axis, both directions) and a column of links to the 2D map in the data table.
 
 ### 1.3.10 — 2026-10-23
 - Robustness: corrupted preferences in `localStorage` (e.g. `null`) are ignored instead of breaking start-up; the version shown in the title, the Guide and the self-test is the real one again.

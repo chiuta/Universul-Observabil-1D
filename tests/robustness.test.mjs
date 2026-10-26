@@ -1,4 +1,4 @@
-// UO-1D 1.3.11 — preferințe corupte și permalink extrem. Rulare: node robustness.test.mjs <dir1D>   (rețea blocată, file://)
+// UO-1D 2.0.0 — preferințe corupte și permalink extrem. Rulare: node robustness.test.mjs <dir1D>   (rețea blocată, file://)
 import {createRequire} from "module"; const require = createRequire(process.env.PW_ROOT || import.meta.url); const {chromium} = require("playwright");
 let fails = 0; const check = (n, c, x) => { c ? console.log("  ok  " + n) : (fails++, console.log("FAIL  " + n + (x !== undefined ? "  -> " + JSON.stringify(x) : ""))); };
 const d1 = process.argv[2] || process.cwd();

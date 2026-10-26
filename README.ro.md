@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 1.3.11 · **Ultima actualizare:** 2026-10-26
+**Versiune:** 2.0.0 · **Ultima actualizare:** 2026-10-26
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -24,6 +24,7 @@ O vizualizare dintr-un singur fișier HTML (v1.3.1) care așază 112 galaxii pe 
 - Histogramă logaritmică a densității galaxiilor.
 - Zoom pe axă, tooltip la hover, panou de detalii la click pe o galaxie.
 - **Tabel de date** (📊 sau tasta `D`): toate cele 112 de galaxii cu distanță, z, lookback și comoving calculate cu H₀ curent; coloane sortabile, filtru după nume/tip, export CSV (`observable-universe-1d-h0-<H₀>.csv`). Este și alternativa accesibilă la hartă (cititoare de ecran, navigare de la tastatură).
+- **Călătoria luminii** (💡 sau tasta `J`, v2.0): un foton pornește pe axă. Fie de la o galaxie spre noi, cu cronologia drumului (vârsta Universului la emisie, timp de călătorie, distanța proprie și comobilă, evenimente de pe Pământ petrecute între timp), fie de la noi, astăzi, spre viitor, până la orizontul cosmic de evenimente (≈16,5 Gly comobili în ΛCDM cu energie întunecată constantă). Butonul „💡 JOURNEY” din panoul galaxiei o deschide direct; tabelul de date are acum și linkuri „2D ↗”.
 - Căutare de galaxii (🔍), tur ghidat (🚀), quiz cosmic de 10 întrebări cu scor (🧩), ghid cu secțiunile Intro, Navigation, Axis Modes, Why 1D?, Terms, Limits, Changelog, Credits (📖).
 - Selector de limbă și ⌂ pentru resetarea vizualizării.
 - „SHARE" generează un link permanent cu starea vizualizării în fragmentul URL (`#s=`); „COPY" copiază textul în clipboard.
@@ -53,6 +54,9 @@ Descarcă `index.html` și deschide-l în browser; funcționează fără interne
 MIT — vezi fișierul LICENSE
 
 ## Istoric / Changelog
+
+### 2.0.0 — 2026-10-26
+- Călătoria luminii (foton pe axă, în ambele sensuri) și coloană de linkuri către harta 2D în tabelul de date.
 
 ### 1.3.10 — 2026-10-23
 - Robustețe: preferințele corupte din `localStorage` (ex. `null`) sunt ignorate în loc să blocheze pornirea; versiunea afișată în titlu, în Ghid și în autotest este din nou cea reală.
