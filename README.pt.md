@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · **Português** · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versão:** 2.0.1 · **Última atualização:** 2026-10-27
+**Versão:** 2.1.0 · **Última atualização:** 2026-10-27
 
 **Estado:** estável · **Offline:** completo
 
@@ -66,7 +66,19 @@ MIT — veja o ficheiro LICENSE
 - **JADES-GS-z14-0:** NIRSpec z = 14,32 (+0,08/−0,20) (Carniani et al. 2024, Nature); ALMA [OIII] 88 µm z = 14,1793 ± 0,0007 (Schouws et al. 2025, arXiv:2409.20549), compatível. O catálogo mantém o valor NIRSpec; o valor ALMA é indicado na descrição.
 - **PAN-z14-1:** z = 13,53 (+0,05/−0,06), JWST/NIRSpec (Donnan et al., arXiv:2601.11515, jan. 2026): quarta em distância, não um recorde. Não foi adicionada ao catálogo (coordenadas por verificar), apenas referida na nota de MoM-z14.
 
+## JWST notes in 8 languages and discrepancies (2.1.0)
+
+_(English only; not yet translated into this language. Machine translation intentionally not added to avoid errors in technical statements.)_
+
+- The JWST notes re-checked on 27 Oct 2026 (ALMA [OIII] 88 µm for JADES-GS-z14-0, z = 14.1793; PAN-z14-1 in the MoM-z14 note) now also exist in fr/it/es/pt/de/hu as **machine translations marked in the text**; translation keys were not modified (`tests/jwst-notes.test.mjs`).
+- The discrepancies against 2D (8 distances, the sign of Andromeda's z) are in a generated table: [`docs/DISCREPANTE.md`](docs/DISCREPANTE.md). **No value was chosen** (NED/SIMBAD unreachable in the session); the 1D values match the lookback computed from the catalogue's own z, which is **not a source**.
+- Merging the catalogues into one shared file: not done (it would have required choosing between conflicting values).
+
 ## Histórico / Changelog
+
+### 2.1.0 — 2026-10-27
+- JWST notes machine-translated into 6 languages; `docs/DISCREPANTE.md`.
+
 
 ### 1.3.10 — 2026-10-23
 - Robustez: preferências corrompidas em `localStorage` (p. ex. `null`) são ignoradas em vez de bloquear o arranque; a versão mostrada no título, no Guia e no autoteste volta a ser a real.
