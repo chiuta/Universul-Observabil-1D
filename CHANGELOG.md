@@ -2,6 +2,19 @@
 
 Format: SemVer (MAJOR.MINOR.PATCH). Intrările mai vechi sunt copiate din README (secțiunea „History / Changelog”), neschimbate.
 
+## 2.1.1 — 2026-10-28 (anterior: 2.1.0)
+
+Stare: stabil
+Offline: complet (un singur fișier)
+
+Tura 3 a recenziei (revizor astrofizician):
+- Distanțele din catalog (NGC 1132 330, IC 310 270, 3C 48 4150, Abell 370 4200, CL 0024+1654 4400, SDSS J1004+4112 10050, IC 4296 180, Abell 1689 2330 Mly) **confirmate** prin derivare din z (lookback, ΛCDM Planck 2018) și surse independente; sursele și formulele sunt în `docs/DISCREPANTE.md`. Semnul z al Andromedei (−0,001) era deja corect.
+- Identificare: „Perseus (BCG IC 310)” → „IC 310 (Perseus)” (IC 310 nu este BCG; aceea este NGC 1275). Redenumit în catalog, în descrierea EN și în dicționarul `GAL_TR` (toate limbile); nicio altă cheie de traducere atinsă.
+- Teste noi: `tests/catalog.test.mjs` (valori, lookback ±1,5 %, chei de traducere, 32/32) și `tests/blueshift.test.mjs` (Andromeda afișată cu z negativ).
+- Versiune 2.1.1 în `index.html`, `sw.js`, `app.json`; README (8 limbi); CSP rehash (`fixcsp`).
+
+---
+
 ## 2.1.0 — 2026-10-27 (anterior: 2.0.1)
 
 Stare: stabil
