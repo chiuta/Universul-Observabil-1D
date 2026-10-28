@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 2.1.1 · **Zuletzt aktualisiert:** 2026-10-28
+**Version:** 2.1.2 · **Zuletzt aktualisiert:** 2026-10-28
 
 **Status:** stabil · **Offline:** vollständig
 
@@ -75,6 +75,10 @@ _(English only; not yet translated into this language. Machine translation inten
 - Merging the catalogues into one shared file: not done (it would have required choosing between conflicting values).
 
 ## Verlauf / Changelog
+
+### 2.1.2 — 2026-10-28
+- Katalogentfernungen an z und Quellen angeglichen (Review 4): 3C 273 2.440→2.050, Mrk 421 397→430, 3C 279 5.800→5.470, PKS 2155-304 1.400→1.550, TON 618 10.400→10.840, MACS J0025 5.200→5.810, NGC 1277 220→240 Mly (z 0,0169). „RXCJ0232 (Pandora)“ vermischte zwei Haufen: jetzt „Abell 2744 (Pandora)“ (RA 3,59°, Dek −30,4°, z 0,308, 3.620 Mly; Übersetzungsschlüssel umbenannt). Stephans Quintett, NGC 4874 und Arp 220 sind geprüft und unverändert; NGC 1275 bleibt ungelöst (eine Quelle). Details und URLs: `docs/DISCREPANTE.md`.
+
 
 ### 2.1.1 — 2026-10-28
 - Bezeichnung „Perseus (BCG IC 310)“ → „IC 310 (Perseus)“ (IC 310 ist nicht die BCG; Übersetzungsschlüssel in allen Sprachen umbenannt); die 1D-Entfernungen sind durch Quellen bestätigt (`docs/DISCREPANTE.md`); Tests `tests/catalog.test.mjs` und `tests/blueshift.test.mjs`.

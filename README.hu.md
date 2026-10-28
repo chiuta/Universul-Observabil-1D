@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 2.1.1 · **Utolsó frissítés:** 2026-10-28
+**Verzió:** 2.1.2 · **Utolsó frissítés:** 2026-10-28
 
 **Állapot:** stabil · **Offline:** teljes
 
@@ -75,6 +75,10 @@ _(English only; not yet translated into this language. Machine translation inten
 - Merging the catalogues into one shared file: not done (it would have required choosing between conflicting values).
 
 ## Előzmények / Changelog
+
+### 2.1.2 — 2026-10-28
+- A katalógus távolságai igazítva z-hez és forrásokhoz (4. áttekintés): 3C 273 2 440→2 050, Mrk 421 397→430, 3C 279 5 800→5 470, PKS 2155-304 1 400→1 550, TON 618 10 400→10 840, MACS J0025 5 200→5 810, NGC 1277 220→240 Mly (z 0,0169). Az „RXCJ0232 (Pandora)” két halmazt kevert össze: mostantól „Abell 2744 (Pandora)” (rektaszcenzió 3,59°, deklináció −30,4°, z 0,308, 3 620 Mly; a fordítási kulcsok átnevezve). A Stephan-kvintett, az NGC 4874 és az Arp 220 ellenőrizve, változatlan; az NGC 1275 megoldatlan marad (egyetlen forrás). Részletek és URL-ek: `docs/DISCREPANTE.md`.
+
 
 ### 2.1.1 — 2026-10-28
 - A „Perseus (BCG IC 310)” címke → „IC 310 (Perseus)” (az IC 310 nem BCG; a fordítási kulcsok minden nyelven átnevezve); az 1D távolságokat források igazolják (`docs/DISCREPANTE.md`); tesztek: `tests/catalog.test.mjs` és `tests/blueshift.test.mjs`.
