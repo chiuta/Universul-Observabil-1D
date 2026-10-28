@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 2.1.1 · **Ultima actualizare:** 2026-10-28
+**Versiune:** 2.1.2 · **Ultima actualizare:** 2026-10-28
 
 **Stare:** stabil · **Offline:** complet
 
@@ -74,6 +74,10 @@ MIT — vezi fișierul LICENSE
 - Unificarea cataloagelor într-un fișier comun: nu s-a făcut (ar fi cerut alegerea între valori în conflict).
 
 ## Istoric / Changelog
+
+### 2.1.2 — 2026-10-28
+- Distanțe de catalog aliniate la z și la surse (recenzia 4): 3C 273 2.440→2.050, Mrk 421 397→430, 3C 279 5.800→5.470, PKS 2155-304 1.400→1.550, TON 618 10.400→10.840, MACS J0025 5.200→5.810, NGC 1277 220→240 Mly (z 0,0169). „RXCJ0232 (Pandora)” amesteca două roiuri: acum este „Abell 2744 (Pandora)” (RA 3,59°, Dec −30,4°, z 0,308, 3.620 Mly; chei de traducere redenumite). Stephan's Quintet, NGC 4874 și Arp 220 sunt verificate și neschimbate; NGC 1275 rămâne nerezolvat (o singură sursă). Detalii și URL-uri: `docs/DISCREPANTE.md`.
+
 
 ### 2.1.1 — 2026-10-28
 - Eticheta „Perseus (BCG IC 310)” → „IC 310 (Perseus)” (IC 310 nu este BCG; cheile de traducere redenumite în toate limbile); distanțele 1D sunt confirmate cu surse (`docs/DISCREPANTE.md`); teste `tests/catalog.test.mjs` și `tests/blueshift.test.mjs`.
