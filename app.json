@@ -9,11 +9,12 @@
   "permissions": [
     "clipboard",
     "serviceWorker",
-    "localStorage"
+    "localStorage",
+    "WebGL"
   ],
   "storageKeys": [],
-  "sizeBytes": 864937,
-  "sha256": "d9e97e0fd1fc4330e36324601c9412a50896b14434894f30346b33127c4b7297",
+  "sizeBytes": 916947,
+  "sha256": "6128e77951aa5ccb9ceefb2dc6c5e8c98759a58dc16b0d80acbf99d8a956bcf5",
   "csp": {
     "present": true,
     "directives": {
@@ -26,7 +27,7 @@
       "base-uri": "'self'",
       "form-action": "'self'",
       "worker-src": "'self' blob:",
-      "script-src": "'self' sha256×4",
+      "script-src": "'self' sha256×5",
       "connect-src": "'self'",
       "manifest-src": "'self'"
     },
