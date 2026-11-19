@@ -1,9 +1,9 @@
 {
   "schema": 1,
   "slug": "universul-observabil-1d",
-  "name": "Observable Universe · 1D · v2.2.2 · The Cosmic Ray™",
-  "version": "2.2.2",
-  "updated": "2026-11-17",
+  "name": "Observable Universe · 1D · v2.2.3 · The Cosmic Ray™",
+  "version": "2.2.3",
+  "updated": "2026-11-20",
   "description": "1D map of the observable universe — 112 galaxies projected on a single radial axis. Switch between lookback time, comoving distance, redshift, and scale factor. Logarithmic histogram of cosmic density. Quiz, guided tour, accessibility (prefers-reduced-motion, daltonism, keyboard nav), available in 8 languages, persistent preferences. v1.0 — The Cosmic Ray™ companion to the 2D and 3D versions.",
   "egress": [],
   "permissions": [
@@ -13,8 +13,8 @@
     "WebGL"
   ],
   "storageKeys": [],
-  "sizeBytes": 1044366,
-  "sha256": "03dce3c1fad4bf112995dfa559890d44dd61544c83786b6de0844661e683bc9a",
+  "sizeBytes": 1048677,
+  "sha256": "2172a240319d5ce8cc75386af8fb555412ce283e109eb65dff03c82ee8cc975a",
   "csp": {
     "present": true,
     "directives": {
@@ -69,7 +69,7 @@
     ]
   },
   "kit": {
-    "version": "1.8.0",
+    "version": "1.8.1",
     "modules": [
       "core",
       "store",
